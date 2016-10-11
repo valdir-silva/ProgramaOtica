@@ -1,16 +1,59 @@
 package programa;
 
-import javax.swing.JOptionPane;
-
 public class Fornecedor {
-	int codigo;
-	String nome, aux, cpf, rg, telefone;
-	public void cadastrar(){ 
-		nome = JOptionPane.showInputDialog("Digite o nome do fornecedor:");
-		cpf = JOptionPane.showInputDialog("Digite seu CPF:");
-		rg = JOptionPane.showInputDialog("Digite o seu RG:");
-		aux = JOptionPane.showInputDialog("Digite o código do fornecedor:");
-		codigo = Integer.parseInt(aux);
-		telefone = JOptionPane.showInputDialog("Digite o nome do fornecedor:");
+	private int id;
+	private String nome;
+	private String aux;
+	private String cpf;
+	private String rg;
+	private String telefone;
+	
+	public int getId() {
+		return id;
 	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public String getNome() {
+		return nome;
+	}
+	
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
+	public String getAux() {
+		return aux;
+	}
+	
+	public void setAux(String aux) {
+		this.aux = aux;
+	}
+	
+	public String getCpf() {
+		return cpf;
+	}
+	
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+	
+	public String getRg() {
+		return rg;
+	}
+	
+	public void setRg(String rg) {
+		this.rg = rg;
+	}
+	
+	public String getTelefone() {
+		return telefone;
+	}
+	
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+	
 }

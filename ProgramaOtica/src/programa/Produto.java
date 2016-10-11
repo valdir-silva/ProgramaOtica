@@ -1,22 +1,59 @@
 package programa;
 
-import javax.swing.JOptionPane;
-
 public class Produto {
-	int codigo;
-	String nome, aux, marca;
-	float valorCompra, valorVenda;
+	private int id;
+	private String nome;
+	private String aux;
+	private String marca;
+	private float valorCompra;
+	private float valorVenda;
 	
-	public void cadastrar() { 
-		
-		nome = JOptionPane.showInputDialog("Digite o nome do produto");
-		marca = JOptionPane.showInputDialog("Digite a marca do produto");
-		aux = JOptionPane.showInputDialog("Digite o id do produto");
-		codigo = Integer.parseInt(aux);
-		aux = JOptionPane.showInputDialog("Digite o preco de compra do produto");
-		valorCompra = Float.parseFloat(aux);
-		aux = JOptionPane.showInputDialog("Digite o preco de venda do produto");
-		valorVenda = Float.parseFloat(aux);
-		JOptionPane.showMessageDialog(null, "Produto cadastrado:\n" + nome + "\n" + codigo);
+	public int getId() {
+		return id;
 	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public String getNome() {
+		return nome;
+	}
+	
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
+	public String getAux() {
+		return aux;
+	}
+	
+	public void setAux(String aux) {
+		this.aux = aux;
+	}
+	
+	public String getMarca() {
+		return marca;
+	}
+	
+	public void setMarca(String marca) {
+		this.marca = marca;
+	}
+	
+	public float getValorCompra() {
+		return valorCompra;
+	}
+	
+	public void setValorCompra(float valorCompra) {
+		this.valorCompra = valorCompra;
+	}
+	
+	public float getValorVenda() {
+		return valorVenda;
+	}
+	
+	public void setValorVenda(float valorVenda) {
+		this.valorVenda = valorVenda;
+	}
+	
 }

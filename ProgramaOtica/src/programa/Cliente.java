@@ -1,24 +1,85 @@
 package programa;
 
-import javax.swing.JOptionPane;
-
 public class Cliente {
-	String nome, aux, nascimento, cpf, rg;
-	String estado, cidade, rua, cep, telefone;
-	int numero, codigo;
+	private String nome;
+	private String nascimento;
+	private String cpf;
+	private String estado;
+	private String cidade;
+	private String rua;
+	private String cep;
+	private String telefone;
+	private int id;
 	
-	public void cadastrar() {
-		nome = JOptionPane.showInputDialog("Digite o seu nome:");
-		nascimento = JOptionPane.showInputDialog("Digite a sua data de nascimento:");
-		cpf = JOptionPane.showInputDialog("Digite o seu cpf:");
-		rg = JOptionPane.showInputDialog("Digite o seu rg:");
-		estado = JOptionPane.showInputDialog("Digite o estado em que você mora:");
-		cidade = JOptionPane.showInputDialog("Digite o cidade em que você mora:");
-		rua = JOptionPane.showInputDialog("Digite a sua rua:");
-		cep = JOptionPane.showInputDialog("Digite seu CEP:");
-		aux = JOptionPane.showInputDialog("Digite o número da sua casa :");
-		numero = Integer.parseInt(aux);
-		telefone = JOptionPane.showInputDialog("Digite seu telefone:");
-		codigo++;
+	public String getNome () {		
+		return this.nome;
+	}
+	
+	public void setNome (String nome) {
+		this.nome = nome;
+	}
+	
+	public String getNascimento () {		
+		return this.nascimento;
+	}
+	
+	public void setNascimento (String nascimento) { 
+		this.nascimento = nascimento;
+	}
+	
+	public void setCpf (String cpf) {
+		this.cpf = cpf;
+	}
+	
+	public String getCpf() {		
+		return this.cpf;
+	}
+	
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+	
+	public String getEstado () {		
+		return this.estado;
+	}
+	
+	public void setCidade (String cidade) {
+		this.cidade = cidade;
+	}
+	
+	public String getCidade () {		
+		return this.cidade;
+	}
+	
+	public void setRua (String rua) {
+		this.rua = rua;
+	}
+	
+	public String getRua () {		
+		return this.rua;
+	}
+	
+	public void setCep (String cep) {
+		this.cep = cep;
+	}
+	
+	public String getCep () {		
+		return this.cep;
+	}
+	
+	public void setTelefone (String telefone) {
+		this.telefone = telefone;
+	}
+	
+	public String getTelefone () {
+		return this.telefone;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getId () {
+		return this.id;
 	}
 }
