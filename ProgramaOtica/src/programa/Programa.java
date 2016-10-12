@@ -1,5 +1,4 @@
 package programa;
-import repositorios.IRepositorioCliente;
 
 import javax.swing.JOptionPane;
 
