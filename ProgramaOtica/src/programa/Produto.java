@@ -3,10 +3,10 @@ package programa;
 public class Produto {
 	private int id;
 	private String nome;
-	private String aux;
 	private String marca;
 	private float valorCompra;
 	private float valorVenda;
+	private Fornecedor fornecedor;
 	
 	public int getId() {
 		return id;
@@ -22,14 +22,6 @@ public class Produto {
 	
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-	
-	public String getAux() {
-		return aux;
-	}
-	
-	public void setAux(String aux) {
-		this.aux = aux;
 	}
 	
 	public String getMarca() {
@@ -56,4 +48,11 @@ public class Produto {
 		this.valorVenda = valorVenda;
 	}
 	
+	public Fornecedor getFornecedor() {
+		return fornecedor;
+	}
+	
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
+	}
 }
