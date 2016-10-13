@@ -1,26 +1,18 @@
-package programa;
+package repositorios;
 
-public class RepositorioFornecedorArray implements IRepositorioFornecedor {
+import programa.Fornecedor;
+
+public class RepositorioFornecedor implements IRepositorioFornecedor {
 	private Fornecedor[] fornecedor;
 	private int indice;
 	
-	public RepositorioFornecedorArray () {
+	public RepositorioFornecedor () {
 		fornecedor = new Fornecedor[100];
 	}
 	
 	public void inserirFornecedor (Fornecedor fornecedor) {
-		if (this.fornecedor[indice] == null){//se a posição esta vaga coloque
-			this.fornecedor[indice] = fornecedor;
-			indice++;			
-		}else {//se não estiver procure em todas as posições do array se tem posisao livre
-			for (int i = 0; i < this.fornecedor.length; i++){
-				if (this.fornecedor[i] == null){
-					this.fornecedor[indice] = fornecedor;
-					indice++;
-					break;
-				}
-			}
-		}
+		this.fornecedor[indice] = fornecedor;
+		indice++;
 	}
 	
 	public void removerFornecedor (int id) {

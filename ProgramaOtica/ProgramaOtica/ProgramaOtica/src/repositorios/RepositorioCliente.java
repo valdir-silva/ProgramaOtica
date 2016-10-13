@@ -1,27 +1,18 @@
-package programa;
+package repositorios;
 
-public class RepositorioClienteArray implements IRepositorioCliente {
+import programa.Cliente;
+
+public class RepositorioCliente implements IRepositorioCliente {
 	private Cliente[] cliente;
 	private int indice;
 	
-	public RepositorioClienteArray () {
+	public RepositorioCliente () {
 		cliente = new Cliente[100];
 	}
 	
 	public void inserirCliente (Cliente cliente) {
-		if (this.cliente[indice] == null){//se a posição esta vaga coloque
-			this.cliente[indice] = cliente;
-			indice++;			
-		}else {//se não estiver procure em todas as posições do array se tem posisao livre
-			for (int i = 0; i < this.cliente.length; i++){
-				if (this.cliente[i] == null){
-					this.cliente[indice] = cliente;
-					indice++;
-					break;
-				}
-			}
-		}
-
+		this.cliente[indice] = cliente;
+		indice++;
 	}
 	
 	public void removerCliente (int id) {

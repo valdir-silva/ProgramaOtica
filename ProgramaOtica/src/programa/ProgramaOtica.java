@@ -7,11 +7,9 @@ public class ProgramaOtica {
 		// TODO Auto-generated method stub
 		
 		boolean run = true;
-		EntradaDeDados dados = new EntradaDeDados();//carregar os dados
-		IRepositorioCliente guardaC = new RepositorioClienteArray();
-		IRepositorioFornecedor guardaF = new RepositorioFornecedorArray();
-		IRepositorioProduto guardaP = new RepositorioProdutoArray();
-		while (run){
+		EntradaDeDados dados = new EntradaDeDados();
+		
+		while (run) {
 			int opcao;
 			opcao = Integer.parseInt(JOptionPane.showInputDialog(" 1. Cliente\n 2. Fornecedor\n 3. Produto\n 4. Venda\n 0. Encerrar Programa"));
 			switch (opcao) {
@@ -35,7 +33,7 @@ public class ProgramaOtica {
 							tempC1.setEstado(JOptionPane.showInputDialog("Qual o seu estado?"));
 							tempC1.setCidade(JOptionPane.showInputDialog("Qual a sua cidade?"));
 							tempC1.setRua(JOptionPane.showInputDialog("Qual a sua rua?"));
-							guardaC.inserirCliente(tempC1);
+							dados.clientes.inserirCliente(tempC1);
 							break;
 						case 2://atualizar
 							Cliente tempC2 = new Cliente();
@@ -47,18 +45,18 @@ public class ProgramaOtica {
 							tempC2.setEstado(JOptionPane.showInputDialog("Qual o seu estado?"));
 							tempC2.setCidade(JOptionPane.showInputDialog("Qual a sua cidade?"));
 							tempC2.setRua(JOptionPane.showInputDialog("Qual a sua rua?"));
-							guardaC.atualizarCliente(tempC2);
+							dados.clientes.atualizarCliente(tempC2);
 							break;
 						case 3://remover
 							int deletaC = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
-							guardaC.removerCliente(deletaC);
+							dados.clientes.removerCliente(deletaC);
 							break;
 						case 4://procurar
 							Cliente tempC4 = new Cliente();
 							int buscaC = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
-							tempC4 = guardaC.procurarCliente(buscaC);
+							tempC4 = dados.clientes.procurarCliente(buscaC);
 							System.out.printf("nome: %s\nnascimento: %s\ncpf: %s\ntelefone: %s\ncep: %s\nestado: %s\ncidade: %s\nrua: %s\n", 
-									tempC4.getNome(),tempC4.getNascimento(),tempC4.getCpf(),tempC4.getTelefone(),tempC4.getCep(),tempC4.getEstado(),tempC4.getCidade(),tempC4.getRua());
+							tempC4.getNome(),tempC4.getNascimento(),tempC4.getCpf(),tempC4.getTelefone(),tempC4.getCep(),tempC4.getEstado(),tempC4.getCidade(),tempC4.getRua());
 							break;
 						default:
 							JOptionPane.showMessageDialog(null, "ERROR!!\n Opcao nao confere");
@@ -75,23 +73,23 @@ public class ProgramaOtica {
 							tempF1.setNome(JOptionPane.showInputDialog("Qual o seu nome?"));
 							tempF1.setCpf(JOptionPane.showInputDialog("Qual o seu cpf?"));
 							tempF1.setTelefone(JOptionPane.showInputDialog("Qual o seu telefone?"));
-							guardaF.inserirFornecedor(tempF1);
+							dados.fornecedores.inserirFornecedor(tempF1);
 							break;
 						case 2://atualizar
-							Fornecedor tempF3 = new Fornecedor();
-							tempF3.setNome(JOptionPane.showInputDialog("Qual o seu nome?"));
-							tempF3.setCpf(JOptionPane.showInputDialog("Qual o seu cpf?"));
-							tempF3.setTelefone(JOptionPane.showInputDialog("Qual o seu telefone?"));
-							guardaF.atualizarFornecedor(tempF3);
+							Fornecedor tempF2 = new Fornecedor();
+							tempF2.setNome(JOptionPane.showInputDialog("Qual o seu nome?"));
+							tempF2.setCpf(JOptionPane.showInputDialog("Qual o seu cpf?"));
+							tempF2.setTelefone(JOptionPane.showInputDialog("Qual o seu telefone?"));
+							dados.fornecedores.atualizarFornecedor(tempF2);
 							break;
 						case 3://remover
 							int deletaF = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
-							guardaF.removerFornecedor(deletaF);
+							dados.fornecedores.removerFornecedor(deletaF);
 							break;
 						case 4://procurar
 							Fornecedor tempF4 = new Fornecedor();
 							int buscaF = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
-							tempF4 = guardaF.procurarFornecedor(buscaF);
+							tempF4 = dados.fornecedores.procurarFornecedor(buscaF);
 							System.out.printf("nome: %s\ncpf: %s\ntelefone: %s\n", 
 									tempF4.getNome(),tempF4.getCpf(),tempF4.getTelefone());
 							break;
@@ -109,8 +107,9 @@ public class ProgramaOtica {
 							tempP1.setMarca(JOptionPane.showInputDialog("Qual a marca?"));
 							tempP1.setValorCompra(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Compra?")));
 							tempP1.setValorVenda(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Venda?")));
-							// perae que vamo discutir como fazer esse fornecedor aqui (sugiro id, se pegar kk)
-							guardaP.inserirProduto(tempP1);
+							tempP1.setFornecedor(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do fornecedor?")));
+							//tempP1.fornecedor.setnome algo assim?  (sugiro id, se pegar kk)
+							dados.produtos.inserirProduto(tempP1);
 							break;
 						case 2://atualizar
 							Produto tempP2 = new Produto();
@@ -118,17 +117,18 @@ public class ProgramaOtica {
 							tempP2.setMarca(JOptionPane.showInputDialog("Qual a marca?"));
 							tempP2.setValorCompra(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Compra?")));
 							tempP2.setValorVenda(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Venda?")));
+							tempP2.setFornecedor(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do fornecedor?")));
 							// perae que vamo discutir como fazer esse fornecedor aqui (sugiro id, se pegar kk)
-							guardaP.atualizarProduto(tempP2);
+							dados.produtos.atualizarProduto(tempP2);
 							break;
 						case 3://remover
 							int deletaP = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
-							guardaP.removerProduto(deletaP);
+							dados.produtos.removerProduto(deletaP);
 							break;
 						case 4://procurar
 							Produto tempP4 = new Produto();
 							int buscaP = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
-							tempP4 = guardaP.procurarProduto(buscaP);
+							tempP4 = dados.produtos.procurarProduto(buscaP);
 							System.out.printf("nome: %s\nmarca: %s\nvalor de compra: %f\nvalor de venda: %f\n", 
 									tempP4.getNome(),tempP4.getMarca(),tempP4.getValorCompra(),tempP4.getValorVenda());
 							//daqui a pouco vemos isso de fornecedor, kk (que daqui a pouco, olha a hora)
@@ -143,13 +143,30 @@ public class ProgramaOtica {
 					switch(opcaoVenda){
 						case 1://inserir
 							Venda tempV1 = new Venda();
-							//vamo ver isso aqui
+							tempV1.setCliente(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do cliente?")));
+							tempV1.setProduto(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do produto?")));
+							dados.vendas.inserirVenda(tempV1);
 							break;
 						case 2://atualizar
+							Venda tempV2 = new Venda();
+							tempV2.setCliente(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do cliente?")));
+							tempV2.setProduto(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do produto?")));
+							dados.vendas.atualizarVenda(tempV2);
 							break;
 						case 3://remover
+							int deletaV = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
+							dados.vendas.removerVenda(deletaV);
 							break;
 						case 4://procurar
+							Venda tempV4 = new Venda();
+							int buscaV = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
+							tempV4 = dados.vendas.procurarVenda(buscaV);
+							Cliente cliente = new Cliente();
+							Produto produto = new Produto();
+							cliente = tempV4.getCliente();
+							produto = tempV4.getProduto();
+							System.out.printf("nome Cliente: %s\nid: %d\n nome Produto: %s\n", 
+									cliente.getNome(),tempV4.getId(),produto.getNome());
 							break;
 						default:
 							JOptionPane.showMessageDialog(null, "ERROR!!\n Opcao nao confere");

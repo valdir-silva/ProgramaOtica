@@ -1,26 +1,18 @@
-package programa;
+package repositorios;
 
-public class RepositorioProdutoArray implements IRepositorioProduto{
+import programa.Produto;
+
+public class RepositorioProduto {
 	private Produto[] produto;
 	private int indice;
 	
-	public RepositorioProdutoArray () {
+	public RepositorioProduto () {
 		this.produto = new Produto[100];
 	}
 	
 	public void inserirProduto (Produto produto) {
-		if (this.produto[indice] == null){//se a posição esta vaga coloque
-			this.produto[indice] = produto;
-			indice++;			
-		}else {//se não estiver procure em todas as posições do array se tem posisao livre
-			for (int i = 0; i < this.produto.length; i++){
-				if (this.produto[i] == null){
-					this.produto[indice] = produto;
-					indice++;
-					break;
-				}
-			}
-		}
+		this.produto[indice] = produto;
+		indice++;
 	}
 	
 	public void removerProduto (int id) {

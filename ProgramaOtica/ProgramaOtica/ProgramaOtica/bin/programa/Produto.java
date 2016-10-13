@@ -52,8 +52,7 @@ public class Produto {
 		return fornecedor;
 	}
 	
-	public void setFornecedor(int id) {
-		IRepositorioFornecedor fornecedor = new RepositorioFornecedorArray();
-		this.fornecedor = fornecedor.procurarFornecedor(id);
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
 	}
 }

@@ -17,18 +17,16 @@ public class Venda {
 		return cliente;
 	}
 	
-	public void setCliente(int id) {
-		IRepositorioCliente cliente = new RepositorioClienteArray();
-		this.cliente = cliente.procurarCliente(id);
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 	
 	public Produto getProduto() {
 		return produto;
 	}
 	
-	public void setProduto(int id) {
-		IRepositorioProduto produto = new RepositorioProdutoArray();
-		this.produto = produto.procurarProduto(id);
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
 	
 }
