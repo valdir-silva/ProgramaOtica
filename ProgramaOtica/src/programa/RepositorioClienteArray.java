@@ -2,7 +2,7 @@ package programa;
 
 public class RepositorioClienteArray implements IRepositorioCliente {
 	private Cliente[] cliente;
-	private int indice;
+	private int indice=0; //inicializei a variável
 	
 	public RepositorioClienteArray () {
 		cliente = new Cliente[100];
