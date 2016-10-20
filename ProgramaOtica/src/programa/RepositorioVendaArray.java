@@ -23,7 +23,7 @@ public class RepositorioVendaArray implements IRepositorioVenda{
 		}
 	}
 	
-	public void removerVenda (int id) {
+	public boolean removerVenda (int id) {
 		boolean found = false;
 		for (int i = 0; i < this.venda.length; i++){
 			if (this.venda[i].getId() == id) {
@@ -33,11 +33,13 @@ public class RepositorioVendaArray implements IRepositorioVenda{
 				break;
 			}
 		}
+		/*
 		if (found) {
 			System.out.println("Venda removido com sucesso!!");
 		}else {//throw VendaNotFound;
 			System.out.println("Venda nao encontrado!!");
-		}
+		}*/
+		return found;
 	}
 	
 	public void atualizarVenda (Venda venda) {

@@ -15,8 +15,13 @@ public class Cliente {
 		return this.nome;
 	}
 	
-	public void setNome (String nome) {
-		this.nome = nome;
+	public void setNome (String nome) throws LENException {
+		if (nome.length()<10){
+			this.nome = nome;			
+		} else {
+			LENException e = new LENException();
+			throw e;
+		}
 	}
 	
 	public String getNascimento () {		

@@ -23,7 +23,7 @@ public class RepositorioClienteArray implements IRepositorioCliente {
 		}
 
 	}
-	
+	//se foi removido return true se não false
 	public void removerCliente (int id) {
 		boolean found = false;
 		for (int i = 0; i < this.cliente.length; i++){
@@ -35,9 +35,9 @@ public class RepositorioClienteArray implements IRepositorioCliente {
 			}
 		}
 		if (found) {
-			System.out.println("Cliente removido com sucesso!!");
-		}else {//throw ClienteNotFound;
-			System.out.println("Cliente nao encontrado!!");
+			System.out.println("Removido");
+		} else {
+			System.out.println("Não removido");
 		}
 	}
 	
@@ -57,12 +57,15 @@ public class RepositorioClienteArray implements IRepositorioCliente {
 		}
 	}
 	
-	public Cliente procurarCliente (int id) {
+	public Cliente procurarCliente (int id) throws NULLException {
 		for (int i = 0; i < this.cliente.length; i++){
 			if(this.cliente[i].getId() == id) {
 				return this.cliente[i];
 			}
 		}
-		return null;//null se n existir esse cliente
+		NULLException e = new NULLException();
+		throw e;
+
+		
 	}
 }

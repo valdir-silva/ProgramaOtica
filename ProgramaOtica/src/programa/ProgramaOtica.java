@@ -3,10 +3,11 @@ package programa;
 import javax.swing.JOptionPane;
 
 public class ProgramaOtica {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws LENException, NULLException {
 		// TODO Auto-generated method stub
 		
 		boolean run = true;
+		//Fachada fachada = new Fachada(); implement
 		EntradaDeDados dados = new EntradaDeDados();
 		
 		while (run) {
@@ -25,15 +26,18 @@ public class ProgramaOtica {
 							break;
 						case 1://inserir
 							Cliente tempC1 = new Cliente();
-							tempC1.setNome(JOptionPane.showInputDialog("Qual o seu nome?"));
-							tempC1.setNascimento(JOptionPane.showInputDialog("Qual sua data de nascimento?"));
-							tempC1.setCpf(JOptionPane.showInputDialog("Qual o seu cpf?"));
-							tempC1.setTelefone(JOptionPane.showInputDialog("Qual o seu telefone?"));
-							tempC1.setCep(JOptionPane.showInputDialog("Qual o seu cep?"));
-							tempC1.setEstado(JOptionPane.showInputDialog("Qual o seu estado?"));
-							tempC1.setCidade(JOptionPane.showInputDialog("Qual a sua cidade?"));
-							tempC1.setRua(JOptionPane.showInputDialog("Qual a sua rua?"));
-							dados.clientes.inserirCliente(tempC1);
+							try{
+								tempC1.setNome(JOptionPane.showInputDialog("Qual o seu nome?"));
+								tempC1.setNascimento(JOptionPane.showInputDialog("Qual sua data de nascimento?"));
+								tempC1.setCpf(JOptionPane.showInputDialog("Qual o seu cpf?"));
+								tempC1.setTelefone(JOptionPane.showInputDialog("Qual o seu telefone?"));
+								tempC1.setCep(JOptionPane.showInputDialog("Qual o seu cep?"));
+								tempC1.setEstado(JOptionPane.showInputDialog("Qual o seu estado?"));
+								tempC1.setCidade(JOptionPane.showInputDialog("Qual a sua cidade?"));
+								tempC1.setRua(JOptionPane.showInputDialog("Qual a sua rua?"));
+								dados.clientes.inserirCliente(tempC1);
+							} catch (LENException e) {
+								JOptionPane.showMessageDialog(null, e);							}
 							break;
 						case 2://atualizar
 							Cliente tempC2 = new Cliente();

@@ -23,7 +23,7 @@ public class RepositorioFornecedorArray implements IRepositorioFornecedor {
 		}
 	}
 	
-	public void removerFornecedor (int id) {
+	public boolean removerFornecedor (int id) {
 		boolean found = false;
 		for (int i = 0;i < this.fornecedor.length;i++){
 			if (this.fornecedor[i].getId() == id){
@@ -33,11 +33,12 @@ public class RepositorioFornecedorArray implements IRepositorioFornecedor {
 				break;
 			}
 		}
-		if (found) {
-			System.out.println("Fornecedor removido com sucesso!!");
-		}else {//throw FornecedorNotFound;
-			System.out.println("Fornecedor nao encontrado!!");
-		}
+		//if (found) {
+		//	System.out.println("Fornecedor removido com sucesso!!");
+		//}else {//throw FornecedorNotFound;
+		//	System.out.println("Fornecedor nao encontrado!!");
+		//}
+		return found;
 	}
 	
 	public void atualizarFornecedor (Fornecedor fornecedor) {

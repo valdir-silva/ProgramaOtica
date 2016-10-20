@@ -1,22 +1,22 @@
 package programa;
 
 public class EntradaDeDados {
-	public CadastroClientes clientes;
-	public CadastroFornecedores fornecedores;
-	public CadastroProdutos produtos;
-	public CadastroVendas vendas;
+	public ControleClientes clientes;
+	public ControleFornecedores fornecedores;
+	public ControleProdutos produtos;
+	public ControleVendas vendas;
 	
 	public EntradaDeDados () {
 		IRepositorioCliente repositorioClientes = new RepositorioClienteArray();
-		clientes = new CadastroClientes (repositorioClientes);
+		clientes = new ControleClientes (repositorioClientes);
 		
 		IRepositorioFornecedor repositorioFornecedores = new RepositorioFornecedorArray();
-		fornecedores = new CadastroFornecedores (repositorioFornecedores);
+		fornecedores = new ControleFornecedores (repositorioFornecedores);
 		
 		IRepositorioProduto repositorioProdutos = new RepositorioProdutoArray();
-		produtos = new CadastroProdutos (repositorioProdutos);
+		produtos = new ControleProdutos (repositorioProdutos);
 		
 		IRepositorioVenda repositorioVendas = new RepositorioVendaArray();
-		vendas = new CadastroVendas (repositorioVendas);
+		vendas = new ControleVendas (repositorioVendas);
 	}
 }

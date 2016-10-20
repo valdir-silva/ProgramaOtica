@@ -17,7 +17,7 @@ public class Venda {
 		return cliente;
 	}
 	
-	public void setCliente(int id) {
+	public void setCliente(int id) throws NULLException {
 		IRepositorioCliente cliente = new RepositorioClienteArray();
 		this.cliente = cliente.procurarCliente(id);
 	}

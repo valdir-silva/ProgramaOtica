@@ -23,7 +23,7 @@ public class RepositorioProdutoArray implements IRepositorioProduto{
 		}
 	}
 	
-	public void removerProduto (int id) {
+	public boolean removerProduto (int id) {
 		boolean found = false;
 		for (int i = 0;i < this.produto.length;i++) {
 			if (this.produto[i].getId() == id) {
@@ -33,11 +33,13 @@ public class RepositorioProdutoArray implements IRepositorioProduto{
 				break;
 			}
 		}
-		if (found) {
+		/*
+	 	if (found) {
 			System.out.println("Produto removido com sucesso!!");
 		}else {//throw ProdutoNotFound;
 			System.out.println("Produto nao encontrado!!");
-		}
+		}*/
+		return found;
 	}
 	public void atualizarProduto (Produto produto) {
 		boolean found = false;
