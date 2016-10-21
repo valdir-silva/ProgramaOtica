@@ -1,5 +1,8 @@
 package programa;
 
+import base.Funcionario;
+import interfaces.IRepositorioFuncionario;
+
 public class ControleFuncionarios implements  IRepositorioFuncionario{
 	IRepositorioFuncionario repositorioFuncionario;
 	Funcionario funcionario;

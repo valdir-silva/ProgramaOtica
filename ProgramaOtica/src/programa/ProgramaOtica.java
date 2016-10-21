@@ -2,8 +2,17 @@ package programa;
 
 import javax.swing.JOptionPane;
 
+import base.Cliente;
+import base.Endereco;
+import base.Funcionario;
+import base.Produto;
+import base.Venda;
+import exceptions.RemocaoNaoConcluidaException;
+import exceptions.SemPosicaoParaInserirException;
+import exceptions.TamanhoException;
+
 public class ProgramaOtica {
-	public static void main(String[] args) throws LENException, NULLException {
+	public static void main(String[] args) throws TamanhoException, NullPointerException, SemPosicaoParaInserirException, RemocaoNaoConcluidaException {
 		// TODO Auto-generated method stub
 		
 		boolean run = true;
@@ -26,42 +35,70 @@ public class ProgramaOtica {
 							break;
 						case 1://inserir
 							Cliente tempC1 = new Cliente();
+							Endereco endereco1 = new Endereco();
 							try{
 								tempC1.setNome(JOptionPane.showInputDialog("Qual o seu nome?"));
 								tempC1.setNascimento(JOptionPane.showInputDialog("Qual sua data de nascimento?"));
 								tempC1.setCpf(JOptionPane.showInputDialog("Qual o seu cpf?"));
 								tempC1.setTelefone(JOptionPane.showInputDialog("Qual o seu telefone?"));
-								tempC1.setCep(JOptionPane.showInputDialog("Qual o seu cep?"));
-								tempC1.setEstado(JOptionPane.showInputDialog("Qual o seu estado?"));
-								tempC1.setCidade(JOptionPane.showInputDialog("Qual a sua cidade?"));
-								tempC1.setRua(JOptionPane.showInputDialog("Qual a sua rua?"));
-								fachada.inserirCliente(tempC1);
-							} catch (LENException e) {
+								endereco1.setCep(JOptionPane.showInputDialog("Qual o seu cep?"));
+								endereco1.setEstado(JOptionPane.showInputDialog("Qual o seu estado?"));
+								endereco1.setCidade(JOptionPane.showInputDialog("Qual a sua cidade?"));
+								endereco1.setRua(JOptionPane.showInputDialog("Qual a sua rua?"));
+								tempC1.setEndereco(endereco1);
+								fachada.inserir(tempC1);
+							} catch (TamanhoException e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, e);
+							} catch (SemPosicaoParaInserirException e) {
+								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
 							}
 							break;
 						case 2://atualizar
 							Cliente tempC2 = new Cliente();
-							tempC2.setNome(JOptionPane.showInputDialog("Qual o seu nome?"));
-							tempC2.setNascimento(JOptionPane.showInputDialog("Qual sua data de nascimento?"));
-							tempC2.setCpf(JOptionPane.showInputDialog("Qual o seu cpf?"));
-							tempC2.setTelefone(JOptionPane.showInputDialog("Qual o seu telefone?"));
-							tempC2.setCep(JOptionPane.showInputDialog("Qual o seu cep?"));
-							tempC2.setEstado(JOptionPane.showInputDialog("Qual o seu estado?"));
-							tempC2.setCidade(JOptionPane.showInputDialog("Qual a sua cidade?"));
-							tempC2.setRua(JOptionPane.showInputDialog("Qual a sua rua?"));
-							fachada.atualizarCliente(tempC2);
+							Endereco endereco2 = new Endereco();
+							try{
+								tempC2.setNome(JOptionPane.showInputDialog("Qual o seu nome?"));
+								tempC2.setNascimento(JOptionPane.showInputDialog("Qual sua data de nascimento?"));
+								tempC2.setCpf(JOptionPane.showInputDialog("Qual o seu cpf?"));
+								tempC2.setTelefone(JOptionPane.showInputDialog("Qual o seu telefone?"));
+								endereco2.setCep(JOptionPane.showInputDialog("Qual o seu cep?"));
+								endereco2.setEstado(JOptionPane.showInputDialog("Qual o seu estado?"));
+								endereco2.setCidade(JOptionPane.showInputDialog("Qual a sua cidade?"));
+								endereco2.setRua(JOptionPane.showInputDialog("Qual a sua rua?"));
+								tempC2.setEndereco(endereco2);
+								fachada.atualizar(tempC2);
+							} catch (TamanhoException e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, e);
+							} catch (NullPointerException e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, e);
+							}
 							break;
 						case 3://remover
 							int deletaC = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
-							fachada.removerCliente(deletaC);
+							try {
+								fachada.removerCliente(deletaC);
+							} catch (RemocaoNaoConcluidaException e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, e);
+							}
 							break;
 						case 4://procurar
 							Cliente tempC4 = new Cliente();
 							int buscaC = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
-							tempC4 = fachada.procurarCliente(buscaC);
-							System.out.printf("nome: %s\nnascimento: %s\ncpf: %s\ntelefone: %s\ncep: %s\nestado: %s\ncidade: %s\nrua: %s\n", 
-							tempC4.getNome(),tempC4.getNascimento(),tempC4.getCpf(),tempC4.getTelefone(),tempC4.getCep(),tempC4.getEstado(),tempC4.getCidade(),tempC4.getRua());
+							try {
+								tempC4 = fachada.procurarCliente(buscaC);
+								JOptionPane.showMessageDialog(null, "nome: " + tempC4.getNome() +"\nnascimento: " + tempC4.getNascimento() + "\ncpf: " + tempC4.getCpf() 
+								+ "\ntelefone: " + tempC4.getTelefone() + "\ncep: " + tempC4.getEndereco().getCep() + "\nestado: " + tempC4.getEndereco().getEstado() 
+								+ "\ncidade: " + tempC4.getEndereco().getCidade() + "\nrua: " + tempC4.getEndereco().getRua() + "\n"); 									
+							} catch (NullPointerException e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, e);
+							}
+							
 							break;
 						default:
 							JOptionPane.showMessageDialog(null, "ERROR!!\n Opcao nao confere");
