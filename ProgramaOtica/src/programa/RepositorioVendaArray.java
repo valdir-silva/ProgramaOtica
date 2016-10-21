@@ -11,6 +11,7 @@ public class RepositorioVendaArray implements IRepositorioVenda{
 	public void inserirVenda (Venda venda) {
 		if (this.venda[indice] == null){//se a posição esta vaga coloque
 			this.venda[indice] = venda;
+			venda.setId(indice);
 			indice++;			
 		}else {//se não estiver procure em todas as posições do array se tem posisao livre
 			for (int i = 0; i < this.venda.length; i++){

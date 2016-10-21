@@ -2,7 +2,7 @@ package programa;
 
 public class EntradaDeDados {
 	public ControleClientes clientes;
-	public ControleFornecedores fornecedores;
+	public ControleFuncionarios fornecedores;
 	public ControleProdutos produtos;
 	public ControleVendas vendas;
 	
@@ -10,8 +10,8 @@ public class EntradaDeDados {
 		IRepositorioCliente repositorioClientes = new RepositorioClienteArray();
 		clientes = new ControleClientes (repositorioClientes);
 		
-		IRepositorioFornecedor repositorioFornecedores = new RepositorioFornecedorArray();
-		fornecedores = new ControleFornecedores (repositorioFornecedores);
+		IRepositorioFuncionario repositorioFornecedores = new RepositorioFuncionario();
+		fornecedores = new ControleFuncionarios (repositorioFornecedores);
 		
 		IRepositorioProduto repositorioProdutos = new RepositorioProdutoArray();
 		produtos = new ControleProdutos (repositorioProdutos);

@@ -1,8 +1,8 @@
 package programa;
 
-public interface IRepositorioFornecedor {
-	public void inserirFornecedor (Fornecedor fornecedor);
-	public boolean removerFornecedor (int id);
-	public void atualizarFornecedor (Fornecedor fornecedor);
-	public Fornecedor procurarFornecedor (int id);
+public interface IRepositorioFuncionario {
+	public void inserirFuncionario (Funcionario funcionario);
+	public boolean removerFuncionario (int id);
+	public void atualizarFuncionario (Funcionario funcionario);
+	public Funcionario procurarFuncionario (int id);
 }

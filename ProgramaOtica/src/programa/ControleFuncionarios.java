@@ -1,30 +1,34 @@
 package programa;
 
-public class ControleFornecedores implements  IRepositorioFornecedor{
-	IRepositorioFornecedor repositorioFornecedor;
-	Fornecedor fornecedor;
+public class ControleFuncionarios implements  IRepositorioFuncionario{
+	IRepositorioFuncionario repositorioFuncionario;
+	Funcionario funcionario;
 	
-	public ControleFornecedores (IRepositorioFornecedor repositorioFornecedor) {
-		this.repositorioFornecedor = repositorioFornecedor;
+	public ControleFuncionarios (IRepositorioFuncionario repositorioFuncionario) {
+		this.repositorioFuncionario = repositorioFuncionario;
 	}
 	
-	public void inserirFornecedor (Fornecedor fornecedor) {
-		repositorioFornecedor.inserirFornecedor(fornecedor);
+	@Override
+	public void inserirFuncionario(Funcionario funcionario) {
+		repositorioFuncionario.inserirFuncionario(funcionario);
 	}
-	
-	public boolean removerFornecedor (int id) {
-		if (repositorioFornecedor.removerFornecedor(id)) {
+
+	@Override
+	public boolean removerFuncionario(int id) {
+		if (repositorioFuncionario.removerFuncionario(id)) {
 			return true;
 		} else {
 			return false;
-		}	
+		}
 	}
-	
-	public void atualizarFornecedor (Fornecedor fornecedor) {
-		repositorioFornecedor.atualizarFornecedor(fornecedor);
+
+	@Override
+	public void atualizarFuncionario(Funcionario funcionario) {
+		repositorioFuncionario.atualizarFuncionario(funcionario);
 	}
-	
-	public Fornecedor procurarFornecedor (int id) {
-		return repositorioFornecedor.procurarFornecedor(id);
+
+	@Override
+	public Funcionario procurarFuncionario(int id) {
+		return repositorioFuncionario.procurarFuncionario(id);
 	}
 }

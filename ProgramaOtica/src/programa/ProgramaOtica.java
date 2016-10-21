@@ -12,7 +12,7 @@ public class ProgramaOtica {
 		
 		while (run) {
 			int opcao;
-			opcao = Integer.parseInt(JOptionPane.showInputDialog(" 1. Cliente\n 2. Fornecedor\n 3. Produto\n 4. Venda\n 0. Encerrar Programa"));
+			opcao = Integer.parseInt(JOptionPane.showInputDialog(" 1. Cliente\n 2. Funcionario\n 3. Produto\n 4. Venda\n 0. Encerrar Programa"));
 			switch (opcao) {
 				case 0:
 					JOptionPane.showMessageDialog(null, "Programa encerrado\n    BYE");
@@ -37,7 +37,8 @@ public class ProgramaOtica {
 								tempC1.setRua(JOptionPane.showInputDialog("Qual a sua rua?"));
 								dados.clientes.inserirCliente(tempC1);
 							} catch (LENException e) {
-								JOptionPane.showMessageDialog(null, e);							}
+								JOptionPane.showMessageDialog(null, e);
+							}
 							break;
 						case 2://atualizar
 							Cliente tempC2 = new Cliente();
@@ -67,33 +68,33 @@ public class ProgramaOtica {
 							break;
 					}
 					break;
-				case 2://Fornecedor
-					int opcaoFornecedor = Integer.parseInt(JOptionPane.showInputDialog("    FORNECEDOR\n 1. Inserir\n 2. Atualizar\n 3. Remover\n 4. Procurar\n 0. Voltar Menu"));
-					switch (opcaoFornecedor){
+				case 2://Funcionário
+					int opcaoFuncionario = Integer.parseInt(JOptionPane.showInputDialog("    FUNCIONARIO\n 1. Inserir\n 2. Atualizar\n 3. Remover\n 4. Procurar\n 0. Voltar Menu"));
+					switch (opcaoFuncionario){
 						case 0://voltar menu
 							break;
 						case 1://inserir
-							Fornecedor tempF1 = new Fornecedor();
+							Funcionario tempF1 = new Funcionario();
 							tempF1.setNome(JOptionPane.showInputDialog("Qual o seu nome?"));
 							tempF1.setCpf(JOptionPane.showInputDialog("Qual o seu cpf?"));
 							tempF1.setTelefone(JOptionPane.showInputDialog("Qual o seu telefone?"));
-							dados.fornecedores.inserirFornecedor(tempF1);
+							dados.fornecedores.inserirFuncionario(tempF1);
 							break;
 						case 2://atualizar
-							Fornecedor tempF2 = new Fornecedor();
+							Funcionario tempF2 = new Funcionario();
 							tempF2.setNome(JOptionPane.showInputDialog("Qual o seu nome?"));
 							tempF2.setCpf(JOptionPane.showInputDialog("Qual o seu cpf?"));
 							tempF2.setTelefone(JOptionPane.showInputDialog("Qual o seu telefone?"));
-							dados.fornecedores.atualizarFornecedor(tempF2);
+							dados.fornecedores.atualizarFuncionario(tempF2);
 							break;
 						case 3://remover
 							int deletaF = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
-							dados.fornecedores.removerFornecedor(deletaF);
+							dados.fornecedores.removerFuncionario(deletaF);
 							break;
 						case 4://procurar
-							Fornecedor tempF4 = new Fornecedor();
+							Funcionario tempF4 = new Funcionario();
 							int buscaF = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
-							tempF4 = dados.fornecedores.procurarFornecedor(buscaF);
+							tempF4 = dados.fornecedores.procurarFuncionario(buscaF);
 							System.out.printf("nome: %s\ncpf: %s\ntelefone: %s\n", 
 									tempF4.getNome(),tempF4.getCpf(),tempF4.getTelefone());
 							break;
@@ -111,7 +112,6 @@ public class ProgramaOtica {
 							tempP1.setMarca(JOptionPane.showInputDialog("Qual a marca?"));
 							tempP1.setValorCompra(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Compra?")));
 							tempP1.setValorVenda(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Venda?")));
-							tempP1.setFornecedor(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do fornecedor?")));
 							//tempP1.fornecedor.setnome algo assim?  (sugiro id, se pegar kk)
 							dados.produtos.inserirProduto(tempP1);
 							break;
@@ -121,7 +121,6 @@ public class ProgramaOtica {
 							tempP2.setMarca(JOptionPane.showInputDialog("Qual a marca?"));
 							tempP2.setValorCompra(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Compra?")));
 							tempP2.setValorVenda(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Venda?")));
-							tempP2.setFornecedor(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do fornecedor?")));
 							// perae que vamo discutir como fazer esse fornecedor aqui (sugiro id, se pegar kk)
 							dados.produtos.atualizarProduto(tempP2);
 							break;

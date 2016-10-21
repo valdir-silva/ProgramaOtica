@@ -6,7 +6,6 @@ public class Produto {
 	private String marca;
 	private float valorCompra;
 	private float valorVenda;
-	private Fornecedor fornecedor;
 	
 	public int getId() {
 		return id;
@@ -46,14 +45,5 @@ public class Produto {
 	
 	public void setValorVenda(float valorVenda) {
 		this.valorVenda = valorVenda;
-	}
-	
-	public Fornecedor getFornecedor() {
-		return fornecedor;
-	}
-	
-	public void setFornecedor(int id) {
-		IRepositorioFornecedor fornecedor = new RepositorioFornecedorArray();
-		this.fornecedor = fornecedor.procurarFornecedor(id);
 	}
 }

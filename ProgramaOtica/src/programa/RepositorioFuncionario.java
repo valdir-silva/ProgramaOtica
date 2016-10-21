@@ -1,33 +1,36 @@
 package programa;
 
-public class RepositorioFornecedorArray implements IRepositorioFornecedor {
-	private Fornecedor[] fornecedor;
+public class RepositorioFuncionario implements IRepositorioFuncionario {
+	private Funcionario[] funcionario;
 	private int indice;
 	
-	public RepositorioFornecedorArray () {
-		fornecedor = new Fornecedor[100];
+	public RepositorioFuncionario () {
+		funcionario = new Funcionario[100];
 	}
-	
-	public void inserirFornecedor (Fornecedor fornecedor) {
-		if (this.fornecedor[indice] == null){//se a posição esta vaga coloque
-			this.fornecedor[indice] = fornecedor;
-			indice++;			
+			
+	@Override
+	public void inserirFuncionario(Funcionario funcionario) {
+		if (this.funcionario[indice] == null){//se a posição esta vaga coloque
+			this.funcionario[indice] = funcionario;
+			funcionario.setId(indice);
+			indice++;
 		}else {//se não estiver procure em todas as posições do array se tem posisao livre
-			for (int i = 0; i < this.fornecedor.length; i++){
-				if (this.fornecedor[i] == null){
-					this.fornecedor[indice] = fornecedor;
+			for (int i = 0; i < this.funcionario.length; i++){
+				if (this.funcionario[i] == null){
+					this.funcionario[indice] = funcionario;
 					indice++;
 					break;
 				}
 			}
 		}
 	}
-	
-	public boolean removerFornecedor (int id) {
+
+	@Override
+	public boolean removerFuncionario(int id) {
 		boolean found = false;
-		for (int i = 0;i < this.fornecedor.length;i++){
-			if (this.fornecedor[i].getId() == id){
-				this.fornecedor[i] = null;
+		for (int i = 0;i < this.funcionario.length;i++){
+			if (this.funcionario[i].getId() == id){
+				this.funcionario[i] = null;
 				indice--;
 				found = true;
 				break;
@@ -40,12 +43,13 @@ public class RepositorioFornecedorArray implements IRepositorioFornecedor {
 		//}
 		return found;
 	}
-	
-	public void atualizarFornecedor (Fornecedor fornecedor) {
+
+	@Override
+	public void atualizarFuncionario(Funcionario funcionario) {
 		boolean found = false;
-		for (int i = 0;i < this.fornecedor.length;i++){
-			if (this.fornecedor[i].getId() == fornecedor.getId()){
-				this.fornecedor[i] = fornecedor;
+		for (int i = 0;i < this.funcionario.length;i++){
+			if (this.funcionario[i].getId() == funcionario.getId()){
+				this.funcionario[i] = funcionario;
 				found = true;
 				break;
 			}
@@ -55,12 +59,14 @@ public class RepositorioFornecedorArray implements IRepositorioFornecedor {
 		}else {//throw FornecedorNotFound;
 			System.out.println("Fornecedor nao encontrado!!");
 		}
+		
 	}
-	
-	public Fornecedor procurarFornecedor (int id) {
-		for (int i = 0; i < this.fornecedor.length; i++){
-			if(this.fornecedor[i].getId() == id) {
-				return this.fornecedor[i];
+
+	@Override
+	public Funcionario procurarFuncionario(int id) {
+		for (int i = 0; i < this.funcionario.length; i++){
+			if(this.funcionario[i].getId() == id) {
+				return this.funcionario[i];
 			}
 		}
 		return null;//null se n existir esse fornecedor

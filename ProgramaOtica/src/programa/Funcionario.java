@@ -1,10 +1,14 @@
 package programa;
 
-public class Fornecedor {
+public class Funcionario {
 	private int id;
 	private String nome;
 	private String cpf;
 	private String telefone;
+	
+	public Funcionario() {
+		
+	}
 	
 	public int getId() {
 		return id;

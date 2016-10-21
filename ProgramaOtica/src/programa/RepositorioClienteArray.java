@@ -11,6 +11,7 @@ public class RepositorioClienteArray implements IRepositorioCliente {
 	public void inserirCliente (Cliente cliente) {
 		if (this.cliente[indice] == null){//se a posição esta vaga coloque
 			this.cliente[indice] = cliente;
+			cliente.setId(indice);
 			indice++;			
 		}else {//se não estiver procure em todas as posições do array se tem posisao livre
 			for (int i = 0; i < this.cliente.length; i++){
@@ -65,7 +66,5 @@ public class RepositorioClienteArray implements IRepositorioCliente {
 		}
 		NULLException e = new NULLException();
 		throw e;
-
-		
 	}
 }

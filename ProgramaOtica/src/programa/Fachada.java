@@ -3,7 +3,7 @@ package programa;
 public class Fachada {
 	private static Fachada instance = null;
 	private ControleClientes clientes;
-	private ControleFornecedores fornecedores;
+	private ControleFuncionarios fornecedores;
 	private ControleProdutos produtos;
 	private ControleVendas vendas;
 	
@@ -11,8 +11,8 @@ public class Fachada {
 		IRepositorioCliente repositorioClientes = new RepositorioClienteArray();
 		clientes = new ControleClientes (repositorioClientes);
 		
-		IRepositorioFornecedor repositorioFornecedores = new RepositorioFornecedorArray();
-		fornecedores = new ControleFornecedores (repositorioFornecedores);
+		IRepositorioFuncionario repositorioFornecedores = new RepositorioFuncionario();
+		fornecedores = new ControleFuncionarios (repositorioFornecedores);
 		
 		IRepositorioProduto repositorioProdutos = new RepositorioProdutoArray();
 		produtos = new ControleProdutos (repositorioProdutos);
@@ -53,20 +53,20 @@ public class Fachada {
 	///Fornecedor///
 	////////////////
 
-	public void CadastrarFornecedor (Fornecedor fornecedor) {
-		this.fornecedores.inserirFornecedor(fornecedor);
+	public void CadastrarFornecedor (Funcionario funcionario) {
+		this.fornecedores.inserirFuncionario(funcionario);
 	}
 	
-	public void atualizarFornecedor (Fornecedor fornecedor) {
-		this.fornecedores.atualizarFornecedor(fornecedor);
+	public void atualizarFornecedor (Funcionario funcionario) {
+		this.fornecedores.atualizarFuncionario(funcionario);
 	}
 	
-	public Fornecedor procurarFornecedor (int id) {
-		return this.fornecedores.procurarFornecedor(id);
+	public Funcionario procurarFornecedor (int id) {
+		return this.fornecedores.procurarFuncionario(id);
 	}
 	
 	public void removerFornecedor (int id) {
-		this.fornecedores.removerFornecedor(id);
+		this.fornecedores.removerFuncionario(id);
 	}
 	
 	/////////////
