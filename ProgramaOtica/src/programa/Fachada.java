@@ -50,22 +50,22 @@ public class Fachada {
 	}
 
 	////////////////
-	///Fornecedor///
+	///Funcionario//
 	////////////////
 
-	public void CadastrarFornecedor (Funcionario funcionario) {
+	public void inserirFuncionario (Funcionario funcionario) {
 		this.fornecedores.inserirFuncionario(funcionario);
 	}
 	
-	public void atualizarFornecedor (Funcionario funcionario) {
+	public void atualizarFuncionario (Funcionario funcionario) {
 		this.fornecedores.atualizarFuncionario(funcionario);
 	}
 	
-	public Funcionario procurarFornecedor (int id) {
+	public Funcionario procurarFuncionario (int id) {
 		return this.fornecedores.procurarFuncionario(id);
 	}
 	
-	public void removerFornecedor (int id) {
+	public void removerFuncionario (int id) {
 		this.fornecedores.removerFuncionario(id);
 	}
 	
@@ -73,7 +73,7 @@ public class Fachada {
 	///Produto///
 	/////////////
 	
-	public void CadastrarProduto (Produto produto) {
+	public void inserirProduto (Produto produto) {
 		this.produtos.inserirProduto(produto);
 	}
 	
@@ -93,11 +93,11 @@ public class Fachada {
 	////Venda////
 	/////////////
 
-	public void CadastrarVenda (Venda produto) {
+	public void inserirVenda (Venda produto) {
 		this.vendas.inserirVenda(produto);
 	}
 	
-	public void atualizarProduto (Venda produto) {
+	public void atualizarVenda (Venda produto) {
 		this.vendas.atualizarVenda(produto);
 	}
 	
