@@ -1,5 +1,8 @@
 package programa;
 
+import base.Venda;
+import interfaces.IRepositorioVenda;
+
 public class ControleVendas implements IRepositorioVenda {
 	IRepositorioVenda repositorioVenda;
 	Venda venda;

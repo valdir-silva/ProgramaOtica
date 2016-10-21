@@ -1,5 +1,10 @@
 package programa;
 
+import base.Cliente;
+import exceptions.RemocaoNaoConcluidaException;
+import exceptions.SemPosicaoParaInserirException;
+import interfaces.IRepositorioCliente;
+
 public class ControleClientes {
 	private IRepositorioCliente clientes;
 	
@@ -7,35 +12,20 @@ public class ControleClientes {
 		this.clientes = clientes;
 	}
 	
-	public void inserirCliente (Cliente cliente) {
-		if (cliente != null) {
-			this.clientes.inserirCliente(cliente);
-		} else {
-			System.out.println("Este não é um cliente válido!!");
-		}
+	public void inserir (Cliente cliente) throws SemPosicaoParaInserirException {
+		this.clientes.inserir(cliente);
 	}
 	
-	public void atualizarCliente (Cliente cliente) {
-		if (cliente != null) {
-			this.clientes.inserirCliente(cliente);
-		} else {
-			System.out.println("Este não é um cliente válido!!");
-		}
+	public void atualizar (Cliente cliente) throws NullPointerException {
+		this.clientes.atualizar(cliente);
 	}
 	
-	public Cliente procurarCliente (int id) throws NULLException {
-		if (this.clientes.procurarCliente(id) != null) {
-			System.out.println("Show Cliente");
-		} else {
-			System.out.println("Cliente não foi encontrado");
-		}
-		return null;
-		
+	public Cliente procurarCliente (int id) throws NullPointerException {
+		return this.clientes.procurarCliente(id);
 	}
 	
-	public void removerCliente (int id) {
+	public void removerCliente (int id) throws RemocaoNaoConcluidaException {
 		this.clientes.removerCliente(id);
-			System.out.println("Cliente removido com sucesso!!");
 	}
 	
 	

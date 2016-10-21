@@ -1,4 +1,7 @@
-package programa;
+package repositorios;
+
+import base.Funcionario;
+import interfaces.IRepositorioFuncionario;
 
 public class RepositorioFuncionario implements IRepositorioFuncionario {
 	private Funcionario[] funcionario;

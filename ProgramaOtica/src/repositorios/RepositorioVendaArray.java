@@ -1,4 +1,7 @@
-package programa;
+package repositorios;
+
+import base.Venda;
+import interfaces.IRepositorioVenda;
 
 public class RepositorioVendaArray implements IRepositorioVenda{
 	private Venda[] venda;

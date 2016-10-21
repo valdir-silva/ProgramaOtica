@@ -1,4 +1,6 @@
-package programa;
+package interfaces;
+
+import base.Venda;
 
 public interface IRepositorioVenda {
 	public void inserirVenda (Venda venda);

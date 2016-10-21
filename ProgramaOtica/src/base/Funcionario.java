@@ -1,4 +1,4 @@
-package programa;
+package base;
 
 public class Funcionario {
 	private int id;

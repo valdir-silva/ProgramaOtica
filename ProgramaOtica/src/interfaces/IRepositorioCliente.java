@@ -1,8 +1,12 @@
-package programa;
+package interfaces;
+
+import base.Cliente;
+import exceptions.RemocaoNaoConcluidaException;
+import exceptions.SemPosicaoParaInserirException;
 
 public interface IRepositorioCliente {
-	public void inserirCliente (Cliente cliente);
-	public void removerCliente (int id);
-	public void atualizarCliente (Cliente cliente);
-	public Cliente procurarCliente (int id) throws NULLException;
+	public void inserir (Cliente cliente) throws SemPosicaoParaInserirException;
+	public void removerCliente (int id) throws RemocaoNaoConcluidaException;
+	public void atualizar (Cliente cliente) throws NullPointerException;
+	public Cliente procurarCliente (int id) throws NullPointerException;
 }

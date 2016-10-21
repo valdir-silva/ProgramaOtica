@@ -1,5 +1,8 @@
 package programa;
 
+import base.Produto;
+import interfaces.IRepositorioProduto;
+
 public class ControleProdutos implements IRepositorioProduto {
 	IRepositorioProduto repositorioProduto;
 	Produto produto;

@@ -1,4 +1,6 @@
-package programa;
+package interfaces;
+
+import base.Produto;
 
 public interface IRepositorioProduto {
 	public void inserirProduto (Produto produto);

@@ -1,4 +1,6 @@
-package programa;
+package interfaces;
+
+import base.Funcionario;
 
 public interface IRepositorioFuncionario {
 	public void inserirFuncionario (Funcionario funcionario);

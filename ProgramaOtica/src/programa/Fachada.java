@@ -1,5 +1,20 @@
 package programa;
 
+import base.Cliente;
+import base.Funcionario;
+import base.Produto;
+import base.Venda;
+import exceptions.RemocaoNaoConcluidaException;
+import exceptions.SemPosicaoParaInserirException;
+import interfaces.IRepositorioCliente;
+import interfaces.IRepositorioFuncionario;
+import interfaces.IRepositorioProduto;
+import interfaces.IRepositorioVenda;
+import repositorios.RepositorioClienteArray;
+import repositorios.RepositorioFuncionario;
+import repositorios.RepositorioProdutoArray;
+import repositorios.RepositorioVendaArray;
+
 public class Fachada {
 	private static Fachada instance = null;
 	private ControleClientes clientes;
@@ -33,19 +48,19 @@ public class Fachada {
 	///Cliente///
 	/////////////
 	
-	public void inserirCliente (Cliente cliente) {
-		this.clientes.inserirCliente(cliente);
+	public void inserir (Cliente cliente) throws SemPosicaoParaInserirException {
+		this.clientes.inserir(cliente);
 	}
 	
-	public void atualizarCliente (Cliente cliente) {
-		this.clientes.atualizarCliente(cliente);
+	public void atualizar (Cliente cliente) throws NullPointerException {
+		this.clientes.atualizar(cliente);
 	}
 	
-	public Cliente procurarCliente (int id) throws NULLException {
+	public Cliente procurarCliente (int id) throws NullPointerException {
 		return this.clientes.procurarCliente(id);
 	}
 	
-	public void removerCliente (int id) {
+	public void removerCliente (int id) throws RemocaoNaoConcluidaException {
 		this.clientes.removerCliente(id);
 	}
 

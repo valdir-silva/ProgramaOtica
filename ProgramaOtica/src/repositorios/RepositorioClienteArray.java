@@ -1,4 +1,9 @@
-package programa;
+package repositorios;
+
+import base.Cliente;
+import exceptions.RemocaoNaoConcluidaException;
+import exceptions.SemPosicaoParaInserirException;
+import interfaces.IRepositorioCliente;
 
 public class RepositorioClienteArray implements IRepositorioCliente {
 	private Cliente[] cliente;
@@ -8,24 +13,30 @@ public class RepositorioClienteArray implements IRepositorioCliente {
 		cliente = new Cliente[100];
 	}
 	
-	public void inserirCliente (Cliente cliente) {
+	public void inserir (Cliente cliente) throws SemPosicaoParaInserirException {
+		boolean found = false;
 		if (this.cliente[indice] == null){//se a posição esta vaga coloque
 			this.cliente[indice] = cliente;
-			cliente.setId(indice);
+			cliente.setId(indice);//gerar id com o indice do vetor
+			found = true;
 			indice++;
 		}else {//se não estiver procure em todas as posições do array se tem posisao livre
 			for (int i = 0; i < this.cliente.length; i++){
 				if (this.cliente[i] == null){
 					this.cliente[indice] = cliente;
+					found = true;
 					indice++;
 					break;
 				}
 			}
 		}
-
+		if (!found) {// se nao inserio
+			SemPosicaoParaInserirException e = new SemPosicaoParaInserirException();
+			throw e;
+		}
 	}
-	//se foi removido return true se não false
-	public void removerCliente (int id) {
+	
+	public void removerCliente (int id) throws RemocaoNaoConcluidaException{
 		boolean found = false;
 		for (int i = 0; i < this.cliente.length; i++){
 			if (this.cliente[i].getId() == id) {
@@ -35,14 +46,13 @@ public class RepositorioClienteArray implements IRepositorioCliente {
 				break;
 			}
 		}
-		if (found) {
-			System.out.println("Removido");
-		} else {
-			System.out.println("Não removido");
+		if (!found) {//se não removeu!!
+			RemocaoNaoConcluidaException e = new RemocaoNaoConcluidaException();
+			throw e;
 		}
 	}
 	
-	public void atualizarCliente (Cliente cliente) {
+	public void atualizar (Cliente cliente) throws NullPointerException {
 		boolean found = false;
 		for (int i = 0; i < this.cliente.length; i++){
 			if (this.cliente[i].getId() == cliente.getId()) {
@@ -51,20 +61,19 @@ public class RepositorioClienteArray implements IRepositorioCliente {
 				break;
 			}
 		}
-		if (found) {
-			System.out.println("Cliente removido com sucesso!!");
-		}else {//throw ClienteNotFound;
-			System.out.println("Cliente nao encontrado!!");
+		if (!found) {
+			NullPointerException e = new NullPointerException();
+			throw e;
 		}
 	}
 	
-	public Cliente procurarCliente (int id) throws NULLException {
+	public Cliente procurarCliente (int id) throws NullPointerException {
 		for (int i = 0; i < this.cliente.length; i++){
 			if(this.cliente[i].getId() == id) {
 				return this.cliente[i];
 			}
 		}
-		NULLException e = new NULLException();
+		NullPointerException e = new NullPointerException();
 		throw e;
 	}
 }

@@ -1,4 +1,9 @@
-package programa;
+package base;
+
+import interfaces.IRepositorioCliente;
+import interfaces.IRepositorioProduto;
+import repositorios.RepositorioClienteArray;
+import repositorios.RepositorioProdutoArray;
 
 public class Venda {
 	private int id;
@@ -17,7 +22,7 @@ public class Venda {
 		return cliente;
 	}
 	
-	public void setCliente(int id) throws NULLException {
+	public void setCliente(int id) throws NullPointerException {
 		IRepositorioCliente cliente = new RepositorioClienteArray();
 		this.cliente = cliente.procurarCliente(id);
 	}

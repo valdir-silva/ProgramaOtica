@@ -1,4 +1,4 @@
-package programa;
+package base;
 
 public class Produto {
 	private int id;

@@ -1,5 +1,9 @@
-package programa;
+package base;
 
 public class ProdutoVenda {
-//implement
+//Produto que será vendido
+	Produto produto;
+	public ProdutoVenda (Produto produto) {
+		this.produto = produto;
+	}
 }
