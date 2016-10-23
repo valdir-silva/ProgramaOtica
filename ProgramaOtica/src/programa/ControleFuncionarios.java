@@ -1,6 +1,8 @@
 package programa;
 
 import base.Funcionario;
+import exceptions.RemocaoNaoConcluidaException;
+import exceptions.SemPosicaoParaInserirException;
 import interfaces.IRepositorioFuncionario;
 
 public class ControleFuncionarios implements  IRepositorioFuncionario{
@@ -11,26 +13,18 @@ public class ControleFuncionarios implements  IRepositorioFuncionario{
 		this.repositorioFuncionario = repositorioFuncionario;
 	}
 	
-	@Override
-	public void inserirFuncionario(Funcionario funcionario) {
-		repositorioFuncionario.inserirFuncionario(funcionario);
+	public void inserir(Funcionario funcionario) throws SemPosicaoParaInserirException {
+		repositorioFuncionario.inserir(funcionario);
 	}
 
-	@Override
-	public boolean removerFuncionario(int id) {
-		if (repositorioFuncionario.removerFuncionario(id)) {
-			return true;
-		} else {
-			return false;
-		}
+	public void removerFuncionario(int id) throws RemocaoNaoConcluidaException {
+		repositorioFuncionario.removerFuncionario(id);
 	}
 
-	@Override
-	public void atualizarFuncionario(Funcionario funcionario) {
-		repositorioFuncionario.atualizarFuncionario(funcionario);
+	public void atualizar(Funcionario funcionario) {
+		repositorioFuncionario.atualizar(funcionario);
 	}
 
-	@Override
 	public Funcionario procurarFuncionario(int id) {
 		return repositorioFuncionario.procurarFuncionario(id);
 	}

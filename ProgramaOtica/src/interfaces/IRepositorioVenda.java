@@ -1,11 +1,12 @@
 package interfaces;
 
 import base.Venda;
+import exceptions.RemocaoNaoConcluidaException;
+import exceptions.SemPosicaoParaInserirException;
 
 public interface IRepositorioVenda {
-	public void inserirVenda (Venda venda);
-	public boolean removerVenda (int id);
-	public void atualizarVenda (Venda venda);
-	public Venda procurarVenda (int id);
-
+	public void inserir (Venda venda) throws SemPosicaoParaInserirException;
+	public void removerVenda (int id) throws RemocaoNaoConcluidaException;
+	public void atualizar (Venda venda) throws NullPointerException;
+	public Venda procurarVenda (int id) throws NullPointerException;
 }

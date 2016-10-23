@@ -1,45 +1,43 @@
 package base;
 
-public class Funcionario {
-	private int id;
-	private String nome;
-	private String cpf;
-	private String telefone;
+import exceptions.TamanhoException;
+
+public class Funcionario extends Identificacao{
 	
 	public Funcionario() {
-		
+		super();
 	}
 	
 	public int getId() {
-		return id;
+		return super.getId();
 	}
 	
 	public void setId(int id) {
-		this.id = id;
+		super.setId(id);;
 	}
 	
 	public String getNome() {
-		return nome;
+		return super.getNome();
 	}
 	
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNome(String nome) throws TamanhoException {
+		super.setNome(nome);
 	}
 	
 	public String getCpf() {
-		return cpf;
+		return super.getCpf();
 	}
 	
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+	public void setCpf(String cpf) throws TamanhoException {
+		super.setCpf(cpf);
 	}
 	
 	public String getTelefone() {
-		return telefone;
+		return super.getTelefone();
 	}
 	
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+	public void setTelefone(String telefone) throws TamanhoException {
+		super.setTelefone(telefone);
 	}
 	
 }

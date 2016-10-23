@@ -2,25 +2,20 @@ package base;
 
 import exceptions.TamanhoException;
 
-public class Cliente {
-	private String nome;
+public class Cliente extends Identificacao{
 	private String nascimento;
-	private String cpf;
-	private String telefone;
 	private Endereco endereco;
-	private int id;
+	
+	public Cliente() {
+		super();
+	}
 	
 	public String getNome () {		
-		return this.nome;
+		return super.getNome();
 	}
 	
 	public void setNome (String nome) throws TamanhoException {
-		if (nome.length()<20){
-			this.nome = nome;			
-		} else {
-			TamanhoException e = new TamanhoException();
-			throw e;
-		}
+		super.setNome(nome);
 	}
 	
 	public String getNascimento () {		
@@ -38,30 +33,19 @@ public class Cliente {
 	}
 	
 	public void setCpf (String cpf) throws TamanhoException {
-		if (cpf.length() == 11) {
-			this.cpf = cpf;
-		} else {
-			TamanhoException e = new TamanhoException();
-			throw e;
-		}
-		
+		super.setCpf(cpf);
 	}
 	
 	public String getCpf() {		
-		return this.cpf;
+		return super.getCpf();
 	}
 	
 	public void setTelefone (String telefone) throws TamanhoException {
-		if (telefone.length() < 12 && telefone.length() > 8) {
-			this.telefone = telefone;
-		} else {
-			TamanhoException e = new TamanhoException();
-			throw e;
-		}
+		super.setTelefone(telefone);
 	}
 	
 	public String getTelefone () {
-		return this.telefone;
+		return super.getTelefone();
 	}
 	
 	public Endereco getEndereco() {
@@ -73,10 +57,10 @@ public class Cliente {
 	}
 	
 	public void setId(int id) {
-		this.id = id;
+		super.setId(id);
 	}
 
 	public int getId () {
-		return this.id;
+		return super.getId();
 	}
 }

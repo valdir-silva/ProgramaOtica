@@ -1,6 +1,8 @@
 package repositorios;
 
 import base.Produto;
+import exceptions.RemocaoNaoConcluidaException;
+import exceptions.SemPosicaoParaInserirException;
 import interfaces.IRepositorioProduto;
 
 public class RepositorioProdutoArray implements IRepositorioProduto{
@@ -11,23 +13,30 @@ public class RepositorioProdutoArray implements IRepositorioProduto{
 		this.produto = new Produto[100];
 	}
 	
-	public void inserirProduto (Produto produto) {
+	public void inserir (Produto produto) throws SemPosicaoParaInserirException {
+		boolean found = false;
 		if (this.produto[indice] == null){//se a posição esta vaga coloque
 			this.produto[indice] = produto;
 			produto.setId(indice);
+			found = true;
 			indice++;			
 		}else {//se não estiver procure em todas as posições do array se tem posisao livre
 			for (int i = 0; i < this.produto.length; i++){
 				if (this.produto[i] == null){
 					this.produto[indice] = produto;
+					found = true;
 					indice++;
 					break;
 				}
 			}
 		}
+		if (!found) {// se nao inserio
+			SemPosicaoParaInserirException e = new SemPosicaoParaInserirException();
+			throw e;
+		}
 	}
 	
-	public boolean removerProduto (int id) {
+	public void removerProduto (int id) throws RemocaoNaoConcluidaException {
 		boolean found = false;
 		for (int i = 0;i < this.produto.length;i++) {
 			if (this.produto[i].getId() == id) {
@@ -37,36 +46,35 @@ public class RepositorioProdutoArray implements IRepositorioProduto{
 				break;
 			}
 		}
-		/*
-	 	if (found) {
-			System.out.println("Produto removido com sucesso!!");
-		}else {//throw ProdutoNotFound;
-			System.out.println("Produto nao encontrado!!");
-		}*/
-		return found;
+		if (!found) {//se não removeu!!
+			RemocaoNaoConcluidaException e = new RemocaoNaoConcluidaException();
+			throw e;
+		}
 	}
-	public void atualizarProduto (Produto produto) {
+	
+	public void atualizar (Produto produto) throws NullPointerException {
 		boolean found = false;
 		for (int i = 0;i < this.produto.length;i++) {
 			if (this.produto[i].getId() == produto.getId()) {
 				this.produto[i] = produto;
 				found = true;
+				break;
 			}
 		}
-		if (found) {
-			System.out.println("Produto removido com sucesso!!");
-		}else {//throw ProdutoNotFound;
-			System.out.println("Produto nao encontrado!!");
+		if (!found) {
+			NullPointerException e = new NullPointerException();
+			throw e;
 		}
 	}
 	
-	public Produto procurarProduto (int id) {
+	public Produto procurarProduto (int id) throws NullPointerException{
 		for (int i = 0;i < this.produto.length;i++) {
 			if (this.produto[i].getId() == id) {
 				return this.produto[i];
 			}
 		}
-		return null;
+		NullPointerException e = new NullPointerException();
+		throw e;
 	}
 
 }

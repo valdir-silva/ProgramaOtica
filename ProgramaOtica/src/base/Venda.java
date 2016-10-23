@@ -5,17 +5,20 @@ import interfaces.IRepositorioProduto;
 import repositorios.RepositorioClienteArray;
 import repositorios.RepositorioProdutoArray;
 
-public class Venda {
-	private int id;
+public class Venda extends Identificacao {
 	private Cliente cliente;
 	private Produto produto;
 	
+	public Venda() {
+		super();
+	}
+	
 	public int getId() {
-		return id;
+		return super.getId();
 	}
 	
 	public void setId(int id) {
-		this.id = id;
+		super.setId(id);
 	}
 	
 	public Cliente getCliente() {
