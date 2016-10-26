@@ -19,35 +19,33 @@ public class ProgramaOtica {
 		Fachada instance = new Fachada();
 		Fachada fachada = instance.getInstance();
 		
-		/*
-		Funcionario loginFuncionario = new Funcionario();
-		login
+		
+		String loginFuncionario = "095727";
 		while (true) {
-			int loginId, op;
+			int op;
 			String loginCpf;
-			loginId = Integer.parseInt(JOptionPane.showInputDialog("Login funcionario: \n Digite seu id"));
 			loginCpf = (JOptionPane.showInputDialog("Senha funcionario: \n Digite seu cpf"));
-			loginFuncionario = fachada.procurarFuncionario(loginId);
 			
-			if (loginCpf.equals(loginFuncionario.getCpf()) ) {//testa se o cpf confere
+			if (loginCpf.equals(loginFuncionario) ) {//testa se o cpf confere
 				run = true;
 				break;
 			} else {
 				JOptionPane.showMessageDialog(null, "Id ou login nao conferem");
 				op = Integer.parseInt(JOptionPane.showInputDialog("1. Tentar novamente \n0. Encerrar programa"));
 				if (op == 0) {//end program
+					JOptionPane.showMessageDialog(null, "Programa encerrado\n    BYE");
 					run = false;
 					break;
 				}
 			}
 
-		}*/
+		}
 		
 		while (run) {
 			int opcao;
 			opcao = Integer.parseInt(JOptionPane.showInputDialog(" 1. Cliente\n 2. Funcionario\n 3. Produto\n 4. Venda\n 0. Encerrar Programa"));
 			switch (opcao) {
-				case 0:
+				case 0://end program
 					JOptionPane.showMessageDialog(null, "Programa encerrado\n    BYE");
 					run = false;
 					break;
@@ -195,6 +193,8 @@ public class ProgramaOtica {
 				case 3://Produto
 					int opcaoProduto = Integer.parseInt(JOptionPane.showInputDialog("    PRODUTO\n 1. Inserir\n 2. Atualizar\n 3. Remover\n 4. Procurar\n 0. Voltar Menu"));
 					switch (opcaoProduto){
+						case 0://voltar menu
+							break;
 						case 1://inserir
 							try {
 							Produto tempP1 = new Produto();
@@ -255,9 +255,12 @@ public class ProgramaOtica {
 							break;
 					}
 					break;
+					
 				case 4://Venda
 					int opcaoVenda = Integer.parseInt(JOptionPane.showInputDialog("    VENDA\n 1. Inserir\n 2. Atualizar\n 3. Remover\n 4. Procurar\n 0. Voltar Menu"));
 					switch(opcaoVenda){
+						case 0://voltar menu
+							break;
 						case 1://inserir
 							try {
 							Venda tempV1 = new Venda();
