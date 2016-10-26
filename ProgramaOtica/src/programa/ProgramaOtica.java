@@ -18,6 +18,7 @@ public class ProgramaOtica {
 		boolean run = true;//start false to use the loggin
 		Fachada instance = new Fachada();
 		Fachada fachada = instance.getInstance();
+		
 		/*
 		Funcionario loginFuncionario = new Funcionario();
 		login
