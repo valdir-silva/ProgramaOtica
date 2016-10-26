@@ -1,7 +1,7 @@
 package programa;
 
 import base.Produto;
-import exceptions.RemocaoNaoConcluidaException;
+
 import exceptions.SemPosicaoParaInserirException;
 import interfaces.IRepositorioProduto;
 
@@ -17,7 +17,7 @@ public class ControleProdutos implements IRepositorioProduto {
 		repositorioProduto.inserir(produto);
 	}
 	
-	public void removerProduto (int id) throws RemocaoNaoConcluidaException {
+	public void removerProduto (int id) throws NullPointerException {
 		repositorioProduto.removerProduto(id);
 	}
 	

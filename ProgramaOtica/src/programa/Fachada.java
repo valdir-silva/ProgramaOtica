@@ -1,10 +1,10 @@
 package programa;
 
 import base.Cliente;
+
 import base.Funcionario;
 import base.Produto;
 import base.Venda;
-import exceptions.RemocaoNaoConcluidaException;
 import exceptions.SemPosicaoParaInserirException;
 import interfaces.IRepositorioCliente;
 import interfaces.IRepositorioFuncionario;
@@ -60,7 +60,7 @@ public class Fachada {
 		return this.clientes.procurarCliente(id);
 	}
 	
-	public void removerCliente (int id) throws RemocaoNaoConcluidaException {
+	public void removerCliente (int id) throws NullPointerException {
 		this.clientes.removerCliente(id);
 	}
 
@@ -80,7 +80,7 @@ public class Fachada {
 		return this.fornecedores.procurarFuncionario(id);
 	}
 	
-	public void removerFuncionario (int id) throws RemocaoNaoConcluidaException {
+	public void removerFuncionario (int id) throws NullPointerException {
 		this.fornecedores.removerFuncionario(id);
 	}
 	
@@ -100,7 +100,7 @@ public class Fachada {
 		return this.produtos.procurarProduto(id);
 	}
 	
-	public void removerProduto (int id) throws RemocaoNaoConcluidaException {
+	public void removerProduto (int id) throws NullPointerException {
 		this.produtos.removerProduto(id);
 	}
 	
@@ -120,7 +120,7 @@ public class Fachada {
 		return this.vendas.procurarVenda(id);
 	}
 	
-	public void removerVenda (int id) throws RemocaoNaoConcluidaException {
+	public void removerVenda (int id) throws NullPointerException {
 		this.vendas.removerVenda(id);
 	}
 	

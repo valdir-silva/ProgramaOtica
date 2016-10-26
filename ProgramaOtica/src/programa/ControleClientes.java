@@ -1,7 +1,7 @@
 package programa;
 
 import base.Cliente;
-import exceptions.RemocaoNaoConcluidaException;
+
 import exceptions.SemPosicaoParaInserirException;
 import interfaces.IRepositorioCliente;
 
@@ -24,7 +24,7 @@ public class ControleClientes {
 		return this.clientes.procurarCliente(id);
 	}
 	
-	public void removerCliente (int id) throws RemocaoNaoConcluidaException {
+	public void removerCliente (int id) throws NullPointerException {
 		this.clientes.removerCliente(id);
 	}
 	

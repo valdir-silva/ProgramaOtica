@@ -1,7 +1,7 @@
 package programa;
 
 import base.Venda;
-import exceptions.RemocaoNaoConcluidaException;
+
 import exceptions.SemPosicaoParaInserirException;
 import interfaces.IRepositorioVenda;
 
@@ -17,7 +17,7 @@ public class ControleVendas implements IRepositorioVenda {
 		repositorioVenda.inserir(venda);
 	}
 	
-	public void removerVenda (int id) throws RemocaoNaoConcluidaException {
+	public void removerVenda (int id) throws NullPointerException {
 		repositorioVenda.removerVenda(id);
 	}
 	

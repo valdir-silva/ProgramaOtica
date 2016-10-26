@@ -2,17 +2,17 @@ package programa;
 
 import javax.swing.JOptionPane;
 
+
 import base.Cliente;
 import base.Endereco;
 import base.Funcionario;
 import base.Produto;
 import base.Venda;
-import exceptions.RemocaoNaoConcluidaException;
 import exceptions.SemPosicaoParaInserirException;
 import exceptions.TamanhoException;
 
 public class ProgramaOtica {
-	public static void main(String[] args) throws TamanhoException, NullPointerException, SemPosicaoParaInserirException, RemocaoNaoConcluidaException {
+	public static void main(String[] args) throws TamanhoException, NullPointerException, SemPosicaoParaInserirException {
 		// TODO Auto-generated method stub
 		
 		boolean run = true;//start false to use the loggin
@@ -104,7 +104,7 @@ public class ProgramaOtica {
 							int deletaC = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
 							try {
 								fachada.removerCliente(deletaC);
-							} catch (RemocaoNaoConcluidaException e) {
+							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
 							}
@@ -167,7 +167,7 @@ public class ProgramaOtica {
 							int deletaF = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
 							try {
 							fachada.removerFuncionario(deletaF);
-							} catch (RemocaoNaoConcluidaException e) {
+							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
 							}
@@ -233,7 +233,7 @@ public class ProgramaOtica {
 							int deletaP = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
 							try {
 							fachada.removerProduto(deletaP);
-							} catch (RemocaoNaoConcluidaException e) {
+							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
 							}
@@ -287,7 +287,7 @@ public class ProgramaOtica {
 							int deletaV = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
 							try {
 							fachada.removerVenda(deletaV);
-							} catch (RemocaoNaoConcluidaException e) {
+							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
 							}

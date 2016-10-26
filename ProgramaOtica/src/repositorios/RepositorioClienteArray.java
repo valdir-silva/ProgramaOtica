@@ -1,7 +1,7 @@
 package repositorios;
 
 import base.Cliente;
-import exceptions.RemocaoNaoConcluidaException;
+
 import exceptions.SemPosicaoParaInserirException;
 import interfaces.IRepositorioCliente;
 
@@ -36,7 +36,7 @@ public class RepositorioClienteArray implements IRepositorioCliente {
 		}
 	}
 	
-	public void removerCliente (int id) throws RemocaoNaoConcluidaException{
+	public void removerCliente (int id) throws NullPointerException{
 		boolean found = false;
 		for (int i = 0; i < this.cliente.length; i++){
 			if (this.cliente[i].getId() == id) {
@@ -47,7 +47,7 @@ public class RepositorioClienteArray implements IRepositorioCliente {
 			}
 		}
 		if (!found) {//se não removeu!!
-			RemocaoNaoConcluidaException e = new RemocaoNaoConcluidaException();
+			NullPointerException e = new NullPointerException();
 			throw e;
 		}
 	}
