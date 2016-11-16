@@ -20,7 +20,7 @@ public class ProgramaOtica {
 		Fachada fachada = instance.getInstance();
 		/*
 		Funcionario loginFuncionario = new Funcionario();
-		login
+		loginFuncionario.setCpf("");
 		while (true) {
 			int loginId, op;
 			String loginCpf;
