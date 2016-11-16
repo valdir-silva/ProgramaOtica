@@ -15,9 +15,32 @@ public class ProgramaOtica {
 	public static void main(String[] args) throws TamanhoException, NullPointerException, SemPosicaoParaInserirException, RemocaoNaoConcluidaException {
 		// TODO Auto-generated method stub
 		
-		boolean run = true;
+		boolean run = true;//start false to use the loggin
 		Fachada instance = new Fachada();
 		Fachada fachada = instance.getInstance();
+		/*
+		Funcionario loginFuncionario = new Funcionario();
+		login
+		while (true) {
+			int loginId, op;
+			String loginCpf;
+			loginId = Integer.parseInt(JOptionPane.showInputDialog("Login funcionario: \n Digite seu id"));
+			loginCpf = (JOptionPane.showInputDialog("Senha funcionario: \n Digite seu cpf"));
+			loginFuncionario = fachada.procurarFuncionario(loginId);
+			
+			if (loginCpf.equals(loginFuncionario.getCpf()) ) {//testa se o cpf confere
+				run = true;
+				break;
+			} else {
+				JOptionPane.showMessageDialog(null, "Id ou login nao conferem");
+				op = Integer.parseInt(JOptionPane.showInputDialog("1. Tentar novamente \n0. Encerrar programa"));
+				if (op == 0) {//end program
+					run = false;
+					break;
+				}
+			}
+
+		}*/
 		
 		while (run) {
 			int opcao;
@@ -27,6 +50,7 @@ public class ProgramaOtica {
 					JOptionPane.showMessageDialog(null, "Programa encerrado\n    BYE");
 					run = false;
 					break;
+					
 				case 1://Cliente
 					int opcaoCliente;
 					opcaoCliente = Integer.parseInt(JOptionPane.showInputDialog("    CLIENTE\n 1. Inserir\n 2. Atualizar\n 3. Remover\n 4. Procurar\n 0. Voltar Menu"));
@@ -93,85 +117,137 @@ public class ProgramaOtica {
 								tempC4 = fachada.procurarCliente(buscaC);
 								JOptionPane.showMessageDialog(null, "nome: " + tempC4.getNome() +"\nnascimento: " + tempC4.getNascimento() + "\ncpf: " + tempC4.getCpf() 
 								+ "\ntelefone: " + tempC4.getTelefone() + "\ncep: " + tempC4.getEndereco().getCep() + "\nestado: " + tempC4.getEndereco().getEstado() 
-								+ "\ncidade: " + tempC4.getEndereco().getCidade() + "\nrua: " + tempC4.getEndereco().getRua() + "\n"); 									
+								+ "\ncidade: " + tempC4.getEndereco().getCidade() + "\nrua: " + tempC4.getEndereco().getRua() + "\n");
 							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
 							}
-							
 							break;
 						default:
 							JOptionPane.showMessageDialog(null, "ERROR!!\n Opcao nao confere");
 							break;
 					}
 					break;
+					
 				case 2://Funcionário
 					int opcaoFuncionario = Integer.parseInt(JOptionPane.showInputDialog("    FUNCIONARIO\n 1. Inserir\n 2. Atualizar\n 3. Remover\n 4. Procurar\n 0. Voltar Menu"));
 					switch (opcaoFuncionario){
 						case 0://voltar menu
 							break;
 						case 1://inserir
+							try{
 							Funcionario tempF1 = new Funcionario();
 							tempF1.setNome(JOptionPane.showInputDialog("Qual o seu nome?"));
 							tempF1.setCpf(JOptionPane.showInputDialog("Qual o seu cpf?"));
 							tempF1.setTelefone(JOptionPane.showInputDialog("Qual o seu telefone?"));
-							fachada.inserirFuncionario(tempF1);
+							fachada.inserir(tempF1);
+							} catch (TamanhoException e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, e);
+							} catch (SemPosicaoParaInserirException e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, e);
+							}
 							break;
 						case 2://atualizar
 							Funcionario tempF2 = new Funcionario();
+							try {
 							tempF2.setNome(JOptionPane.showInputDialog("Qual o seu nome?"));
 							tempF2.setCpf(JOptionPane.showInputDialog("Qual o seu cpf?"));
 							tempF2.setTelefone(JOptionPane.showInputDialog("Qual o seu telefone?"));
-							fachada.atualizarFuncionario(tempF2);
+							fachada.atualizar(tempF2);
+							} catch (TamanhoException e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, e);
+							} catch (NullPointerException e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, e);
+							}
 							break;
 						case 3://remover
 							int deletaF = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
+							try {
 							fachada.removerFuncionario(deletaF);
+							} catch (RemocaoNaoConcluidaException e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, e);
+							}
 							break;
 						case 4://procurar
 							Funcionario tempF4 = new Funcionario();
 							int buscaF = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
+							try {
 							tempF4 = fachada.procurarFuncionario(buscaF);
-							System.out.printf("nome: %s\ncpf: %s\ntelefone: %s\n", 
-									tempF4.getNome(),tempF4.getCpf(),tempF4.getTelefone());
+							JOptionPane.showMessageDialog(null, "nome: " + tempF4.getNome() + "\ncpf: " + tempF4.getCpf() 
+							+ "\ntelefone: " + tempF4.getTelefone());
+							} catch (NullPointerException e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, e);
+							}
 							break;
 						default:
 							JOptionPane.showMessageDialog(null, "ERROR!!\n Opcao nao confere");
 							break;
 					}
 					break;
+					
 				case 3://Produto
 					int opcaoProduto = Integer.parseInt(JOptionPane.showInputDialog("    PRODUTO\n 1. Inserir\n 2. Atualizar\n 3. Remover\n 4. Procurar\n 0. Voltar Menu"));
 					switch (opcaoProduto){
 						case 1://inserir
+							try {
 							Produto tempP1 = new Produto();
 							tempP1.setNome(JOptionPane.showInputDialog("Qual o nome?"));
 							tempP1.setMarca(JOptionPane.showInputDialog("Qual a marca?"));
 							tempP1.setValorCompra(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Compra?")));
 							tempP1.setValorVenda(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Venda?")));
 							//tempP1.fornecedor.setnome algo assim?  (sugiro id, se pegar kk)
-							fachada.inserirProduto(tempP1);
+							fachada.inserir(tempP1);
+							} catch (TamanhoException e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, e);
+							} catch (SemPosicaoParaInserirException e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, e);
+							}
 							break;
 						case 2://atualizar
 							Produto tempP2 = new Produto();
+							try {
 							tempP2.setNome(JOptionPane.showInputDialog("Qual o nome?"));
 							tempP2.setMarca(JOptionPane.showInputDialog("Qual a marca?"));
 							tempP2.setValorCompra(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Compra?")));
 							tempP2.setValorVenda(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Venda?")));
 							// perae que vamo discutir como fazer esse fornecedor aqui (sugiro id, se pegar kk)
-							fachada.atualizarProduto(tempP2);
+							fachada.atualizar(tempP2);
+							} catch (TamanhoException e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, e);
+							} catch (NullPointerException e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, e);
+							}
 							break;
 						case 3://remover
 							int deletaP = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
+							try {
 							fachada.removerProduto(deletaP);
+							} catch (RemocaoNaoConcluidaException e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, e);
+							}
 							break;
 						case 4://procurar
 							Produto tempP4 = new Produto();
 							int buscaP = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
+							try {
 							tempP4 = fachada.procurarProduto(buscaP);
-							System.out.printf("nome: %s\nmarca: %s\nvalor de compra: %f\nvalor de venda: %f\n", 
-									tempP4.getNome(),tempP4.getMarca(),tempP4.getValorCompra(),tempP4.getValorVenda());
-							//daqui a pouco vemos isso de fornecedor, kk (que daqui a pouco, olha a hora)
+							JOptionPane.showMessageDialog(null, "nome: " + tempP4.getNome() + "\nmarca: " + tempP4.getMarca() 
+							+ "\nvalor de compra: " + tempP4.getValorCompra() + "\nvalor de venda: " + tempP4.getValorVenda());
+							} catch (NullPointerException e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, e);
+							}
 							break;
 						default:
 							JOptionPane.showMessageDialog(null, "ERROR!!\n Opcao nao confere");
@@ -182,31 +258,53 @@ public class ProgramaOtica {
 					int opcaoVenda = Integer.parseInt(JOptionPane.showInputDialog("    VENDA\n 1. Inserir\n 2. Atualizar\n 3. Remover\n 4. Procurar\n 0. Voltar Menu"));
 					switch(opcaoVenda){
 						case 1://inserir
+							try {
 							Venda tempV1 = new Venda();
 							tempV1.setCliente(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do cliente?")));
 							tempV1.setProduto(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do produto?")));
-							fachada.inserirVenda(tempV1);
+							fachada.inserir(tempV1);
+							} catch (SemPosicaoParaInserirException e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, e);
+							}
 							break;
 						case 2://atualizar
 							Venda tempV2 = new Venda();
+							try {
 							tempV2.setCliente(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do cliente?")));
 							tempV2.setProduto(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do produto?")));
-							fachada.atualizarVenda(tempV2);
+							fachada.atualizar(tempV2);
+							} catch (NullPointerException e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, e);
+							}
 							break;
 						case 3://remover
 							int deletaV = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
+							try {
 							fachada.removerVenda(deletaV);
+							} catch (RemocaoNaoConcluidaException e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, e);
+							}
 							break;
 						case 4://procurar
 							Venda tempV4 = new Venda();
 							int buscaV = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
+							try {
 							tempV4 = fachada.procurarVenda(buscaV);
 							Cliente cliente = new Cliente();
 							Produto produto = new Produto();
 							cliente = tempV4.getCliente();
 							produto = tempV4.getProduto();
-							System.out.printf("nome Cliente: %s\nid: %d\n nome Produto: %s\n", 
-									cliente.getNome(),tempV4.getId(),produto.getNome());
+							
+							JOptionPane.showMessageDialog(null, "nome Cliente: " + cliente.getNome() + "\nId Cliente:"+ cliente.getId() 
+							+ "\nnome produto: " + produto.getNome() + "\nId Produto:" + produto.getId() 
+							+ "\nnome Venda" + tempV4.getNome());
+							} catch (NullPointerException e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, e);
+							}
 							break;
 						default:
 							JOptionPane.showMessageDialog(null, "ERROR!!\n Opcao nao confere");

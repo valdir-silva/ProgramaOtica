@@ -1,34 +1,44 @@
 package base;
 
-public class Produto {
-	private int id;
-	private String nome;
+import exceptions.TamanhoException;
+
+public class Produto extends Identificacao{
 	private String marca;
 	private float valorCompra;
 	private float valorVenda;
 	
+	public Produto() {
+		super();
+	}
+	
 	public int getId() {
-		return id;
+		return super.getId();
 	}
 	
 	public void setId(int id) {
-		this.id = id;
+		super.setId(id);;
 	}
 	
 	public String getNome() {
-		return nome;
+		return super.getNome();
 	}
 	
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNome(String nome) throws TamanhoException {
+		super.setNome(nome);;
 	}
 	
 	public String getMarca() {
 		return marca;
 	}
 	
-	public void setMarca(String marca) {
-		this.marca = marca;
+	public void setMarca(String marca) throws TamanhoException {
+		if (super.getNome().length() < 40){
+			this.marca = marca;			
+		} else {
+			TamanhoException e = new TamanhoException();
+			throw e;
+		}
+		
 	}
 	
 	public float getValorCompra() {

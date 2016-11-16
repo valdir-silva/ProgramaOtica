@@ -11,7 +11,7 @@ import interfaces.IRepositorioFuncionario;
 import interfaces.IRepositorioProduto;
 import interfaces.IRepositorioVenda;
 import repositorios.RepositorioClienteArray;
-import repositorios.RepositorioFuncionario;
+import repositorios.RepositorioFuncionarioArray;
 import repositorios.RepositorioProdutoArray;
 import repositorios.RepositorioVendaArray;
 
@@ -26,7 +26,7 @@ public class Fachada {
 		IRepositorioCliente repositorioClientes = new RepositorioClienteArray();
 		clientes = new ControleClientes (repositorioClientes);
 		
-		IRepositorioFuncionario repositorioFornecedores = new RepositorioFuncionario();
+		IRepositorioFuncionario repositorioFornecedores = new RepositorioFuncionarioArray();
 		fornecedores = new ControleFuncionarios (repositorioFornecedores);
 		
 		IRepositorioProduto repositorioProdutos = new RepositorioProdutoArray();
@@ -68,19 +68,19 @@ public class Fachada {
 	///Funcionario//
 	////////////////
 
-	public void inserirFuncionario (Funcionario funcionario) {
-		this.fornecedores.inserirFuncionario(funcionario);
+	public void inserir (Funcionario funcionario) throws SemPosicaoParaInserirException {
+		this.fornecedores.inserir(funcionario);
 	}
 	
-	public void atualizarFuncionario (Funcionario funcionario) {
-		this.fornecedores.atualizarFuncionario(funcionario);
+	public void atualizar (Funcionario funcionario) {
+		this.fornecedores.atualizar(funcionario);
 	}
 	
 	public Funcionario procurarFuncionario (int id) {
 		return this.fornecedores.procurarFuncionario(id);
 	}
 	
-	public void removerFuncionario (int id) {
+	public void removerFuncionario (int id) throws RemocaoNaoConcluidaException {
 		this.fornecedores.removerFuncionario(id);
 	}
 	
@@ -88,19 +88,19 @@ public class Fachada {
 	///Produto///
 	/////////////
 	
-	public void inserirProduto (Produto produto) {
-		this.produtos.inserirProduto(produto);
+	public void inserir (Produto produto) throws SemPosicaoParaInserirException {
+		this.produtos.inserir(produto);
 	}
 	
-	public void atualizarProduto (Produto produto) {
-		this.produtos.atualizarProduto(produto);
+	public void atualizar (Produto produto) throws NullPointerException {
+		this.produtos.atualizar(produto);
 	}
 	
-	public Produto procurarProduto (int id) {
+	public Produto procurarProduto (int id) throws NullPointerException {
 		return this.produtos.procurarProduto(id);
 	}
 	
-	public void removerProduto (int id) {
+	public void removerProduto (int id) throws RemocaoNaoConcluidaException {
 		this.produtos.removerProduto(id);
 	}
 	
@@ -108,19 +108,19 @@ public class Fachada {
 	////Venda////
 	/////////////
 
-	public void inserirVenda (Venda produto) {
-		this.vendas.inserirVenda(produto);
+	public void inserir (Venda produto) throws SemPosicaoParaInserirException {
+		this.vendas.inserir(produto);
 	}
 	
-	public void atualizarVenda (Venda produto) {
-		this.vendas.atualizarVenda(produto);
+	public void atualizar (Venda produto) throws NullPointerException {
+		this.vendas.atualizar(produto);
 	}
 	
-	public Venda procurarVenda (int id) {
+	public Venda procurarVenda (int id) throws NullPointerException {
 		return this.vendas.procurarVenda(id);
 	}
 	
-	public void removerVenda (int id) {
+	public void removerVenda (int id) throws RemocaoNaoConcluidaException {
 		this.vendas.removerVenda(id);
 	}
 	

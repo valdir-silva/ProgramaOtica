@@ -1,6 +1,8 @@
 package programa;
 
 import base.Produto;
+import exceptions.RemocaoNaoConcluidaException;
+import exceptions.SemPosicaoParaInserirException;
 import interfaces.IRepositorioProduto;
 
 public class ControleProdutos implements IRepositorioProduto {
@@ -11,23 +13,19 @@ public class ControleProdutos implements IRepositorioProduto {
 		this.repositorioProduto = repositorioProduto;
 	}
 	
-	public void inserirProduto (Produto produto) {
-		repositorioProduto.inserirProduto(produto);
+	public void inserir (Produto produto) throws SemPosicaoParaInserirException {
+		repositorioProduto.inserir(produto);
 	}
 	
-	public boolean removerProduto (int id) {
-		if (repositorioProduto.removerProduto(id)) {
-			return true;
-		} else {
-			return false;
-		}
+	public void removerProduto (int id) throws RemocaoNaoConcluidaException {
+		repositorioProduto.removerProduto(id);
 	}
 	
-	public void atualizarProduto (Produto produto) {
-		repositorioProduto.atualizarProduto(produto);
+	public void atualizar (Produto produto) throws NullPointerException {
+		repositorioProduto.atualizar(produto);
 	}
 	
-	public Produto procurarProduto (int id) {
+	public Produto procurarProduto (int id) throws NullPointerException {
 		return repositorioProduto.procurarProduto(id);
 	}
 }

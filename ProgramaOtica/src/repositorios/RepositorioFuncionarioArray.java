@@ -1,35 +1,42 @@
 package repositorios;
 
 import base.Funcionario;
+import exceptions.RemocaoNaoConcluidaException;
+import exceptions.SemPosicaoParaInserirException;
 import interfaces.IRepositorioFuncionario;
 
-public class RepositorioFuncionario implements IRepositorioFuncionario {
+public class RepositorioFuncionarioArray implements IRepositorioFuncionario {
 	private Funcionario[] funcionario;
 	private int indice;
 	
-	public RepositorioFuncionario () {
+	public RepositorioFuncionarioArray () {
 		funcionario = new Funcionario[100];
 	}
 			
-	@Override
-	public void inserirFuncionario(Funcionario funcionario) {
+	public void inserir(Funcionario funcionario) throws SemPosicaoParaInserirException {
+		boolean found = false;
 		if (this.funcionario[indice] == null){//se a posição esta vaga coloque
 			this.funcionario[indice] = funcionario;
 			funcionario.setId(indice);
+			found = true;
 			indice++;
 		}else {//se não estiver procure em todas as posições do array se tem posisao livre
 			for (int i = 0; i < this.funcionario.length; i++){
 				if (this.funcionario[i] == null){
 					this.funcionario[indice] = funcionario;
+					found = true;
 					indice++;
 					break;
 				}
 			}
 		}
+		if (!found) {// se nao inserio
+			SemPosicaoParaInserirException e = new SemPosicaoParaInserirException();
+			throw e;
+		}
 	}
 
-	@Override
-	public boolean removerFuncionario(int id) {
+	public void removerFuncionario(int id) throws RemocaoNaoConcluidaException {
 		boolean found = false;
 		for (int i = 0;i < this.funcionario.length;i++){
 			if (this.funcionario[i].getId() == id){
@@ -39,16 +46,13 @@ public class RepositorioFuncionario implements IRepositorioFuncionario {
 				break;
 			}
 		}
-		//if (found) {
-		//	System.out.println("Fornecedor removido com sucesso!!");
-		//}else {//throw FornecedorNotFound;
-		//	System.out.println("Fornecedor nao encontrado!!");
-		//}
-		return found;
+		if (!found) {//se não removeu!!
+			RemocaoNaoConcluidaException e = new RemocaoNaoConcluidaException();
+			throw e;
+		}
 	}
 
-	@Override
-	public void atualizarFuncionario(Funcionario funcionario) {
+	public void atualizar(Funcionario funcionario) throws NullPointerException{
 		boolean found = false;
 		for (int i = 0;i < this.funcionario.length;i++){
 			if (this.funcionario[i].getId() == funcionario.getId()){
@@ -57,21 +61,19 @@ public class RepositorioFuncionario implements IRepositorioFuncionario {
 				break;
 			}
 		}
-		if (found) {
-			System.out.println("Fornecedor atualizado com sucesso!!");
-		}else {//throw FornecedorNotFound;
-			System.out.println("Fornecedor nao encontrado!!");
+		if (!found) {
+			NullPointerException e = new NullPointerException();
+			throw e;
 		}
-		
 	}
 
-	@Override
-	public Funcionario procurarFuncionario(int id) {
+	public Funcionario procurarFuncionario(int id) throws NullPointerException{
 		for (int i = 0; i < this.funcionario.length; i++){
 			if(this.funcionario[i].getId() == id) {
 				return this.funcionario[i];
 			}
 		}
-		return null;//null se n existir esse fornecedor
+		NullPointerException e = new NullPointerException();
+		throw e;
 	}
 }

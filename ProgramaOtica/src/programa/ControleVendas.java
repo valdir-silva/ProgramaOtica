@@ -1,6 +1,8 @@
 package programa;
 
 import base.Venda;
+import exceptions.RemocaoNaoConcluidaException;
+import exceptions.SemPosicaoParaInserirException;
 import interfaces.IRepositorioVenda;
 
 public class ControleVendas implements IRepositorioVenda {
@@ -11,23 +13,19 @@ public class ControleVendas implements IRepositorioVenda {
 		this.repositorioVenda = repositorioVenda;
 	}
 	
-	public void inserirVenda (Venda venda) {
-		repositorioVenda.inserirVenda(venda);
+	public void inserir (Venda venda) throws SemPosicaoParaInserirException {
+		repositorioVenda.inserir(venda);
 	}
 	
-	public boolean removerVenda (int id) {
-		if (repositorioVenda.removerVenda(id)) {
-			return true;
-		} else {
-			return false;
-		}
+	public void removerVenda (int id) throws RemocaoNaoConcluidaException {
+		repositorioVenda.removerVenda(id);
 	}
 	
-	public void atualizarVenda (Venda venda) {
-		repositorioVenda.atualizarVenda(venda);
+	public void atualizar (Venda venda) throws NullPointerException {
+		repositorioVenda.atualizar(venda);
 	}
 	
-	public Venda procurarVenda (int id) {
+	public Venda procurarVenda (int id) throws NullPointerException {
 		return repositorioVenda.procurarVenda(id);
 	}
 

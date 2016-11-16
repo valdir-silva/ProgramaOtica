@@ -1,10 +1,12 @@
 package interfaces;
 
 import base.Produto;
+import exceptions.RemocaoNaoConcluidaException;
+import exceptions.SemPosicaoParaInserirException;
 
 public interface IRepositorioProduto {
-	public void inserirProduto (Produto produto);
-	public boolean removerProduto (int id);
-	public void atualizarProduto (Produto produto);
-	public Produto procurarProduto (int id);
+	public void inserir (Produto produto) throws SemPosicaoParaInserirException;
+	public void removerProduto (int id) throws RemocaoNaoConcluidaException;
+	public void atualizar (Produto produto) throws NullPointerException;
+	public Produto procurarProduto (int id) throws NullPointerException;
 }
