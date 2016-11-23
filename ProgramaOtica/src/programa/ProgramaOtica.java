@@ -8,11 +8,12 @@ import base.Funcionario;
 import base.Produto;
 import base.Venda;
 import exceptions.RemocaoNaoConcluidaException;
+import exceptions.RepositorioException;
 import exceptions.SemPosicaoParaInserirException;
 import exceptions.TamanhoException;
 
 public class ProgramaOtica {
-	public static void main(String[] args) throws TamanhoException, NullPointerException, SemPosicaoParaInserirException, RemocaoNaoConcluidaException {
+	public static void main(String[] args) throws TamanhoException, NullPointerException, SemPosicaoParaInserirException, RemocaoNaoConcluidaException, RepositorioException {
 		// TODO Auto-generated method stub
 		
 		boolean run = true;//start false to use the loggin

@@ -5,7 +5,9 @@ import base.Funcionario;
 import base.Produto;
 import base.Venda;
 import exceptions.RemocaoNaoConcluidaException;
+import exceptions.RepositorioException;
 import exceptions.SemPosicaoParaInserirException;
+import exceptions.TamanhoException;
 import interfaces.IRepositorioCliente;
 import interfaces.IRepositorioFuncionario;
 import interfaces.IRepositorioProduto;
@@ -48,19 +50,19 @@ public class Fachada {
 	///Cliente///
 	/////////////
 	
-	public void inserir (Cliente cliente) throws SemPosicaoParaInserirException {
+	public void inserir (Cliente cliente) throws SemPosicaoParaInserirException, RepositorioException {
 		this.clientes.inserir(cliente);
 	}
 	
-	public void atualizar (Cliente cliente) throws NullPointerException {
+	public void atualizar (Cliente cliente) throws NullPointerException, RepositorioException {
 		this.clientes.atualizar(cliente);
 	}
 	
-	public Cliente procurarCliente (int id) throws NullPointerException {
+	public Cliente procurarCliente (int id) throws NullPointerException, RepositorioException, TamanhoException {
 		return this.clientes.procurarCliente(id);
 	}
 	
-	public void removerCliente (int id) throws RemocaoNaoConcluidaException {
+	public void removerCliente (int id) throws RemocaoNaoConcluidaException, RepositorioException {
 		this.clientes.removerCliente(id);
 	}
 
