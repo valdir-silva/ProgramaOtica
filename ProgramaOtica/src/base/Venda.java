@@ -1,5 +1,7 @@
 package base;
 
+import exceptions.RepositorioException;
+import exceptions.TamanhoException;
 import interfaces.IRepositorioCliente;
 import interfaces.IRepositorioProduto;
 import repositorios.RepositorioClienteArray;
@@ -25,7 +27,7 @@ public class Venda extends Identificacao {
 		return cliente;
 	}
 	
-	public void setCliente(int id) throws NullPointerException {
+	public void setCliente(int id) throws NullPointerException, RepositorioException, TamanhoException {
 		IRepositorioCliente cliente = new RepositorioClienteArray();
 		this.cliente = cliente.procurarCliente(id);
 	}

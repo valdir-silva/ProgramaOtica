@@ -1,7 +1,7 @@
 package programa;
 
 import base.Funcionario;
-
+import exceptions.RemocaoNaoConcluidaException;
 import exceptions.SemPosicaoParaInserirException;
 import interfaces.IRepositorioFuncionario;
 
@@ -17,7 +17,7 @@ public class ControleFuncionarios implements  IRepositorioFuncionario{
 		repositorioFuncionario.inserir(funcionario);
 	}
 
-	public void removerFuncionario(int id) throws NullPointerException {
+	public void removerFuncionario(int id) throws RemocaoNaoConcluidaException {
 		repositorioFuncionario.removerFuncionario(id);
 	}
 

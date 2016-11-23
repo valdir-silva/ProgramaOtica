@@ -1,11 +1,13 @@
 package programa;
 
 import base.Cliente;
-
 import base.Funcionario;
 import base.Produto;
 import base.Venda;
+import exceptions.RemocaoNaoConcluidaException;
+import exceptions.RepositorioException;
 import exceptions.SemPosicaoParaInserirException;
+import exceptions.TamanhoException;
 import interfaces.IRepositorioCliente;
 import interfaces.IRepositorioFuncionario;
 import interfaces.IRepositorioProduto;
@@ -48,19 +50,19 @@ public class Fachada {
 	///Cliente///
 	/////////////
 	
-	public void inserir (Cliente cliente) throws SemPosicaoParaInserirException {
+	public void inserir (Cliente cliente) throws SemPosicaoParaInserirException, RepositorioException {
 		this.clientes.inserir(cliente);
 	}
 	
-	public void atualizar (Cliente cliente) throws NullPointerException {
+	public void atualizar (Cliente cliente) throws NullPointerException, RepositorioException {
 		this.clientes.atualizar(cliente);
 	}
 	
-	public Cliente procurarCliente (int id) throws NullPointerException {
+	public Cliente procurarCliente (int id) throws NullPointerException, RepositorioException, TamanhoException {
 		return this.clientes.procurarCliente(id);
 	}
 	
-	public void removerCliente (int id) throws NullPointerException {
+	public void removerCliente (int id) throws RemocaoNaoConcluidaException, RepositorioException {
 		this.clientes.removerCliente(id);
 	}
 
@@ -80,7 +82,7 @@ public class Fachada {
 		return this.fornecedores.procurarFuncionario(id);
 	}
 	
-	public void removerFuncionario (int id) throws NullPointerException {
+	public void removerFuncionario (int id) throws RemocaoNaoConcluidaException {
 		this.fornecedores.removerFuncionario(id);
 	}
 	
@@ -100,7 +102,7 @@ public class Fachada {
 		return this.produtos.procurarProduto(id);
 	}
 	
-	public void removerProduto (int id) throws NullPointerException {
+	public void removerProduto (int id) throws RemocaoNaoConcluidaException {
 		this.produtos.removerProduto(id);
 	}
 	
@@ -120,7 +122,7 @@ public class Fachada {
 		return this.vendas.procurarVenda(id);
 	}
 	
-	public void removerVenda (int id) throws NullPointerException {
+	public void removerVenda (int id) throws RemocaoNaoConcluidaException {
 		this.vendas.removerVenda(id);
 	}
 	

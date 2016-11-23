@@ -1,7 +1,7 @@
 package repositorios;
 
 import base.Venda;
-
+import exceptions.RemocaoNaoConcluidaException;
 import exceptions.SemPosicaoParaInserirException;
 import interfaces.IRepositorioVenda;
 
@@ -36,7 +36,7 @@ public class RepositorioVendaArray implements IRepositorioVenda{
 		}
 	}
 	
-	public void removerVenda (int id) throws NullPointerException {
+	public void removerVenda (int id) throws RemocaoNaoConcluidaException {
 		boolean found = false;
 		for (int i = 0; i < this.venda.length; i++){
 			if (this.venda[i].getId() == id) {
@@ -47,7 +47,7 @@ public class RepositorioVendaArray implements IRepositorioVenda{
 			}
 		}
 		if (!found) {//se não removeu!!
-			NullPointerException e = new NullPointerException();
+			RemocaoNaoConcluidaException e = new RemocaoNaoConcluidaException();
 			throw e;
 		}
 	}

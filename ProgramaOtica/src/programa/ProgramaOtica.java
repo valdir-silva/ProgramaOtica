@@ -2,49 +2,52 @@ package programa;
 
 import javax.swing.JOptionPane;
 
-
 import base.Cliente;
 import base.Endereco;
 import base.Funcionario;
 import base.Produto;
 import base.Venda;
+import exceptions.RemocaoNaoConcluidaException;
+import exceptions.RepositorioException;
 import exceptions.SemPosicaoParaInserirException;
 import exceptions.TamanhoException;
 
 public class ProgramaOtica {
-	public static void main(String[] args) throws TamanhoException, NullPointerException, SemPosicaoParaInserirException {
+	public static void main(String[] args) throws TamanhoException, NullPointerException, SemPosicaoParaInserirException, RemocaoNaoConcluidaException, RepositorioException {
 		// TODO Auto-generated method stub
 		
 		boolean run = true;//start false to use the loggin
 		Fachada instance = new Fachada();
-		Fachada fachada = Fachada.getInstance();
-		
-		String loginFuncionario = "095727";
+		Fachada fachada = instance.getInstance();
+		/*
+		Funcionario loginFuncionario = new Funcionario();
+		loginFuncionario.setCpf("");
 		while (true) {
-			int op;
+			int loginId, op;
 			String loginCpf;
+			loginId = Integer.parseInt(JOptionPane.showInputDialog("Login funcionario: \n Digite seu id"));
 			loginCpf = (JOptionPane.showInputDialog("Senha funcionario: \n Digite seu cpf"));
+			loginFuncionario = fachada.procurarFuncionario(loginId);
 			
-			if (loginCpf.equals(loginFuncionario) ) {//testa se o cpf confere
+			if (loginCpf.equals(loginFuncionario.getCpf()) ) {//testa se o cpf confere
 				run = true;
 				break;
 			} else {
 				JOptionPane.showMessageDialog(null, "Id ou login nao conferem");
 				op = Integer.parseInt(JOptionPane.showInputDialog("1. Tentar novamente \n0. Encerrar programa"));
 				if (op == 0) {//end program
-					JOptionPane.showMessageDialog(null, "Programa encerrado\n    BYE");
 					run = false;
 					break;
 				}
 			}
 
-		}
+		}*/
 		
 		while (run) {
 			int opcao;
 			opcao = Integer.parseInt(JOptionPane.showInputDialog(" 1. Cliente\n 2. Funcionario\n 3. Produto\n 4. Venda\n 0. Encerrar Programa"));
 			switch (opcao) {
-				case 0://end program
+				case 0:
 					JOptionPane.showMessageDialog(null, "Programa encerrado\n    BYE");
 					run = false;
 					break;
@@ -103,7 +106,7 @@ public class ProgramaOtica {
 							int deletaC = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
 							try {
 								fachada.removerCliente(deletaC);
-							} catch (NullPointerException e) {
+							} catch (RemocaoNaoConcluidaException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
 							}
@@ -166,7 +169,7 @@ public class ProgramaOtica {
 							int deletaF = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
 							try {
 							fachada.removerFuncionario(deletaF);
-							} catch (NullPointerException e) {
+							} catch (RemocaoNaoConcluidaException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
 							}
@@ -192,8 +195,6 @@ public class ProgramaOtica {
 				case 3://Produto
 					int opcaoProduto = Integer.parseInt(JOptionPane.showInputDialog("    PRODUTO\n 1. Inserir\n 2. Atualizar\n 3. Remover\n 4. Procurar\n 0. Voltar Menu"));
 					switch (opcaoProduto){
-						case 0://voltar menu
-							break;
 						case 1://inserir
 							try {
 							Produto tempP1 = new Produto();
@@ -232,7 +233,7 @@ public class ProgramaOtica {
 							int deletaP = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
 							try {
 							fachada.removerProduto(deletaP);
-							} catch (NullPointerException e) {
+							} catch (RemocaoNaoConcluidaException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
 							}
@@ -254,12 +255,9 @@ public class ProgramaOtica {
 							break;
 					}
 					break;
-					
 				case 4://Venda
 					int opcaoVenda = Integer.parseInt(JOptionPane.showInputDialog("    VENDA\n 1. Inserir\n 2. Atualizar\n 3. Remover\n 4. Procurar\n 0. Voltar Menu"));
 					switch(opcaoVenda){
-						case 0://voltar menu
-							break;
 						case 1://inserir
 							try {
 							Venda tempV1 = new Venda();
@@ -286,7 +284,7 @@ public class ProgramaOtica {
 							int deletaV = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
 							try {
 							fachada.removerVenda(deletaV);
-							} catch (NullPointerException e) {
+							} catch (RemocaoNaoConcluidaException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
 							}
