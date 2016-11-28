@@ -1,6 +1,7 @@
 package programa;
 
 import base.Cliente;
+
 import base.Funcionario;
 import base.Produto;
 import base.Venda;
@@ -12,20 +13,21 @@ import interfaces.IRepositorioCliente;
 import interfaces.IRepositorioFuncionario;
 import interfaces.IRepositorioProduto;
 import interfaces.IRepositorioVenda;
-import repositorios.RepositorioClienteArray;
+import repositorios.RepositorioClienteBanco;
 import repositorios.RepositorioFuncionarioArray;
 import repositorios.RepositorioProdutoArray;
 import repositorios.RepositorioVendaArray;
 
 public class Fachada {
-	private static Fachada instance = null;
+	private static Fachada instance;
 	private ControleClientes clientes;
 	private ControleFuncionarios fornecedores;
 	private ControleProdutos produtos;
 	private ControleVendas vendas;
 	
-	public Fachada () {
-		IRepositorioCliente repositorioClientes = new RepositorioClienteArray();
+	private Fachada () {
+		RepositorioClienteBanco instance = RepositorioClienteBanco.getInstance();
+		IRepositorioCliente repositorioClientes = instance;
 		clientes = new ControleClientes (repositorioClientes);
 		
 		IRepositorioFuncionario repositorioFornecedores = new RepositorioFuncionarioArray();
@@ -39,7 +41,7 @@ public class Fachada {
 	}
 	
 	// Singleton method 
-	public static Fachada getInstance () {
+	public synchronized static Fachada getInstance () {
 		if (instance == null) {
 			instance = new Fachada();
 		}
@@ -70,19 +72,19 @@ public class Fachada {
 	///Funcionario//
 	////////////////
 
-	public void inserir (Funcionario funcionario) throws SemPosicaoParaInserirException {
+	public void inserir (Funcionario funcionario) throws SemPosicaoParaInserirException, RepositorioException {
 		this.fornecedores.inserir(funcionario);
 	}
 	
-	public void atualizar (Funcionario funcionario) {
+	public void atualizar (Funcionario funcionario) throws NullPointerException, RepositorioException {
 		this.fornecedores.atualizar(funcionario);
 	}
 	
-	public Funcionario procurarFuncionario (int id) {
+	public Funcionario procurarFuncionario (int id) throws NullPointerException, RepositorioException, TamanhoException {
 		return this.fornecedores.procurarFuncionario(id);
 	}
 	
-	public void removerFuncionario (int id) throws RemocaoNaoConcluidaException {
+	public void removerFuncionario (int id) throws RemocaoNaoConcluidaException, RepositorioException {
 		this.fornecedores.removerFuncionario(id);
 	}
 	
@@ -90,19 +92,19 @@ public class Fachada {
 	///Produto///
 	/////////////
 	
-	public void inserir (Produto produto) throws SemPosicaoParaInserirException {
+	public void inserir (Produto produto) throws SemPosicaoParaInserirException, RepositorioException {
 		this.produtos.inserir(produto);
 	}
 	
-	public void atualizar (Produto produto) throws NullPointerException {
+	public void atualizar (Produto produto) throws NullPointerException, RepositorioException {
 		this.produtos.atualizar(produto);
 	}
 	
-	public Produto procurarProduto (int id) throws NullPointerException {
+	public Produto procurarProduto (int id) throws NullPointerException, RepositorioException, TamanhoException {
 		return this.produtos.procurarProduto(id);
 	}
 	
-	public void removerProduto (int id) throws RemocaoNaoConcluidaException {
+	public void removerProduto (int id) throws RemocaoNaoConcluidaException, RepositorioException {
 		this.produtos.removerProduto(id);
 	}
 	
@@ -110,19 +112,19 @@ public class Fachada {
 	////Venda////
 	/////////////
 
-	public void inserir (Venda produto) throws SemPosicaoParaInserirException {
+	public void inserir (Venda produto) throws SemPosicaoParaInserirException, RepositorioException {
 		this.vendas.inserir(produto);
 	}
 	
-	public void atualizar (Venda produto) throws NullPointerException {
+	public void atualizar (Venda produto) throws NullPointerException, RepositorioException {
 		this.vendas.atualizar(produto);
 	}
 	
-	public Venda procurarVenda (int id) throws NullPointerException {
+	public Venda procurarVenda (int id) throws NullPointerException, RepositorioException, TamanhoException {
 		return this.vendas.procurarVenda(id);
 	}
 	
-	public void removerVenda (int id) throws RemocaoNaoConcluidaException {
+	public void removerVenda (int id) throws RemocaoNaoConcluidaException, RepositorioException {
 		this.vendas.removerVenda(id);
 	}
 	

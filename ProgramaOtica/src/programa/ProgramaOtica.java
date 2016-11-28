@@ -17,8 +17,8 @@ public class ProgramaOtica {
 		// TODO Auto-generated method stub
 		
 		boolean run = true;//start false to use the loggin
-		Fachada instance = new Fachada();
-		Fachada fachada = instance.getInstance();
+		Fachada instance = Fachada.getInstance();
+		Fachada fachada = instance;
 		/*
 		Funcionario loginFuncionario = new Funcionario();
 		loginFuncionario.setCpf("");
@@ -84,6 +84,7 @@ public class ProgramaOtica {
 							Cliente tempC2 = new Cliente();
 							Endereco endereco2 = new Endereco();
 							try{
+								tempC2.setId(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do cliente?")));
 								tempC2.setNome(JOptionPane.showInputDialog("Qual o seu nome?"));
 								tempC2.setNascimento(JOptionPane.showInputDialog("Qual sua data de nascimento?"));
 								tempC2.setCpf(JOptionPane.showInputDialog("Qual o seu cpf?"));
@@ -137,11 +138,11 @@ public class ProgramaOtica {
 							break;
 						case 1://inserir
 							try{
-							Funcionario tempF1 = new Funcionario();
-							tempF1.setNome(JOptionPane.showInputDialog("Qual o seu nome?"));
-							tempF1.setCpf(JOptionPane.showInputDialog("Qual o seu cpf?"));
-							tempF1.setTelefone(JOptionPane.showInputDialog("Qual o seu telefone?"));
-							fachada.inserir(tempF1);
+								Funcionario tempF1 = new Funcionario();
+								tempF1.setNome(JOptionPane.showInputDialog("Qual o seu nome?"));
+								tempF1.setCpf(JOptionPane.showInputDialog("Qual o seu cpf?"));
+								tempF1.setTelefone(JOptionPane.showInputDialog("Qual o seu telefone?"));
+								fachada.inserir(tempF1);
 							} catch (TamanhoException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
@@ -153,11 +154,12 @@ public class ProgramaOtica {
 						case 2://atualizar
 							Funcionario tempF2 = new Funcionario();
 							try {
-							tempF2.setNome(JOptionPane.showInputDialog("Qual o seu nome?"));
-							tempF2.setCpf(JOptionPane.showInputDialog("Qual o seu cpf?"));
-							tempF2.setTelefone(JOptionPane.showInputDialog("Qual o seu telefone?"));
-							fachada.atualizar(tempF2);
-							} catch (TamanhoException e) {
+								tempF2.setId(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do cliente?")));
+								tempF2.setNome(JOptionPane.showInputDialog("Qual o seu nome?"));
+								tempF2.setCpf(JOptionPane.showInputDialog("Qual o seu cpf?"));
+								tempF2.setTelefone(JOptionPane.showInputDialog("Qual o seu telefone?"));
+								fachada.atualizar(tempF2);
+								} catch (TamanhoException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
 							} catch (NullPointerException e) {
@@ -178,9 +180,9 @@ public class ProgramaOtica {
 							Funcionario tempF4 = new Funcionario();
 							int buscaF = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
 							try {
-							tempF4 = fachada.procurarFuncionario(buscaF);
-							JOptionPane.showMessageDialog(null, "nome: " + tempF4.getNome() + "\ncpf: " + tempF4.getCpf() 
-							+ "\ntelefone: " + tempF4.getTelefone());
+								tempF4 = fachada.procurarFuncionario(buscaF);
+								JOptionPane.showMessageDialog(null, "nome: " + tempF4.getNome() + "\ncpf: " + tempF4.getCpf() 
+								+ "\ntelefone: " + tempF4.getTelefone());
 							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
@@ -197,13 +199,12 @@ public class ProgramaOtica {
 					switch (opcaoProduto){
 						case 1://inserir
 							try {
-							Produto tempP1 = new Produto();
-							tempP1.setNome(JOptionPane.showInputDialog("Qual o nome?"));
-							tempP1.setMarca(JOptionPane.showInputDialog("Qual a marca?"));
-							tempP1.setValorCompra(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Compra?")));
-							tempP1.setValorVenda(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Venda?")));
-							//tempP1.fornecedor.setnome algo assim?  (sugiro id, se pegar kk)
-							fachada.inserir(tempP1);
+								Produto tempP1 = new Produto();
+								tempP1.setNome(JOptionPane.showInputDialog("Qual o nome?"));
+								tempP1.setMarca(JOptionPane.showInputDialog("Qual a marca?"));
+								tempP1.setValorCompra(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Compra?")));
+								tempP1.setValorVenda(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Venda?")));
+								fachada.inserir(tempP1);
 							} catch (TamanhoException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
@@ -215,12 +216,12 @@ public class ProgramaOtica {
 						case 2://atualizar
 							Produto tempP2 = new Produto();
 							try {
-							tempP2.setNome(JOptionPane.showInputDialog("Qual o nome?"));
-							tempP2.setMarca(JOptionPane.showInputDialog("Qual a marca?"));
-							tempP2.setValorCompra(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Compra?")));
-							tempP2.setValorVenda(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Venda?")));
-							// perae que vamo discutir como fazer esse fornecedor aqui (sugiro id, se pegar kk)
-							fachada.atualizar(tempP2);
+								tempP2.setId(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do cliente?")));
+								tempP2.setNome(JOptionPane.showInputDialog("Qual o nome?"));
+								tempP2.setMarca(JOptionPane.showInputDialog("Qual a marca?"));
+								tempP2.setValorCompra(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Compra?")));
+								tempP2.setValorVenda(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Venda?")));
+								fachada.atualizar(tempP2);
 							} catch (TamanhoException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
@@ -232,7 +233,7 @@ public class ProgramaOtica {
 						case 3://remover
 							int deletaP = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
 							try {
-							fachada.removerProduto(deletaP);
+								fachada.removerProduto(deletaP);
 							} catch (RemocaoNaoConcluidaException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
@@ -242,9 +243,9 @@ public class ProgramaOtica {
 							Produto tempP4 = new Produto();
 							int buscaP = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
 							try {
-							tempP4 = fachada.procurarProduto(buscaP);
-							JOptionPane.showMessageDialog(null, "nome: " + tempP4.getNome() + "\nmarca: " + tempP4.getMarca() 
-							+ "\nvalor de compra: " + tempP4.getValorCompra() + "\nvalor de venda: " + tempP4.getValorVenda());
+								tempP4 = fachada.procurarProduto(buscaP);
+								JOptionPane.showMessageDialog(null, "nome: " + tempP4.getNome() + "\nmarca: " + tempP4.getMarca() 
+								+ "\nvalor de compra: " + tempP4.getValorCompra() + "\nvalor de venda: " + tempP4.getValorVenda());
 							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
@@ -260,10 +261,10 @@ public class ProgramaOtica {
 					switch(opcaoVenda){
 						case 1://inserir
 							try {
-							Venda tempV1 = new Venda();
-							tempV1.setCliente(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do cliente?")));
-							tempV1.setProduto(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do produto?")));
-							fachada.inserir(tempV1);
+								Venda tempV1 = new Venda();
+								tempV1.setCliente(fachada.procurarCliente(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do cliente?"))));
+								tempV1.setProduto(fachada.procurarProduto(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do produto?"))));
+								fachada.inserir(tempV1);
 							} catch (SemPosicaoParaInserirException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
@@ -272,9 +273,11 @@ public class ProgramaOtica {
 						case 2://atualizar
 							Venda tempV2 = new Venda();
 							try {
-							tempV2.setCliente(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do cliente?")));
-							tempV2.setProduto(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do produto?")));
-							fachada.atualizar(tempV2);
+							//procura o cliente / produto e manda para o temV2
+								tempV2.setId(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do cliente?")));
+								tempV2.setCliente(fachada.procurarCliente(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do cliente?"))));
+								tempV2.setProduto(fachada.procurarProduto(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do produto?"))));
+								fachada.atualizar(tempV2);
 							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);

@@ -40,7 +40,7 @@ public class Identificacao {
 	}
 	
 	public void setTelefone (String telefone) throws TamanhoException {
-		if (telefone.length() < 12 && telefone.length() > 8) {
+		if (telefone.length() <= 12) {
 			this.telefone = telefone;
 		} else {
 			TamanhoException e = new TamanhoException();

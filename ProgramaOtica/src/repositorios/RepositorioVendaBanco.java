@@ -5,21 +5,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import base.Cliente;
-import base.Endereco;
+import base.Venda;
 import conecaoBanco.PersistenceMechanismRDBMS;
 import exceptions.PersistenceMechanismException;
 //import exceptions.RemocaoNaoConcluidaException;
 //import exceptions.SemPosicaoParaInserirException;
 import exceptions.TamanhoException;
-import interfaces.IRepositorioCliente;
+import interfaces.IRepositorioVenda;
 import exceptions.RepositorioException;
 
-public class RepositorioClienteBanco implements IRepositorioCliente {
-	private static RepositorioClienteBanco instance;
+public class RepositorioVendaBanco implements IRepositorioVenda {
+	private static RepositorioVendaBanco instance;
 	private PersistenceMechanismRDBMS pm;//variavel para utilizar o banco
 	
-	private RepositorioClienteBanco() {
+	private RepositorioVendaBanco() {
 		try {
 			pm = PersistenceMechanismRDBMS.getInstance();//instancia a conexão
 			pm.connect();//conecta o banco de dados com o java
@@ -29,22 +28,19 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 		
 	}
 	
-	public static RepositorioClienteBanco getInstance() {//metodo singleton
+	public static RepositorioVendaBanco getInstance() {//metodo singleton
 		if (instance == null){// se for instancia unica instancia
-			instance = new RepositorioClienteBanco();
+			instance = new RepositorioVendaBanco();
 		}
 		return instance;
 	}
 	
-	public void inserir (Cliente cliente) throws RepositorioException {
+	public void inserir (Venda venda) throws RepositorioException {
 		//Statement é usado para utilizar os comandos sql no java
 		try {
 			Statement statement = (Statement) pm.getCommunicationChannel();
-			statement.executeUpdate("INSERT INTO cliente (estado, cidade, rua, cep, nascimento, nome, cpf, telefone)"
-					+ "VALUES ('"+ cliente.getEndereco().getEstado() + "', '" + cliente.getEndereco().getCidade() 
-					+ "', '" + cliente.getEndereco().getRua() + "', '" + cliente.getEndereco().getCep()
-					+ "', '" + cliente.getNascimento() + "', '" + cliente.getNome()+ "', '" + cliente.getCpf()
-					+ "', '" + cliente.getTelefone()+ "')");
+			statement.executeUpdate("INSERT INTO venda (cliente, produto)"
+					+ "VALUES ('" + "')");
 		} catch(PersistenceMechanismException e){
 		    throw new RepositorioException(e);
 		} catch (SQLException e) {
@@ -58,10 +54,10 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 		}
 	}
 	
-	public void removerCliente (int id) throws RepositorioException {
+	public void removerVenda (int id) throws RepositorioException {
 		try {
 			Statement statement = (Statement) pm.getCommunicationChannel();
-			statement.executeUpdate("DELETE from cliente WHERE id = '" + id + "'");
+			statement.executeUpdate("DELETE from venda WHERE id = '" + id + "'");
 		} catch (PersistenceMechanismException e) {
 			throw new RepositorioException(e);
 		} catch (SQLException e) {
@@ -76,15 +72,11 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 		
 	}
 	
-	public void atualizar (Cliente cliente) throws RepositorioException {
+	public void atualizar (Venda venda) throws RepositorioException {
 		try {
 			Statement statement = (Statement) pm.getCommunicationChannel();
-			statement.executeUpdate("UPDATE cliente SET estado ='"+ cliente.getEndereco().getEstado() 
-					+ "', cidade = '" + cliente.getEndereco().getCidade() 
-					+ "', rua ='" + cliente.getEndereco().getRua() + "', cep = '" + cliente.getEndereco().getCep()
-					+ "', nascimento ='" + cliente.getNascimento() + "', nome ='" 
-					+ cliente.getNome()+ "', cpf ='" + cliente.getCpf() + "', telefone ='" + cliente.getTelefone() 
-					+ "' WHERE id = '" + cliente.getId() + "'");
+			statement.executeUpdate("UPDATE venda SET cliente ='" + venda.getCliente() + "', produto ='" 
+			+ venda.getProduto() + "' WHERE id = '" + venda.getId() + "'");
 		} catch (PersistenceMechanismException e) {
 			throw new RepositorioException(e);
 		} catch (SQLException e) {
@@ -99,25 +91,16 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 		
 	}
 	
-	public Cliente procurarCliente (int id) throws RepositorioException, TamanhoException {
-		Cliente cliente = null; 
-		Endereco endereco = null;
+	public Venda procurarVenda (int id) throws RepositorioException, TamanhoException {
+		Venda venda = null; 
 		try {
 			Statement statement = (Statement) pm.getCommunicationChannel();
-			ResultSet resultset = statement.executeQuery("SELECT * FROM cliente WHERE id ='"+ id + "'");
+			ResultSet resultset = statement.executeQuery("SELECT * FROM venda WHERE id ='"+ id + "'");
 			if (resultset.next()){
-				cliente = new Cliente();
-				endereco = new Endereco();
+				venda = new Venda();
 				
-				cliente.setCpf(resultset.getString("cpf"));
-				endereco.setCep(resultset.getString("cep"));
-				endereco.setCidade(resultset.getString("cidade"));
-				endereco.setEstado(resultset.getString("estado"));
-				endereco.setRua(resultset.getString("rua"));
-				cliente.setEndereco(endereco);
-				cliente.setNascimento(resultset.getString("nascimento"));
-				cliente.setNome(resultset.getString("nome"));
-				cliente.setTelefone(resultset.getString("telefone"));
+				//venda.setCliente(resultset.getString("cliente"));
+				//venda.setProduto(resultset.getString("produto"));
 			}
 
 		} catch (PersistenceMechanismException e) {
@@ -132,7 +115,7 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 			}
 		}
 		
-		return cliente;
+		return venda;
 	}
 	
 }

@@ -33,7 +33,7 @@ public class Endereco {
 		return cep;
 	}
 	public void setCep(String cep) throws TamanhoException {
-		if (cep.length() == 8){
+		if (cep.length() <= 10){
 			this.cep = cep;
 		} else {
 			TamanhoException e = new TamanhoException();
