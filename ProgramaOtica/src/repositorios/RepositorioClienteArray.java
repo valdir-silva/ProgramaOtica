@@ -1,12 +1,12 @@
 package repositorios;
-
+/*
 import base.Cliente;
 import exceptions.RemocaoNaoConcluidaException;
 import exceptions.SemPosicaoParaInserirException;
 import interfaces.IRepositorioCliente;
-
-public class RepositorioClienteArray implements IRepositorioCliente {
-	private Cliente[] cliente;
+*/
+public class RepositorioClienteArray {
+	/*private Cliente[] cliente;
 	private int indice;
 	
 	public RepositorioClienteArray () {
@@ -76,4 +76,5 @@ public class RepositorioClienteArray implements IRepositorioCliente {
 		NullPointerException e = new NullPointerException();
 		throw e;
 	}
+	*/
 }

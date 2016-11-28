@@ -6,9 +6,9 @@ public class TamanhoException extends Exception{
 	 *
 	 * nome < 50
 	 * cpf = 11
-	 * telefone > 8 && telefone < 12
-	 * cep = 8
-	 * nascimento > 6 && nascimento < 11
+	 * telefone <= 12
+	 * cep <= 10
+	 * nascimento < 11
 	 * 
 	 * Produto:
 	 * 
@@ -16,6 +16,11 @@ public class TamanhoException extends Exception{
 	 */
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public TamanhoException () {
 		super("Tamanho nao confere!!");
 	}

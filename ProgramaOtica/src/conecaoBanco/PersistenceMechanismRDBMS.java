@@ -27,7 +27,7 @@ public class PersistenceMechanismRDBMS implements IPersistenceMechanism {
     private PersistenceMechanismRDBMS(String url, String login, String senha, String classeDoDriver)
             throws PersistenceMechanismException {
         conexoesAlocadas = new HashMap();
-        this.classeDoDriver = classeDoDriver;
+        this.setClasseDoDriver(classeDoDriver);
         this.url = url;
         this.login = login;
         this.senha = senha;
@@ -60,6 +60,7 @@ public class PersistenceMechanismRDBMS implements IPersistenceMechanism {
                     conexoesCriadas[i] = DriverManager.getConnection(url, login, senha);
                     conexoesLivres[i] = conexoesCriadas[i];
                 }
+                System.out.println("Connected");
 
             } catch (Exception e) {//caso não tenha conseguido se conectar
             	e.printStackTrace();
@@ -226,4 +227,12 @@ public class PersistenceMechanismRDBMS implements IPersistenceMechanism {
 			e.printStackTrace();
 		}
     }
+
+	public String getClasseDoDriver() {
+		return classeDoDriver;
+	}
+
+	public void setClasseDoDriver(String classeDoDriver) {
+		this.classeDoDriver = classeDoDriver;
+	}
     }

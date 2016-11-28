@@ -2,7 +2,11 @@ package exceptions;
 
 public class RepositorioException extends Exception {
 
-    private Exception exception;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Exception exception;
 
     public RepositorioException(Exception exception) {
         super("Exce��o encapsulada");
