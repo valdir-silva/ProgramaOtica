@@ -2,18 +2,19 @@ package programa;
 
 import javax.swing.JOptionPane;
 
+
 import base.Cliente;
 import base.Endereco;
 import base.Funcionario;
 import base.Produto;
 import base.Venda;
-import exceptions.RemocaoNaoConcluidaException;
 import exceptions.RepositorioException;
+import exceptions.RepositorioJaExisteException;
 import exceptions.SemPosicaoParaInserirException;
 import exceptions.TamanhoException;
 
 public class ProgramaOtica {
-	public static void main(String[] args) throws TamanhoException, NullPointerException, SemPosicaoParaInserirException, RemocaoNaoConcluidaException, RepositorioException {
+	public static void main(String[] args) throws TamanhoException, NullPointerException, SemPosicaoParaInserirException, RepositorioException {
 		// TODO Auto-generated method stub
 		
 		boolean run = true;//start false to use the loggin
@@ -78,6 +79,9 @@ public class ProgramaOtica {
 							} catch (SemPosicaoParaInserirException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
+							} catch (RepositorioJaExisteException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
 							break;
 						case 2://atualizar
@@ -85,16 +89,21 @@ public class ProgramaOtica {
 							Endereco endereco2 = new Endereco();
 							try{
 								tempC2.setId(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do cliente?")));
-								tempC2.setNome(JOptionPane.showInputDialog("Qual o seu nome?"));
-								tempC2.setNascimento(JOptionPane.showInputDialog("Qual sua data de nascimento?"));
-								tempC2.setCpf(JOptionPane.showInputDialog("Qual o seu cpf?"));
-								tempC2.setTelefone(JOptionPane.showInputDialog("Qual o seu telefone?"));
-								endereco2.setCep(JOptionPane.showInputDialog("Qual o seu cep?"));
-								endereco2.setEstado(JOptionPane.showInputDialog("Qual o seu estado?"));
-								endereco2.setCidade(JOptionPane.showInputDialog("Qual a sua cidade?"));
-								endereco2.setRua(JOptionPane.showInputDialog("Qual a sua rua?"));
-								tempC2.setEndereco(endereco2);
-								fachada.atualizar(tempC2);
+								if (fachada.procurarCliente(tempC2.getId()) != null) {
+									tempC2.setNome(JOptionPane.showInputDialog("Qual o seu nome?"));
+									tempC2.setNascimento(JOptionPane.showInputDialog("Qual sua data de nascimento?"));
+									tempC2.setCpf(JOptionPane.showInputDialog("Qual o seu cpf?"));
+									tempC2.setTelefone(JOptionPane.showInputDialog("Qual o seu telefone?"));
+									endereco2.setCep(JOptionPane.showInputDialog("Qual o seu cep?"));
+									endereco2.setEstado(JOptionPane.showInputDialog("Qual o seu estado?"));
+									endereco2.setCidade(JOptionPane.showInputDialog("Qual a sua cidade?"));
+									endereco2.setRua(JOptionPane.showInputDialog("Qual a sua rua?"));
+									tempC2.setEndereco(endereco2);
+									fachada.atualizar(tempC2);									
+								}else {
+									NullPointerException e = new NullPointerException();
+									throw e;
+								}
 							} catch (TamanhoException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
@@ -107,7 +116,7 @@ public class ProgramaOtica {
 							int deletaC = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
 							try {
 								fachada.removerCliente(deletaC);
-							} catch (RemocaoNaoConcluidaException e) {
+							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
 							}
@@ -149,17 +158,26 @@ public class ProgramaOtica {
 							} catch (SemPosicaoParaInserirException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
+							} catch (RepositorioJaExisteException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
 							break;
 						case 2://atualizar
 							Funcionario tempF2 = new Funcionario();
 							try {
-								tempF2.setId(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do cliente?")));
-								tempF2.setNome(JOptionPane.showInputDialog("Qual o seu nome?"));
-								tempF2.setCpf(JOptionPane.showInputDialog("Qual o seu cpf?"));
-								tempF2.setTelefone(JOptionPane.showInputDialog("Qual o seu telefone?"));
-								fachada.atualizar(tempF2);
-								} catch (TamanhoException e) {
+								tempF2.setId(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do funcionario?")));
+								if (fachada.procurarFuncionario(tempF2.getId()) != null) {
+									tempF2.setNome(JOptionPane.showInputDialog("Qual o seu nome?"));
+									tempF2.setCpf(JOptionPane.showInputDialog("Qual o seu cpf?"));
+									tempF2.setTelefone(JOptionPane.showInputDialog("Qual o seu telefone?"));
+									fachada.atualizar(tempF2);
+									
+								}else {
+									NullPointerException e = new NullPointerException();
+									throw e;
+								}
+							} catch (TamanhoException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
 							} catch (NullPointerException e) {
@@ -171,7 +189,7 @@ public class ProgramaOtica {
 							int deletaF = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
 							try {
 							fachada.removerFuncionario(deletaF);
-							} catch (RemocaoNaoConcluidaException e) {
+							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
 							}
@@ -197,6 +215,8 @@ public class ProgramaOtica {
 				case 3://Produto
 					int opcaoProduto = Integer.parseInt(JOptionPane.showInputDialog("    PRODUTO\n 1. Inserir\n 2. Atualizar\n 3. Remover\n 4. Procurar\n 0. Voltar Menu"));
 					switch (opcaoProduto){
+						case 0://voltar menu
+							break;
 						case 1://inserir
 							try {
 								Produto tempP1 = new Produto();
@@ -211,17 +231,25 @@ public class ProgramaOtica {
 							} catch (SemPosicaoParaInserirException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
+							} catch (RepositorioJaExisteException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
 							break;
 						case 2://atualizar
 							Produto tempP2 = new Produto();
 							try {
-								tempP2.setId(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do cliente?")));
-								tempP2.setNome(JOptionPane.showInputDialog("Qual o nome?"));
-								tempP2.setMarca(JOptionPane.showInputDialog("Qual a marca?"));
-								tempP2.setValorCompra(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Compra?")));
-								tempP2.setValorVenda(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Venda?")));
-								fachada.atualizar(tempP2);
+								tempP2.setId(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do produto?")));
+								if (fachada.procurarProduto(tempP2.getId()) != null) {
+									tempP2.setNome(JOptionPane.showInputDialog("Qual o nome?"));
+									tempP2.setMarca(JOptionPane.showInputDialog("Qual a marca?"));
+									tempP2.setValorCompra(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Compra?")));
+									tempP2.setValorVenda(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Venda?")));
+									fachada.atualizar(tempP2);									
+								}else {
+									NullPointerException e = new NullPointerException();
+									throw e;
+								}
 							} catch (TamanhoException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
@@ -234,7 +262,7 @@ public class ProgramaOtica {
 							int deletaP = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
 							try {
 								fachada.removerProduto(deletaP);
-							} catch (RemocaoNaoConcluidaException e) {
+							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
 							}
@@ -259,13 +287,22 @@ public class ProgramaOtica {
 				case 4://Venda
 					int opcaoVenda = Integer.parseInt(JOptionPane.showInputDialog("    VENDA\n 1. Inserir\n 2. Atualizar\n 3. Remover\n 4. Procurar\n 0. Voltar Menu"));
 					switch(opcaoVenda){
-						case 1://inserir
+					case 0://voltar menu
+						break;
+					case 1://inserir
 							try {
 								Venda tempV1 = new Venda();
-								tempV1.setCliente(fachada.procurarCliente(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do cliente?"))));
-								tempV1.setProduto(fachada.procurarProduto(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do produto?"))));
+								
+								tempV1.setCliente(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do cliente?")));
+								tempV1.setProduto(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do produto?")));
 								fachada.inserir(tempV1);
 							} catch (SemPosicaoParaInserirException e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, e);
+							} catch (NullPointerException e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, e);
+							} catch (TamanhoException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
 							}
@@ -274,11 +311,19 @@ public class ProgramaOtica {
 							Venda tempV2 = new Venda();
 							try {
 							//procura o cliente / produto e manda para o temV2
-								tempV2.setId(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do cliente?")));
-								tempV2.setCliente(fachada.procurarCliente(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do cliente?"))));
-								tempV2.setProduto(fachada.procurarProduto(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do produto?"))));
-								fachada.atualizar(tempV2);
+								tempV2.setId(Integer.parseInt(JOptionPane.showInputDialog("Qual o id da venda?")));
+								if (fachada.procurarVenda(tempV2.getId()) != null) {
+									tempV2.setCliente(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do cliente?")));
+									tempV2.setProduto(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do produto?")));
+									fachada.atualizar(tempV2);
+								}else {
+									NullPointerException e = new NullPointerException();
+									throw e;
+								}
 							} catch (NullPointerException e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, e);
+							} catch (TamanhoException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
 							}
@@ -287,7 +332,7 @@ public class ProgramaOtica {
 							int deletaV = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
 							try {
 							fachada.removerVenda(deletaV);
-							} catch (RemocaoNaoConcluidaException e) {
+							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
 							}
@@ -299,8 +344,9 @@ public class ProgramaOtica {
 							tempV4 = fachada.procurarVenda(buscaV);
 							Cliente cliente = new Cliente();
 							Produto produto = new Produto();
-							cliente = tempV4.getCliente();
-							produto = tempV4.getProduto();
+							//procura seus respectivos objetos, pelo seu id
+							cliente = fachada.procurarCliente(tempV4.getCliente());
+							produto = fachada.procurarProduto(tempV4.getProduto());
 							
 							JOptionPane.showMessageDialog(null, "nome Cliente: " + cliente.getNome() + "\nId Cliente:"+ cliente.getId() 
 							+ "\nnome produto: " + produto.getNome() + "\nId Produto:" + produto.getId() 

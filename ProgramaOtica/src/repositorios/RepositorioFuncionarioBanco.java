@@ -2,8 +2,11 @@ package repositorios;
 
 import java.sql.ResultSet;
 
+
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import javax.swing.JOptionPane;
 
 import base.Funcionario;
 import conecaoBanco.PersistenceMechanismRDBMS;
@@ -11,6 +14,7 @@ import exceptions.PersistenceMechanismException;
 import exceptions.TamanhoException;
 import interfaces.IRepositorioFuncionario;
 import exceptions.RepositorioException;
+import exceptions.RepositorioJaExisteException;
 
 public class RepositorioFuncionarioBanco implements IRepositorioFuncionario {
 	private static RepositorioFuncionarioBanco instance;
@@ -33,17 +37,25 @@ public class RepositorioFuncionarioBanco implements IRepositorioFuncionario {
 		return instance;
 	}
 	
-	public void inserir (Funcionario funcionario) throws RepositorioException {
+	public void inserir (Funcionario funcionario) throws RepositorioException, RepositorioJaExisteException {
 		//Statement é usado para utilizar os comandos sql no java
 		try {
-			Statement statement = (Statement) pm.getCommunicationChannel();
-			statement.executeUpdate("INSERT INTO funcionario (nome, cpf, telefone)"
-					+ "VALUES ('" + funcionario.getNome()+ "', '" + funcionario.getCpf()
-					+ "', '" + funcionario.getTelefone()+ "')");
+			if (procurarFuncionario(funcionario.getId()) == null){
+				Statement statement = (Statement) pm.getCommunicationChannel();
+				statement.executeUpdate("INSERT INTO funcionario (nome, cpf, telefone)"
+						+ "VALUES ('" + funcionario.getNome()+ "', '" + funcionario.getCpf()
+						+ "', '" + funcionario.getTelefone()+ "')");
+			}else {
+				RepositorioJaExisteException e = new RepositorioJaExisteException();
+				throw e;
+			}
 		} catch(PersistenceMechanismException e){
 		    throw new RepositorioException(e);
 		} catch (SQLException e) {
 		    throw new RepositorioException(e);
+		} catch (TamanhoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 		    try {
 				pm.releaseCommunicationChannel();
@@ -51,16 +63,26 @@ public class RepositorioFuncionarioBanco implements IRepositorioFuncionario {
 				throw new RepositorioException(ex);
 			}
 		}
+		JOptionPane.showMessageDialog(null, "Funcionario inserido com sucesso");
 	}
 	
 	public void removerFuncionario (int id) throws RepositorioException {
 		try {
-			Statement statement = (Statement) pm.getCommunicationChannel();
-			statement.executeUpdate("DELETE from funcionario WHERE id = '" + id + "'");
+			Funcionario funcionario = new Funcionario();
+			if(procurarFuncionario(funcionario.getId()) != null) {
+				Statement statement = (Statement) pm.getCommunicationChannel();
+				statement.executeUpdate("DELETE from funcionario WHERE id = '" + id + "'");				
+			}else {
+				NullPointerException e = new NullPointerException();
+				throw e;
+			}
 		} catch (PersistenceMechanismException e) {
 			throw new RepositorioException(e);
 		} catch (SQLException e) {
 			throw new RepositorioException(e);
+		} catch (TamanhoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			try {
 				pm.releaseCommunicationChannel();
@@ -68,19 +90,27 @@ public class RepositorioFuncionarioBanco implements IRepositorioFuncionario {
 				throw new RepositorioException(ex);
 			}
 		}
-		
+		JOptionPane.showMessageDialog(null, "Funcionario removido com sucesso");
 	}
 	
 	public void atualizar (Funcionario funcionario) throws RepositorioException {
 		try {
-			Statement statement = (Statement) pm.getCommunicationChannel();
-			statement.executeUpdate("UPDATE funcionario SET  nome ='" + funcionario.getNome()
-			+ "', cpf ='" + funcionario.getCpf() + "', telefone ='" + funcionario.getTelefone() 
-					+ "' WHERE id = '" + funcionario.getId() + "'");
+			if (procurarFuncionario(funcionario.getId()) != null) {
+				Statement statement = (Statement) pm.getCommunicationChannel();
+				statement.executeUpdate("UPDATE funcionario SET  nome ='" + funcionario.getNome()
+				+ "', cpf ='" + funcionario.getCpf() + "', telefone ='" + funcionario.getTelefone() 
+						+ "' WHERE id = '" + funcionario.getId() + "'");
+			}else {//se produto não existir
+				NullPointerException e = new NullPointerException();
+				throw e;
+			}
 		} catch (PersistenceMechanismException e) {
 			throw new RepositorioException(e);
 		} catch (SQLException e) {
 			throw new RepositorioException(e);
+		} catch (TamanhoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			try {
 				pm.releaseCommunicationChannel();
@@ -88,7 +118,7 @@ public class RepositorioFuncionarioBanco implements IRepositorioFuncionario {
 				throw new RepositorioException(ex);
 			}
 		}
-		
+		JOptionPane.showMessageDialog(null, "funcionario atualizado com sucesso");
 	}
 	
 	public Funcionario procurarFuncionario (int id) throws RepositorioException, TamanhoException {

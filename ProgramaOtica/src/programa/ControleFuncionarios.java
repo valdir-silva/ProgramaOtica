@@ -1,33 +1,35 @@
 package programa;
 
 import base.Funcionario;
-import exceptions.RemocaoNaoConcluidaException;
+
 import exceptions.RepositorioException;
+import exceptions.RepositorioJaExisteException;
 import exceptions.SemPosicaoParaInserirException;
 import exceptions.TamanhoException;
 import interfaces.IRepositorioFuncionario;
 
-public class ControleFuncionarios implements  IRepositorioFuncionario{
-	IRepositorioFuncionario repositorioFuncionario;
-	Funcionario funcionario;
+public class ControleFuncionarios {
+	private IRepositorioFuncionario funcionarios;
 	
-	public ControleFuncionarios (IRepositorioFuncionario repositorioFuncionario) {
-		this.repositorioFuncionario = repositorioFuncionario;
+	public ControleFuncionarios (IRepositorioFuncionario funcionarios) {
+		this.funcionarios = funcionarios;
 	}
 	
-	public void inserir(Funcionario funcionario) throws SemPosicaoParaInserirException, RepositorioException {
-		repositorioFuncionario.inserir(funcionario);
-	}
-
-	public void removerFuncionario(int id) throws RemocaoNaoConcluidaException, RepositorioException {
-		repositorioFuncionario.removerFuncionario(id);
+	public void inserir(Funcionario funcionario) throws SemPosicaoParaInserirException, RepositorioException, RepositorioJaExisteException {
+		this.funcionarios.inserir(funcionario);
 	}
 
 	public void atualizar(Funcionario funcionario) throws NullPointerException, RepositorioException {
-		repositorioFuncionario.atualizar(funcionario);
+		this.funcionarios.atualizar(funcionario);
 	}
 
 	public Funcionario procurarFuncionario(int id) throws NullPointerException, RepositorioException, TamanhoException {
-		return repositorioFuncionario.procurarFuncionario(id);
+		return this.funcionarios.procurarFuncionario(id);
 	}
+
+	public void removerFuncionario(int id) throws RepositorioException {
+		this.funcionarios.removerFuncionario(id);
+	}
+
+
 }

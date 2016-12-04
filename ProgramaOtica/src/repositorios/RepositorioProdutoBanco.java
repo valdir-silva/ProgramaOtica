@@ -2,8 +2,11 @@ package repositorios;
 
 import java.sql.ResultSet;
 
+
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import javax.swing.JOptionPane;
 
 import base.Produto;
 import conecaoBanco.PersistenceMechanismRDBMS;
@@ -13,6 +16,7 @@ import exceptions.PersistenceMechanismException;
 import exceptions.TamanhoException;
 import interfaces.IRepositorioProduto;
 import exceptions.RepositorioException;
+import exceptions.RepositorioJaExisteException;
 
 public class RepositorioProdutoBanco implements IRepositorioProduto {
 	private static RepositorioProdutoBanco instance;
@@ -35,17 +39,26 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 		return instance;
 	}
 	
-	public void inserir (Produto produto) throws RepositorioException {
+	public void inserir (Produto produto) throws RepositorioException, RepositorioJaExisteException {
 		//Statement é usado para utilizar os comandos sql no java
 		try {
-			Statement statement = (Statement) pm.getCommunicationChannel();
-			statement.executeUpdate("INSERT INTO produto (marca, valor_compra, valor_venda, nome)"
-					+ "VALUES ('"+ produto.getMarca() + "', '"+ produto.getValorCompra() 
-					+ "', '" + produto.getValorVenda() + "', '" + produto.getNome() + "')");
+			if (procurarProduto(produto.getId()) == null) {
+				Statement statement = (Statement) pm.getCommunicationChannel();
+				statement.executeUpdate("INSERT INTO produto (marca, valor_compra, valor_venda, nome)"
+						+ "VALUES ('"+ produto.getMarca() + "', '"+ produto.getValorCompra() 
+						+ "', '" + produto.getValorVenda() + "', '" + produto.getNome() + "')");	
+			}else {
+				RepositorioJaExisteException e = new RepositorioJaExisteException();
+				throw e;
+			}
+			
 		} catch(PersistenceMechanismException e){
 		    throw new RepositorioException(e);
 		} catch (SQLException e) {
 		    throw new RepositorioException(e);
+		} catch (TamanhoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 		    try {
 				pm.releaseCommunicationChannel();
@@ -53,16 +66,26 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 				throw new RepositorioException(ex);
 			}
 		}
+		JOptionPane.showMessageDialog(null, "Produto inserido com sucesso");
 	}
 	
 	public void removerProduto (int id) throws RepositorioException {
 		try {
-			Statement statement = (Statement) pm.getCommunicationChannel();
-			statement.executeUpdate("DELETE from produto WHERE id = '" + id + "'");
+			Produto produto = new Produto();
+			if(procurarProduto(produto.getId()) != null) {
+				Statement statement = (Statement) pm.getCommunicationChannel();
+				statement.executeUpdate("DELETE from produto WHERE id = '" + id + "'");				
+			}else {
+				NullPointerException e = new NullPointerException();
+				throw e;
+			}
 		} catch (PersistenceMechanismException e) {
 			throw new RepositorioException(e);
 		} catch (SQLException e) {
 			throw new RepositorioException(e);
+		} catch (TamanhoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			try {
 				pm.releaseCommunicationChannel();
@@ -70,20 +93,28 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 				throw new RepositorioException(ex);
 			}
 		}
-		
+		JOptionPane.showMessageDialog(null, "Produto removido com sucesso");
 	}
 	
 	public void atualizar (Produto produto) throws RepositorioException {
 		try {
-			Statement statement = (Statement) pm.getCommunicationChannel();
-			statement.executeUpdate("UPDATE produto SET marca = '"+ produto.getMarca() + "', valor_compra ='"
-			+ produto.getValorCompra() + "', valor_venda ='" 
-			+ produto.getValorVenda() + "', nome ='" + produto.getNome() + "' WHERE id = '" 
-			+ produto.getId() +"'");
+			if (procurarProduto(produto.getId()) != null) {
+				Statement statement = (Statement) pm.getCommunicationChannel();
+				statement.executeUpdate("UPDATE produto SET marca = '"+ produto.getMarca() + "', valor_compra ='"
+				+ produto.getValorCompra() + "', valor_venda ='" 
+				+ produto.getValorVenda() + "', nome ='" + produto.getNome() + "' WHERE id = '" 
+				+ produto.getId() +"'");				
+			}else {//se produto não existir
+				NullPointerException e = new NullPointerException();
+				throw e;
+			}
 		} catch (PersistenceMechanismException e) {
 			throw new RepositorioException(e);
 		} catch (SQLException e) {
 			throw new RepositorioException(e);
+		} catch (TamanhoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			try {
 				pm.releaseCommunicationChannel();
@@ -91,14 +122,14 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 				throw new RepositorioException(ex);
 			}
 		}
-		
+		JOptionPane.showMessageDialog(null, "Produto atualizado com sucesso");
 	}
 	
 	public Produto procurarProduto (int id) throws RepositorioException, TamanhoException {
 		Produto produto = null; 
 		try {
 			Statement statement = (Statement) pm.getCommunicationChannel();
-			ResultSet resultset = statement.executeQuery("SELECT * FROM cliente WHERE id ='"+ id + "'");
+			ResultSet resultset = statement.executeQuery("SELECT * FROM produto WHERE id ='"+ id + "'");
 			if (resultset.next()){
 				produto = new Produto();
 				

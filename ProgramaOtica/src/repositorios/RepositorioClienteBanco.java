@@ -2,18 +2,21 @@ package repositorios;
 
 import java.sql.ResultSet;
 
+
+
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import javax.swing.JOptionPane;
 
 import base.Cliente;
 import base.Endereco;
 import conecaoBanco.PersistenceMechanismRDBMS;
 import exceptions.PersistenceMechanismException;
-//import exceptions.RemocaoNaoConcluidaException;
-//import exceptions.SemPosicaoParaInserirException;
 import exceptions.TamanhoException;
 import interfaces.IRepositorioCliente;
 import exceptions.RepositorioException;
+import exceptions.RepositorioJaExisteException;
 
 public class RepositorioClienteBanco implements IRepositorioCliente {
 	private static RepositorioClienteBanco instance;
@@ -36,19 +39,28 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 		return instance;
 	}
 	
-	public void inserir (Cliente cliente) throws RepositorioException {
+	public void inserir (Cliente cliente) throws RepositorioException, RepositorioJaExisteException {
 		//Statement é usado para utilizar os comandos sql no java
 		try {
-			Statement statement = (Statement) pm.getCommunicationChannel();
-			statement.executeUpdate("INSERT INTO cliente (estado, cidade, rua, cep, nascimento, nome, cpf, telefone)"
-					+ "VALUES ('"+ cliente.getEndereco().getEstado() + "', '" + cliente.getEndereco().getCidade() 
-					+ "', '" + cliente.getEndereco().getRua() + "', '" + cliente.getEndereco().getCep()
-					+ "', '" + cliente.getNascimento() + "', '" + cliente.getNome()+ "', '" + cliente.getCpf()
-					+ "', '" + cliente.getTelefone()+ "')");
+			if (procurarCliente(cliente.getId()) == null) {
+				Statement statement = (Statement) pm.getCommunicationChannel();
+				statement.executeUpdate("INSERT INTO cliente (estado, cidade, rua, cep, nascimento, nome, cpf, telefone)"
+						+ "VALUES ('"+ cliente.getEndereco().getEstado() + "', '" + cliente.getEndereco().getCidade() 
+						+ "', '" + cliente.getEndereco().getRua() + "', '" + cliente.getEndereco().getCep()
+						+ "', '" + cliente.getNascimento() + "', '" + cliente.getNome()+ "', '" + cliente.getCpf()
+						+ "', '" + cliente.getTelefone()+ "')");
+				
+			}else {
+				RepositorioJaExisteException e = new RepositorioJaExisteException();
+				throw e;
+			}
 		} catch(PersistenceMechanismException e){
 		    throw new RepositorioException(e);
 		} catch (SQLException e) {
 		    throw new RepositorioException(e);
+		} catch (TamanhoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 		    try {
 				pm.releaseCommunicationChannel();
@@ -56,16 +68,26 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 				throw new RepositorioException(ex);
 			}
 		}
+		JOptionPane.showMessageDialog(null, "Cliente inserido com sucesso");
 	}
 	
 	public void removerCliente (int id) throws RepositorioException {
 		try {
-			Statement statement = (Statement) pm.getCommunicationChannel();
-			statement.executeUpdate("DELETE from cliente WHERE id = '" + id + "'");
+			Cliente cliente = new Cliente();
+			if(procurarCliente(cliente.getId()) != null) {
+				Statement statement = (Statement) pm.getCommunicationChannel();
+				statement.executeUpdate("DELETE from cliente WHERE id = '" + id + "'");
+			}else {
+				NullPointerException e = new NullPointerException();
+				throw e;
+			}
 		} catch (PersistenceMechanismException e) {
 			throw new RepositorioException(e);
 		} catch (SQLException e) {
 			throw new RepositorioException(e);
+		} catch (TamanhoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			try {
 				pm.releaseCommunicationChannel();
@@ -73,22 +95,31 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 				throw new RepositorioException(ex);
 			}
 		}
-		
+		JOptionPane.showMessageDialog(null, "Cliente removido com sucesso");
 	}
 	
 	public void atualizar (Cliente cliente) throws RepositorioException {
 		try {
-			Statement statement = (Statement) pm.getCommunicationChannel();
-			statement.executeUpdate("UPDATE cliente SET estado ='"+ cliente.getEndereco().getEstado() 
-					+ "', cidade = '" + cliente.getEndereco().getCidade() 
-					+ "', rua ='" + cliente.getEndereco().getRua() + "', cep = '" + cliente.getEndereco().getCep()
-					+ "', nascimento ='" + cliente.getNascimento() + "', nome ='" 
-					+ cliente.getNome()+ "', cpf ='" + cliente.getCpf() + "', telefone ='" + cliente.getTelefone() 
-					+ "' WHERE id = '" + cliente.getId() + "'");
+			if (procurarCliente(cliente.getId()) != null) {
+				Statement statement = (Statement) pm.getCommunicationChannel();
+				statement.executeUpdate("UPDATE cliente SET estado ='"+ cliente.getEndereco().getEstado() 
+						+ "', cidade = '" + cliente.getEndereco().getCidade() 
+						+ "', rua ='" + cliente.getEndereco().getRua() + "', cep = '" + cliente.getEndereco().getCep()
+						+ "', nascimento ='" + cliente.getNascimento() + "', nome ='" 
+						+ cliente.getNome()+ "', cpf ='" + cliente.getCpf() + "', telefone ='" + cliente.getTelefone() 
+						+ "' WHERE id = '" + cliente.getId() + "'");
+				
+			}else {//se produto não existir
+				NullPointerException e = new NullPointerException();
+				throw e;
+			}
 		} catch (PersistenceMechanismException e) {
 			throw new RepositorioException(e);
 		} catch (SQLException e) {
 			throw new RepositorioException(e);
+		} catch (TamanhoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			try {
 				pm.releaseCommunicationChannel();
@@ -96,12 +127,13 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 				throw new RepositorioException(ex);
 			}
 		}
-		
+		JOptionPane.showMessageDialog(null, "Cliente atualizado com sucesso");
 	}
 	
 	public Cliente procurarCliente (int id) throws RepositorioException, TamanhoException {
 		Cliente cliente = null; 
 		Endereco endereco = null;
+		
 		try {
 			Statement statement = (Statement) pm.getCommunicationChannel();
 			ResultSet resultset = statement.executeQuery("SELECT * FROM cliente WHERE id ='"+ id + "'");

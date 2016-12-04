@@ -6,8 +6,8 @@ import exceptions.RepositorioException;
 import exceptions.TamanhoException;
 
 public class Venda extends Identificacao {
-	private Cliente cliente;
-	private Produto produto;
+	private int IdCliente;
+	private int IdProduto;
 	
 	public Venda() {
 		super();
@@ -21,20 +21,20 @@ public class Venda extends Identificacao {
 		super.setId(id);
 	}
 	
-	public Cliente getCliente() {
-		return cliente;
+	public int getCliente() {
+		return IdCliente;
 	}
 	
-	public void setCliente(Cliente cliente) throws NullPointerException, RepositorioException, TamanhoException {
-		this.cliente = cliente;
+	public void setCliente(int IdCliente) throws NullPointerException, RepositorioException, TamanhoException {
+		this.IdCliente = IdCliente;
 	}
 	
-	public Produto getProduto() {
-		return produto;
+	public int getProduto() {
+		return IdProduto;
 	}
 	
-	public void setProduto(Produto produto) {
-		this.produto = produto;
+	public void setProduto(int IdProduto) {
+		this.IdProduto = IdProduto;
 	}
 	
 }

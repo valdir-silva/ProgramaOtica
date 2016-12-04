@@ -32,7 +32,7 @@ public class Produto extends Identificacao{
 	}
 	
 	public void setMarca(String marca) throws TamanhoException {
-		if (super.getNome().length() < 40){
+		if (marca.length() < 40){
 			this.marca = marca;			
 		} else {
 			TamanhoException e = new TamanhoException();

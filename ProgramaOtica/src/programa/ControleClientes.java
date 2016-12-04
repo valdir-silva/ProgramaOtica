@@ -1,8 +1,9 @@
 package programa;
 
 import base.Cliente;
-import exceptions.RemocaoNaoConcluidaException;
+
 import exceptions.RepositorioException;
+import exceptions.RepositorioJaExisteException;
 import exceptions.SemPosicaoParaInserirException;
 import exceptions.TamanhoException;
 import interfaces.IRepositorioCliente;
@@ -14,7 +15,7 @@ public class ControleClientes {
 		this.clientes = clientes;
 	}
 	
-	public void inserir (Cliente cliente) throws SemPosicaoParaInserirException, RepositorioException {
+	public void inserir (Cliente cliente) throws SemPosicaoParaInserirException, RepositorioException, RepositorioJaExisteException {
 		this.clientes.inserir(cliente);
 	}
 	
@@ -26,7 +27,7 @@ public class ControleClientes {
 		return this.clientes.procurarCliente(id);
 	}
 	
-	public void removerCliente (int id) throws RemocaoNaoConcluidaException, RepositorioException {
+	public void removerCliente (int id) throws RepositorioException {
 		this.clientes.removerCliente(id);
 	}
 	

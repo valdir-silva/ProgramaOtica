@@ -1,7 +1,7 @@
 package repositorios;
 
 import base.Funcionario;
-import exceptions.RemocaoNaoConcluidaException;
+
 import exceptions.SemPosicaoParaInserirException;
 import interfaces.IRepositorioFuncionario;
 
@@ -36,7 +36,7 @@ public class RepositorioFuncionarioArray implements IRepositorioFuncionario {
 		}
 	}
 
-	public void removerFuncionario(int id) throws RemocaoNaoConcluidaException {
+	public void removerFuncionario(int id) {
 		boolean found = false;
 		for (int i = 0;i < this.funcionario.length;i++){
 			if (this.funcionario[i].getId() == id){
@@ -47,7 +47,7 @@ public class RepositorioFuncionarioArray implements IRepositorioFuncionario {
 			}
 		}
 		if (!found) {//se não removeu!!
-			RemocaoNaoConcluidaException e = new RemocaoNaoConcluidaException();
+			NullPointerException e = new NullPointerException();
 			throw e;
 		}
 	}

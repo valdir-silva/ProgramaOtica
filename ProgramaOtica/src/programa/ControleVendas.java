@@ -1,34 +1,33 @@
 package programa;
 
 import base.Venda;
-import exceptions.RemocaoNaoConcluidaException;
+
 import exceptions.RepositorioException;
 import exceptions.SemPosicaoParaInserirException;
 import exceptions.TamanhoException;
 import interfaces.IRepositorioVenda;
 
 public class ControleVendas implements IRepositorioVenda {
-	IRepositorioVenda repositorioVenda;
-	Venda venda;
+	IRepositorioVenda vendas;
 	
 	public ControleVendas (IRepositorioVenda repositorioVenda) {
-		this.repositorioVenda = repositorioVenda;
+		this.vendas = repositorioVenda;
 	}
 	
-	public void inserir (Venda venda) throws SemPosicaoParaInserirException, RepositorioException {
-		repositorioVenda.inserir(venda);
+	public void inserir (Venda venda) throws SemPosicaoParaInserirException, RepositorioException, NullPointerException, TamanhoException {
+		this.vendas.inserir(venda);
 	}
 	
-	public void removerVenda (int id) throws RemocaoNaoConcluidaException, RepositorioException {
-		repositorioVenda.removerVenda(id);
+	public void removerVenda (int id) throws RepositorioException {
+		this.vendas.removerVenda(id);
 	}
 	
-	public void atualizar (Venda venda) throws NullPointerException, RepositorioException {
-		repositorioVenda.atualizar(venda);
+	public void atualizar (Venda venda) throws NullPointerException, RepositorioException, TamanhoException {
+		this.vendas.atualizar(venda);
 	}
 	
 	public Venda procurarVenda (int id) throws NullPointerException, RepositorioException, TamanhoException {
-		return repositorioVenda.procurarVenda(id);
+		return this.vendas.procurarVenda(id);
 	}
 
 }
