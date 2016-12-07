@@ -11,6 +11,9 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JDesktopPane;
 
 public class JLogin extends JFrame {
 
@@ -39,7 +42,7 @@ public class JLogin extends JFrame {
 	 */
 	public JLogin() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 400, 300);
+		setBounds(100, 100, 720, 528);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -70,6 +73,14 @@ public class JLogin extends JFrame {
 		contentPane.add(lblSenha);
 		
 		JButton btnLogin = new JButton("login");
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//abrir tela inicial se login estiver certo
+				JPrograma programa = new JPrograma();
+				contentPane.add(programa);
+				programa.setVisible(true);
+			}
+		});
 		btnLogin.setBounds(149, 178, 89, 23);
 		contentPane.add(btnLogin);
 		

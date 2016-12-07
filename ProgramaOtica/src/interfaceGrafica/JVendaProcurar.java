@@ -1,21 +1,19 @@
 package interfaceGrafica;
 
 import java.awt.BorderLayout;
-
-import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
-public class JClienteInserir extends JFrame {
+public class JVendaProcurar extends JFrame {
+
 
 	private JPanel contentPane;
 
@@ -38,7 +36,7 @@ public class JClienteInserir extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public JClienteInserir() {
+	public JVendaProcurar() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 720, 528);
 		contentPane = new JPanel();
@@ -120,4 +118,5 @@ public class JClienteInserir extends JFrame {
 		JButton button_11 = new JButton("Procurar");
 		menu.add(button_11);
 	}
+
 }
