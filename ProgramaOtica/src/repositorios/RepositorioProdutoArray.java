@@ -2,10 +2,11 @@ package repositorios;
 
 import base.Produto;
 
-import exceptions.SemPosicaoParaInserirException;
-import interfaces.IRepositorioProduto;
 
-public class RepositorioProdutoArray implements IRepositorioProduto{
+import exceptions.SemPosicaoParaInserirException;
+import exceptions.TamanhoException;
+
+public class RepositorioProdutoArray {
 	private Produto[] produto;
 	private int indice;
 	
@@ -17,7 +18,6 @@ public class RepositorioProdutoArray implements IRepositorioProduto{
 		boolean found = false;
 		if (this.produto[indice] == null){//se a posição esta vaga coloque
 			this.produto[indice] = produto;
-			produto.setId(indice);
 			found = true;
 			indice++;			
 		}else {//se não estiver procure em todas as posições do array se tem posisao livre
@@ -77,4 +77,7 @@ public class RepositorioProdutoArray implements IRepositorioProduto{
 		throw e;
 	}
 
+	public Produto[] todosProdutos() throws TamanhoException {
+		return this.produto;
+	}
 }

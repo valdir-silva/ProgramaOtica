@@ -3,6 +3,7 @@ package programa;
 import javax.swing.JOptionPane;
 
 
+
 import base.Cliente;
 import base.Endereco;
 import base.Funcionario;
@@ -12,38 +13,18 @@ import exceptions.RepositorioException;
 import exceptions.RepositorioJaExisteException;
 import exceptions.SemPosicaoParaInserirException;
 import exceptions.TamanhoException;
+import repositorios.RepositorioClienteArray;
+import repositorios.RepositorioFuncionarioArray;
+import repositorios.RepositorioProdutoArray;
+import repositorios.RepositorioVendaArray;
 
 public class ProgramaOtica {
 	public static void main(String[] args) throws TamanhoException, NullPointerException, SemPosicaoParaInserirException, RepositorioException {
-		// TODO Auto-generated method stub
 		
 		boolean run = true;//start false to use the loggin
 		Fachada instance = Fachada.getInstance();
 		Fachada fachada = instance;
-		/*
-		Funcionario loginFuncionario = new Funcionario();
-		loginFuncionario.setCpf("");
-		while (true) {
-			int loginId, op;
-			String loginCpf;
-			loginId = Integer.parseInt(JOptionPane.showInputDialog("Login funcionario: \n Digite seu id"));
-			loginCpf = (JOptionPane.showInputDialog("Senha funcionario: \n Digite seu cpf"));
-			loginFuncionario = fachada.procurarFuncionario(loginId);
-			
-			if (loginCpf.equals(loginFuncionario.getCpf()) ) {//testa se o cpf confere
-				run = true;
-				break;
-			} else {
-				JOptionPane.showMessageDialog(null, "Id ou login nao conferem");
-				op = Integer.parseInt(JOptionPane.showInputDialog("1. Tentar novamente \n0. Encerrar programa"));
-				if (op == 0) {//end program
-					run = false;
-					break;
-				}
-			}
-
-		}*/
-		
+				
 		while (run) {
 			int opcao;
 			opcao = Integer.parseInt(JOptionPane.showInputDialog(" 1. Cliente\n 2. Funcionario\n 3. Produto\n 4. Venda\n 0. Encerrar Programa"));
@@ -55,7 +36,7 @@ public class ProgramaOtica {
 					
 				case 1://Cliente
 					int opcaoCliente;
-					opcaoCliente = Integer.parseInt(JOptionPane.showInputDialog("    CLIENTE\n 1. Inserir\n 2. Atualizar\n 3. Remover\n 4. Procurar\n 0. Voltar Menu"));
+					opcaoCliente = Integer.parseInt(JOptionPane.showInputDialog("    CLIENTE\n 1. Inserir\n 2. Atualizar\n 3. Remover\n 4. Procurar\n 5. Todos\n 0. Voltar Menu"));
 					switch (opcaoCliente){
 						case 0://voltar menu
 							break;
@@ -80,7 +61,6 @@ public class ProgramaOtica {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
 							} catch (RepositorioJaExisteException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 							break;
@@ -126,13 +106,37 @@ public class ProgramaOtica {
 							int buscaC = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
 							try {
 								tempC4 = fachada.procurarCliente(buscaC);
-								JOptionPane.showMessageDialog(null, "nome: " + tempC4.getNome() +"\nnascimento: " + tempC4.getNascimento() + "\ncpf: " + tempC4.getCpf() 
+								JOptionPane.showMessageDialog(null,"id do cliente: " + tempC4.getId() + "\nnome: " + tempC4.getNome() +"\nnascimento: " + tempC4.getNascimento() + "\ncpf: " + tempC4.getCpf() 
 								+ "\ntelefone: " + tempC4.getTelefone() + "\ncep: " + tempC4.getEndereco().getCep() + "\nestado: " + tempC4.getEndereco().getEstado() 
 								+ "\ncidade: " + tempC4.getEndereco().getCidade() + "\nrua: " + tempC4.getEndereco().getRua() + "\n");
 							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
 							}
+							break;
+						case 5://Mostrar todos
+							int i = 0;
+							RepositorioClienteArray clientes = new RepositorioClienteArray();
+							Cliente[] tempC5;
+							clientes = fachada.todosClientes();
+							tempC5 = clientes.todosClientes();
+							
+							
+							while(tempC5[i] != null){
+								try {
+									JOptionPane.showMessageDialog(null,"id do cliente: " + tempC5[i].getId() + "\nnome: " + tempC5[i].getNome() +"\nnascimento: " 
+									+ tempC5[i].getNascimento() + "\ncpf: " + tempC5[i].getCpf() + "\ntelefone: " 
+									+ tempC5[i].getTelefone() + "\ncep: " + tempC5[i].getEndereco().getCep() 
+									+ "\nestado: " + tempC5[i].getEndereco().getEstado() + "\ncidade: " 
+									+ tempC5[i].getEndereco().getCidade() + "\nrua: " + tempC5[i].getEndereco().getRua() + "\n");
+									i++;
+								}
+								catch (NullPointerException e){
+									e.printStackTrace();
+									JOptionPane.showMessageDialog(null, e);
+								}
+							}
+							
 							break;
 						default:
 							JOptionPane.showMessageDialog(null, "ERROR!!\n Opcao nao confere");
@@ -141,7 +145,7 @@ public class ProgramaOtica {
 					break;
 					
 				case 2://Funcionário
-					int opcaoFuncionario = Integer.parseInt(JOptionPane.showInputDialog("    FUNCIONARIO\n 1. Inserir\n 2. Atualizar\n 3. Remover\n 4. Procurar\n 0. Voltar Menu"));
+					int opcaoFuncionario = Integer.parseInt(JOptionPane.showInputDialog("    FUNCIONARIO\n 1. Inserir\n 2. Atualizar\n 3. Remover\n 4. Procurar\n 5. Todos\n 0. Voltar Menu"));
 					switch (opcaoFuncionario){
 						case 0://voltar menu
 							break;
@@ -159,7 +163,6 @@ public class ProgramaOtica {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
 							} catch (RepositorioJaExisteException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 							break;
@@ -199,11 +202,31 @@ public class ProgramaOtica {
 							int buscaF = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
 							try {
 								tempF4 = fachada.procurarFuncionario(buscaF);
-								JOptionPane.showMessageDialog(null, "nome: " + tempF4.getNome() + "\ncpf: " + tempF4.getCpf() 
+								JOptionPane.showMessageDialog(null,"id do funcionario: " + tempF4.getId() + "\nnome: " + tempF4.getNome() + "\ncpf: " + tempF4.getCpf() 
 								+ "\ntelefone: " + tempF4.getTelefone());
 							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
+							}
+							break;
+						case 5://todos
+							int i = 0;
+							RepositorioFuncionarioArray funcionarios = new RepositorioFuncionarioArray();
+							Funcionario[] tempF5;
+							funcionarios = fachada.todosFuncionarios();
+							tempF5 = funcionarios.todosFuncionarios();
+							
+							
+							while(tempF5[i] != null){
+								try {
+									JOptionPane.showMessageDialog(null,"id do funcionario: " + tempF5[i].getId() + "\nnome: " + tempF5[i].getNome() + "\ncpf: " 
+									+ tempF5[i].getCpf() + "\ntelefone: " + tempF5[i].getTelefone());
+									i++;
+								}
+								catch (NullPointerException e){
+									e.printStackTrace();
+									JOptionPane.showMessageDialog(null, e);
+								}
 							}
 							break;
 						default:
@@ -213,7 +236,7 @@ public class ProgramaOtica {
 					break;
 					
 				case 3://Produto
-					int opcaoProduto = Integer.parseInt(JOptionPane.showInputDialog("    PRODUTO\n 1. Inserir\n 2. Atualizar\n 3. Remover\n 4. Procurar\n 0. Voltar Menu"));
+					int opcaoProduto = Integer.parseInt(JOptionPane.showInputDialog("    PRODUTO\n 1. Inserir\n 2. Atualizar\n 3. Remover\n 4. Procurar\n 5. Todos\n 0. Voltar Menu"));
 					switch (opcaoProduto){
 						case 0://voltar menu
 							break;
@@ -232,7 +255,6 @@ public class ProgramaOtica {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
 							} catch (RepositorioJaExisteException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 							break;
@@ -272,11 +294,31 @@ public class ProgramaOtica {
 							int buscaP = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
 							try {
 								tempP4 = fachada.procurarProduto(buscaP);
-								JOptionPane.showMessageDialog(null, "nome: " + tempP4.getNome() + "\nmarca: " + tempP4.getMarca() 
+								JOptionPane.showMessageDialog(null,"id do produto: " + tempP4.getId() + "\nnome: " + tempP4.getNome() + "\nmarca: " + tempP4.getMarca() 
 								+ "\nvalor de compra: " + tempP4.getValorCompra() + "\nvalor de venda: " + tempP4.getValorVenda());
 							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
+							}
+							break;
+						case 5:
+							int i = 0;
+							RepositorioProdutoArray produtos = new RepositorioProdutoArray();
+							Produto[] tempP5;
+							produtos = fachada.todosProdutos();
+							tempP5 = produtos.todosProdutos();
+							
+							
+							while(tempP5[i] != null){
+								try {
+									JOptionPane.showMessageDialog(null,"id do produto: " + tempP5[i].getId() + "\nnome: " + tempP5[i].getNome() + "\nmarca: " + tempP5[i].getMarca() 
+									+ "\nvalor de compra: " + tempP5[i].getValorCompra() + "\nvalor de venda: " + tempP5[i].getValorVenda());
+									i++;
+								}
+								catch (NullPointerException e){
+									e.printStackTrace();
+									JOptionPane.showMessageDialog(null, e);
+								}
 							}
 							break;
 						default:
@@ -285,7 +327,7 @@ public class ProgramaOtica {
 					}
 					break;
 				case 4://Venda
-					int opcaoVenda = Integer.parseInt(JOptionPane.showInputDialog("    VENDA\n 1. Inserir\n 2. Atualizar\n 3. Remover\n 4. Procurar\n 0. Voltar Menu"));
+					int opcaoVenda = Integer.parseInt(JOptionPane.showInputDialog("    VENDA\n 1. Inserir\n 2. Atualizar\n 3. Remover\n 4. Procurar\n 5. Todos\n 0. Voltar Menu"));
 					switch(opcaoVenda){
 					case 0://voltar menu
 						break;
@@ -341,19 +383,47 @@ public class ProgramaOtica {
 							Venda tempV4 = new Venda();
 							int buscaV = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
 							try {
-							tempV4 = fachada.procurarVenda(buscaV);
-							Cliente cliente = new Cliente();
-							Produto produto = new Produto();
-							//procura seus respectivos objetos, pelo seu id
-							cliente = fachada.procurarCliente(tempV4.getCliente());
-							produto = fachada.procurarProduto(tempV4.getProduto());
-							
-							JOptionPane.showMessageDialog(null, "nome Cliente: " + cliente.getNome() + "\nId Cliente:"+ cliente.getId() 
-							+ "\nnome produto: " + produto.getNome() + "\nId Produto:" + produto.getId() 
-							+ "\nnome Venda" + tempV4.getNome());
+								tempV4 = fachada.procurarVenda(buscaV);
+								Cliente cliente = new Cliente();
+								Produto produto = new Produto();
+								//procura seus respectivos objetos, pelo seu id
+								cliente = fachada.procurarCliente(tempV4.getCliente());
+								produto = fachada.procurarProduto(tempV4.getProduto());
+								
+								JOptionPane.showMessageDialog(null,"id da venda: " + tempV4.getId() + "\nnome Cliente: " 
+								+ cliente.getNome() + "\nId Cliente:"+ cliente.getId() 
+								+ "\nnome produto: " + produto.getNome() + "\nId Produto:" + produto.getId() 
+								+ "\nnome Venda" + tempV4.getNome());
 							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
+							}
+							break;
+						case 5:
+							int i = 0;
+							RepositorioVendaArray vendas = new RepositorioVendaArray();
+							Venda[] tempV5;
+							vendas = fachada.todasVendas();
+							tempV5 = vendas.todasVendas();
+							
+							
+							while(tempV5[i] != null) {
+								try {
+									Cliente cliente = new Cliente();
+									Produto produto = new Produto();
+									//procura seus respectivos objetos, pelo seu id
+									cliente = fachada.procurarCliente(tempV5[i].getCliente());
+									produto = fachada.procurarProduto(tempV5[i].getProduto());
+									
+									JOptionPane.showMessageDialog(null, "id da venda: " + tempV5[i].getId() +"\nnome Cliente: " 
+									+ cliente.getNome() + "\nId Cliente:"+ cliente.getId() 
+									+ "\nnome produto: " + produto.getNome() + "\nId Produto:" + produto.getId());
+									i++;
+								}
+								catch (NullPointerException e){
+									e.printStackTrace();
+									JOptionPane.showMessageDialog(null, e);
+								}
 							}
 							break;
 						default:

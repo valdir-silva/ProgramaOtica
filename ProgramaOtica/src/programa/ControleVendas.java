@@ -6,6 +6,7 @@ import exceptions.RepositorioException;
 import exceptions.SemPosicaoParaInserirException;
 import exceptions.TamanhoException;
 import interfaces.IRepositorioVenda;
+import repositorios.RepositorioVendaArray;
 
 public class ControleVendas implements IRepositorioVenda {
 	IRepositorioVenda vendas;
@@ -28,6 +29,10 @@ public class ControleVendas implements IRepositorioVenda {
 	
 	public Venda procurarVenda (int id) throws NullPointerException, RepositorioException, TamanhoException {
 		return this.vendas.procurarVenda(id);
+	}
+	
+	public RepositorioVendaArray todasVendas() throws TamanhoException {
+		return this.vendas.todasVendas();
 	}
 
 }

@@ -7,6 +7,7 @@ import exceptions.RepositorioJaExisteException;
 import exceptions.SemPosicaoParaInserirException;
 import exceptions.TamanhoException;
 import interfaces.IRepositorioProduto;
+import repositorios.RepositorioProdutoArray;
 
 public class ControleProdutos implements IRepositorioProduto {
 	IRepositorioProduto produtos;
@@ -29,5 +30,9 @@ public class ControleProdutos implements IRepositorioProduto {
 	
 	public Produto procurarProduto (int id) throws NullPointerException, RepositorioException, TamanhoException {
 		return this.produtos.procurarProduto(id);
+	}
+
+	public RepositorioProdutoArray todosProdutos() throws TamanhoException {
+		return this.produtos.todosProdutos();
 	}
 }

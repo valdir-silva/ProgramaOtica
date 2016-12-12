@@ -7,8 +7,9 @@ import exceptions.RepositorioJaExisteException;
 import exceptions.SemPosicaoParaInserirException;
 import exceptions.TamanhoException;
 import interfaces.IRepositorioFuncionario;
+import repositorios.RepositorioFuncionarioArray;
 
-public class ControleFuncionarios {
+public class ControleFuncionarios implements IRepositorioFuncionario{
 	private IRepositorioFuncionario funcionarios;
 	
 	public ControleFuncionarios (IRepositorioFuncionario funcionarios) {
@@ -31,5 +32,7 @@ public class ControleFuncionarios {
 		this.funcionarios.removerFuncionario(id);
 	}
 
-
+	public RepositorioFuncionarioArray todosFuncionarios() throws TamanhoException {
+		return this.funcionarios.todosFuncionarios();
+	}
 }

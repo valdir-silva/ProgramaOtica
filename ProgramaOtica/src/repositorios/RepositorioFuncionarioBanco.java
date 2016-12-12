@@ -15,6 +15,7 @@ import exceptions.TamanhoException;
 import interfaces.IRepositorioFuncionario;
 import exceptions.RepositorioException;
 import exceptions.RepositorioJaExisteException;
+import exceptions.SemPosicaoParaInserirException;
 
 public class RepositorioFuncionarioBanco implements IRepositorioFuncionario {
 	private static RepositorioFuncionarioBanco instance;
@@ -54,7 +55,6 @@ public class RepositorioFuncionarioBanco implements IRepositorioFuncionario {
 		} catch (SQLException e) {
 		    throw new RepositorioException(e);
 		} catch (TamanhoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 		    try {
@@ -81,7 +81,6 @@ public class RepositorioFuncionarioBanco implements IRepositorioFuncionario {
 		} catch (SQLException e) {
 			throw new RepositorioException(e);
 		} catch (TamanhoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
@@ -109,7 +108,6 @@ public class RepositorioFuncionarioBanco implements IRepositorioFuncionario {
 		} catch (SQLException e) {
 			throw new RepositorioException(e);
 		} catch (TamanhoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
@@ -129,6 +127,7 @@ public class RepositorioFuncionarioBanco implements IRepositorioFuncionario {
 			if (resultset.next()){
 				funcionario = new Funcionario();
 				
+				funcionario.setId(resultset.getInt("id"));
 				funcionario.setCpf(resultset.getString("cpf"));
 				funcionario.setNome(resultset.getString("nome"));
 				funcionario.setTelefone(resultset.getString("telefone"));
@@ -147,6 +146,39 @@ public class RepositorioFuncionarioBanco implements IRepositorioFuncionario {
 		}
 		
 		return funcionario;
+	}
+	
+	public RepositorioFuncionarioArray todosFuncionarios() throws TamanhoException {
+		RepositorioFuncionarioArray funcionarios = null;
+		try {
+			Statement statement;
+			ResultSet resultset;
+			statement = (Statement) pm.getCommunicationChannel();
+			resultset = statement.executeQuery("SELECT * FROM funcionario ");
+			
+			while (resultset.next()){
+				funcionarios = new RepositorioFuncionarioArray();
+				Funcionario funcionario = new Funcionario();
+				
+				funcionario.setId(resultset.getInt("id"));
+				funcionario.setNome(resultset.getString("nome"));  
+				funcionario.setTelefone(resultset.getString("telefone"));
+				funcionario.setCpf(resultset.getString("cpf"));
+				
+				try {
+					funcionarios.inserir(funcionario);
+				} catch (SemPosicaoParaInserirException e) {
+					e.printStackTrace();
+				}
+			}
+			resultset.close();
+		
+		} catch (PersistenceMechanismException e1) {
+			e1.printStackTrace();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return funcionarios;
 	}
 	
 }

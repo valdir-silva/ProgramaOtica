@@ -2,10 +2,11 @@ package repositorios;
 
 import base.Funcionario;
 
-import exceptions.SemPosicaoParaInserirException;
-import interfaces.IRepositorioFuncionario;
 
-public class RepositorioFuncionarioArray implements IRepositorioFuncionario {
+import exceptions.SemPosicaoParaInserirException;
+import exceptions.TamanhoException;
+
+public class RepositorioFuncionarioArray  {
 	private Funcionario[] funcionario;
 	private int indice;
 	
@@ -17,7 +18,6 @@ public class RepositorioFuncionarioArray implements IRepositorioFuncionario {
 		boolean found = false;
 		if (this.funcionario[indice] == null){//se a posição esta vaga coloque
 			this.funcionario[indice] = funcionario;
-			funcionario.setId(indice);
 			found = true;
 			indice++;
 		}else {//se não estiver procure em todas as posições do array se tem posisao livre
@@ -75,5 +75,9 @@ public class RepositorioFuncionarioArray implements IRepositorioFuncionario {
 		}
 		NullPointerException e = new NullPointerException();
 		throw e;
+	}
+	
+	public Funcionario[] todosFuncionarios() throws TamanhoException {
+		return this.funcionario;
 	}
 }

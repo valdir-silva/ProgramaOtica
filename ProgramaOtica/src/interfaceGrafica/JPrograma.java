@@ -1,38 +1,38 @@
 package interfaceGrafica;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.Font;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
+import javax.swing.JTabbedPane;
 
 public class JPrograma extends JFrame {
 
-
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private static JPrograma instance;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JClienteInserir frame = new JClienteInserir();
+					JPrograma frame = new JPrograma();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+	}
+	
+	public static JPrograma getInstance() {
+		if(instance == null) {
+			instance = new JPrograma();
+			return instance;
+		}else {	
+			return instance;
+		}
 	}
 
 	/**
@@ -46,84 +46,23 @@ public class JPrograma extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnEncerrar = new JButton("Encerrar");
-		btnEncerrar.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnEncerrar.setBounds(582, 29, 96, 23);
-		contentPane.add(btnEncerrar);
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBounds(0, 0, 704, 490);
+		contentPane.add(tabbedPane);
 		
-		JLabel lblCliente = new JLabel("Cliente");
-		lblCliente.setFont(new Font("Times New Roman", Font.BOLD, 30));
-		lblCliente.setBounds(48, 212, 227, 66);
-		contentPane.add(lblCliente);
+		JPanel panelInicio = new JPanel();
+		tabbedPane.addTab("Inicio", null, panelInicio, null);
 		
-		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(27, 29, 300, 40);
-		contentPane.add(menuBar);
 		
-		JMenu mnCliente = new JMenu("Cliente");
-		menuBar.add(mnCliente);
+		tabbedPane.addTab("Cliente", new JClienteTodos());
 		
-		JButton btnInserir = new JButton("Inserir");
-		btnInserir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		mnCliente.add(btnInserir);
 		
-		JButton btnAtualizar = new JButton("Atualizar");
-		mnCliente.add(btnAtualizar);
+		tabbedPane.addTab("Funcionario", new JFuncionarioInserir());
 		
-		JButton btnRemover = new JButton("Remover");
-		mnCliente.add(btnRemover);
 		
-		JButton btnProcurar = new JButton("Procurar");
-		mnCliente.add(btnProcurar);
+		tabbedPane.addTab("Produto", new JProdutoInserir());
 		
-		JMenu mnFuncionario = new JMenu("Funcionario");
-		menuBar.add(mnFuncionario);
 		
-		JButton button = new JButton("Inserir");
-		mnFuncionario.add(button);
-		
-		JButton button_1 = new JButton("Atualizar");
-		mnFuncionario.add(button_1);
-		
-		JButton button_2 = new JButton("Remover");
-		mnFuncionario.add(button_2);
-		
-		JButton button_3 = new JButton("Procurar");
-		mnFuncionario.add(button_3);
-		
-		JMenu mnProduto = new JMenu("Produto");
-		menuBar.add(mnProduto);
-		
-		JButton button_4 = new JButton("Inserir");
-		mnProduto.add(button_4);
-		
-		JButton button_5 = new JButton("Atualizar");
-		mnProduto.add(button_5);
-		
-		JButton button_6 = new JButton("Remover");
-		mnProduto.add(button_6);
-		
-		JButton button_7 = new JButton("Procurar");
-		mnProduto.add(button_7);
-		
-		JMenu menu = new JMenu("Venda");
-		menuBar.add(menu);
-		
-		JButton button_8 = new JButton("Inserir");
-		menu.add(button_8);
-		
-		JButton button_9 = new JButton("Atualizar");
-		menu.add(button_9);
-		
-		JButton button_10 = new JButton("Remover");
-		menu.add(button_10);
-		
-		JButton button_11 = new JButton("Procurar");
-		menu.add(button_11);
+		tabbedPane.addTab("Venda", new JVendaInserir());
 	}
-
 }

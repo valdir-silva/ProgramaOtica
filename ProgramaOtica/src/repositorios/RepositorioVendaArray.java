@@ -2,10 +2,11 @@ package repositorios;
 
 import base.Venda;
 
-import exceptions.SemPosicaoParaInserirException;
-import interfaces.IRepositorioVenda;
 
-public class RepositorioVendaArray implements IRepositorioVenda{
+import exceptions.SemPosicaoParaInserirException;
+import exceptions.TamanhoException;
+
+public class RepositorioVendaArray {
 	private Venda[] venda;
 	private int indice;
 	
@@ -17,7 +18,6 @@ public class RepositorioVendaArray implements IRepositorioVenda{
 		boolean found = false;
 		if (this.venda[indice] == null){//se a posição esta vaga coloque
 			this.venda[indice] = venda;
-			venda.setId(indice);
 			found = true;
 			indice++;			
 		}else {//se não estiver procure em todas as posições do array se tem posisao livre
@@ -76,5 +76,7 @@ public class RepositorioVendaArray implements IRepositorioVenda{
 		NullPointerException e = new NullPointerException();
 		throw e;
 	}
-	
+	public Venda[] todasVendas() throws TamanhoException {
+		return this.venda;
+	}	
 }

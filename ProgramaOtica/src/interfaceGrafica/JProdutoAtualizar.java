@@ -1,6 +1,5 @@
 package interfaceGrafica;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
 
@@ -13,11 +12,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 public class JProdutoAtualizar extends JFrame {
+	
 	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
+	private static final long serialVersionUID = 1L;
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

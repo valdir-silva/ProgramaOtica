@@ -13,9 +13,13 @@ import interfaces.IRepositorioCliente;
 import interfaces.IRepositorioFuncionario;
 import interfaces.IRepositorioProduto;
 import interfaces.IRepositorioVenda;
+import repositorios.RepositorioClienteArray;
 import repositorios.RepositorioClienteBanco;
+import repositorios.RepositorioFuncionarioArray;
 import repositorios.RepositorioFuncionarioBanco;
+import repositorios.RepositorioProdutoArray;
 import repositorios.RepositorioProdutoBanco;
+import repositorios.RepositorioVendaArray;
 import repositorios.RepositorioVendaBanco;
 
 public class Fachada {
@@ -79,6 +83,10 @@ public class Fachada {
 	public void removerCliente (int id) throws RepositorioException {
 		this.clientes.removerCliente(id);
 	}
+	
+	public RepositorioClienteArray todosClientes() throws TamanhoException {
+		return this.clientes.todosClientes();
+	}
 
 	////////////////
 	///Funcionario//
@@ -98,6 +106,10 @@ public class Fachada {
 	
 	public void removerFuncionario (int id) throws RepositorioException {
 		this.funcionarios.removerFuncionario(id);
+	}
+	
+	public RepositorioFuncionarioArray todosFuncionarios() throws TamanhoException {
+		return this.funcionarios.todosFuncionarios();
 	}
 	
 	/////////////
@@ -120,6 +132,10 @@ public class Fachada {
 		this.produtos.removerProduto(id);
 	}
 	
+	public RepositorioProdutoArray todosProdutos() throws TamanhoException {
+		return this.produtos.todosProdutos();
+	}
+	
 	/////////////
 	////Venda////
 	/////////////
@@ -138,6 +154,10 @@ public class Fachada {
 	
 	public void removerVenda (int id) throws RepositorioException {
 		this.vendas.removerVenda(id);
+	}
+	
+	public RepositorioVendaArray todasVendas() throws TamanhoException {
+		return this.vendas.todasVendas();
 	}
 	
 }

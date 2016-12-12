@@ -7,6 +7,7 @@ import exceptions.RepositorioJaExisteException;
 import exceptions.SemPosicaoParaInserirException;
 import exceptions.TamanhoException;
 import interfaces.IRepositorioCliente;
+import repositorios.RepositorioClienteArray;
 
 public class ControleClientes {
 	private IRepositorioCliente clientes;
@@ -31,5 +32,7 @@ public class ControleClientes {
 		this.clientes.removerCliente(id);
 	}
 	
-	
+	public RepositorioClienteArray todosClientes() throws TamanhoException {
+		return this.clientes.todosClientes();
+	}
 }

@@ -3,6 +3,7 @@ package repositorios;
 import java.sql.ResultSet;
 
 
+
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -16,6 +17,7 @@ import interfaces.IRepositorioVenda;
 import programa.Fachada;
 import exceptions.RepositorioException;
 import exceptions.RepositorioJaExisteException;
+import exceptions.SemPosicaoParaInserirException;
 
 public class RepositorioVendaBanco implements IRepositorioVenda {
 	private static RepositorioVendaBanco instance;
@@ -153,7 +155,7 @@ public class RepositorioVendaBanco implements IRepositorioVenda {
 			if (resultset.next()){
 				venda = new Venda();
 				// se for trabalhar com o cliente e n com seu id use resultset.getObject(id);
-				System.out.println(resultset.getInt("id_produto"));
+				venda.setId(resultset.getInt("id"));
 				venda.setCliente(resultset.getInt("id_cliente"));
 				venda.setProduto(resultset.getInt("id_produto"));
 			}
@@ -171,6 +173,38 @@ public class RepositorioVendaBanco implements IRepositorioVenda {
 		}
 		
 		return venda;
+	}
+	
+	public RepositorioVendaArray todasVendas() throws TamanhoException {
+		
+		RepositorioVendaArray vendas = new RepositorioVendaArray();
+		try {
+			Statement statement;
+			ResultSet resultset;
+			statement = (Statement) pm.getCommunicationChannel();
+			resultset = statement.executeQuery("SELECT * FROM venda ");
+			
+			while (resultset.next()){
+				Venda venda = new Venda();
+				
+				try {//insere em clientes todos os clientes
+					venda.setId(resultset.getInt("id"));
+					venda.setCliente(resultset.getInt("id_cliente"));
+					venda.setProduto(resultset.getInt("id_produto"));
+				
+					vendas.inserir(venda);
+				} catch (NullPointerException | RepositorioException | SemPosicaoParaInserirException e) {
+					e.printStackTrace();
+				}
+			}
+			resultset.close();
+		
+		} catch (PersistenceMechanismException e1) {
+			e1.printStackTrace();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return vendas;			
 	}
 	
 }

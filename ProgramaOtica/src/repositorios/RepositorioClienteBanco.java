@@ -17,6 +17,7 @@ import exceptions.TamanhoException;
 import interfaces.IRepositorioCliente;
 import exceptions.RepositorioException;
 import exceptions.RepositorioJaExisteException;
+import exceptions.SemPosicaoParaInserirException;
 
 public class RepositorioClienteBanco implements IRepositorioCliente {
 	private static RepositorioClienteBanco instance;
@@ -59,7 +60,6 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 		} catch (SQLException e) {
 		    throw new RepositorioException(e);
 		} catch (TamanhoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 		    try {
@@ -86,7 +86,6 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 		} catch (SQLException e) {
 			throw new RepositorioException(e);
 		} catch (TamanhoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
@@ -118,7 +117,6 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 		} catch (SQLException e) {
 			throw new RepositorioException(e);
 		} catch (TamanhoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
@@ -141,6 +139,7 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 				cliente = new Cliente();
 				endereco = new Endereco();
 				
+				cliente.setId(resultset.getInt("id"));
 				cliente.setCpf(resultset.getString("cpf"));
 				endereco.setCep(resultset.getString("cep"));
 				endereco.setCidade(resultset.getString("cidade"));
@@ -151,6 +150,7 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 				cliente.setNome(resultset.getString("nome"));
 				cliente.setTelefone(resultset.getString("telefone"));
 			}
+			resultset.close();
 
 		} catch (PersistenceMechanismException e) {
 			throw new RepositorioException(e);
@@ -165,6 +165,46 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 		}
 		
 		return cliente;
+	}
+
+	public RepositorioClienteArray todosClientes() throws TamanhoException {
+		
+		RepositorioClienteArray clientes = new RepositorioClienteArray();
+		try {
+			Statement statement;
+			ResultSet resultset;
+			statement = (Statement) pm.getCommunicationChannel();
+			resultset = statement.executeQuery("SELECT * FROM cliente ");
+			
+			while (resultset.next()){
+				Cliente cliente = new Cliente();
+				Endereco endereco = new Endereco();
+				
+				cliente.setId(resultset.getInt("id"));
+				cliente.setCpf(resultset.getString("cpf"));
+				endereco.setCep(resultset.getString("cep"));
+				endereco.setCidade(resultset.getString("cidade"));
+				endereco.setEstado(resultset.getString("estado"));
+				endereco.setRua(resultset.getString("rua"));
+				cliente.setEndereco(endereco);
+				cliente.setNascimento(resultset.getString("nascimento"));
+				cliente.setNome(resultset.getString("nome"));
+				cliente.setTelefone(resultset.getString("telefone"));
+				
+				try {//insere em clientes todos os clientes
+					clientes.inserir(cliente);
+				} catch (SemPosicaoParaInserirException e) {
+					e.printStackTrace();
+				}
+			}
+			resultset.close();
+		
+		} catch (PersistenceMechanismException e1) {
+			e1.printStackTrace();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return clientes;
 	}
 	
 }

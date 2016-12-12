@@ -3,6 +3,7 @@ package repositorios;
 import java.sql.ResultSet;
 
 
+
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -17,6 +18,7 @@ import exceptions.TamanhoException;
 import interfaces.IRepositorioProduto;
 import exceptions.RepositorioException;
 import exceptions.RepositorioJaExisteException;
+import exceptions.SemPosicaoParaInserirException;
 
 public class RepositorioProdutoBanco implements IRepositorioProduto {
 	private static RepositorioProdutoBanco instance;
@@ -57,7 +59,6 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 		} catch (SQLException e) {
 		    throw new RepositorioException(e);
 		} catch (TamanhoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 		    try {
@@ -84,7 +85,6 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 		} catch (SQLException e) {
 			throw new RepositorioException(e);
 		} catch (TamanhoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
@@ -113,7 +113,6 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 		} catch (SQLException e) {
 			throw new RepositorioException(e);
 		} catch (TamanhoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
@@ -133,6 +132,7 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 			if (resultset.next()){
 				produto = new Produto();
 				
+				produto.setId(resultset.getInt("id"));
 				produto.setMarca(resultset.getString("marca"));
 				produto.setValorCompra(resultset.getFloat("valor_compra"));
 				produto.setValorVenda(resultset.getFloat("valor_venda"));
@@ -154,4 +154,39 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 		return produto;
 	}
 	
+	public RepositorioProdutoArray todosProdutos() throws TamanhoException {
+		
+		RepositorioProdutoArray produtos = null;
+		try {
+			Statement statement;
+			ResultSet resultset;
+			statement = (Statement) pm.getCommunicationChannel();
+			resultset = statement.executeQuery("SELECT * FROM produto ");
+			
+			while (resultset.next()){
+				produtos = new RepositorioProdutoArray();
+				Produto produto = new Produto();
+				
+				produto.setId(resultset.getInt("id"));
+				produto.setMarca(resultset.getString("marca"));  
+				produto.setValorCompra(resultset.getFloat("valor_compra"));
+				produto.setValorVenda(resultset.getFloat("valor_venda"));
+				produto.setNome(resultset.getString("nome"));
+				
+				try {
+					produtos.inserir(produto);
+				} catch (SemPosicaoParaInserirException e) {
+					e.printStackTrace();
+				}
+			}
+			resultset.close();
+		
+		} catch (PersistenceMechanismException e1) {
+			e1.printStackTrace();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return produtos;			
+	}
+
 }

@@ -1,12 +1,12 @@
 package repositorios;
-/*
+
 import base.Cliente;
-import exceptions.RemocaoNaoConcluidaException;
+
 import exceptions.SemPosicaoParaInserirException;
-import interfaces.IRepositorioCliente;
-*/
+import exceptions.TamanhoException;
+
 public class RepositorioClienteArray {
-	/*private Cliente[] cliente;
+	private Cliente[] cliente;
 	private int indice;
 	
 	public RepositorioClienteArray () {
@@ -17,7 +17,6 @@ public class RepositorioClienteArray {
 		boolean found = false;
 		if (this.cliente[indice] == null){//se a posição esta vaga coloque
 			this.cliente[indice] = cliente;
-			cliente.setId(indice);//gerar id com o indice do vetor
 			found = true;
 			indice++;
 		}else {//se não estiver procure em todas as posições do array se tem posisao livre
@@ -36,20 +35,20 @@ public class RepositorioClienteArray {
 		}
 	}
 	
-	public void removerCliente (int id) throws RemocaoNaoConcluidaException{
-		boolean found = false;
+	public void removerCliente (int id) {
+//		boolean found = false;
 		for (int i = 0; i < this.cliente.length; i++){
 			if (this.cliente[i].getId() == id) {
 				this.cliente[i] = null;
 				indice--;
-				found = true;
+//				found = true;
 				break;
 			}
 		}
-		if (!found) {//se não removeu!!
-			RemocaoNaoConcluidaException e = new RemocaoNaoConcluidaException();
-			throw e;
-		}
+//		if (!found) {//se não removeu!!
+//			RemocaoNaoConcluidaException e = new RemocaoNaoConcluidaException();
+//			throw e;
+//		}
 	}
 	
 	public void atualizar (Cliente cliente) throws NullPointerException {
@@ -76,5 +75,11 @@ public class RepositorioClienteArray {
 		NullPointerException e = new NullPointerException();
 		throw e;
 	}
-	*/
+
+	public Cliente[] todosClientes() throws TamanhoException {
+		return this.cliente;
+	}
+
+	
+	
 }
