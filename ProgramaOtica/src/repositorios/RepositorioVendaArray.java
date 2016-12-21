@@ -76,7 +76,18 @@ public class RepositorioVendaArray {
 		NullPointerException e = new NullPointerException();
 		throw e;
 	}
-	public Venda[] todasVendas() throws TamanhoException {
-		return this.venda;
+	public String[][] todasVendas() throws TamanhoException {
+		int i = 0;
+		String[][] vendas = new String [venda.length][9];
+		
+		while (venda[i] != null){
+			
+			vendas[i][0] = Integer.toString(venda[i].getId());
+			vendas[i][1] = Integer.toString(venda[i].getCliente());
+			vendas[i][2] = Integer.toString(venda[i].getProduto());
+			
+			i++;
+		}
+		return vendas;
 	}	
 }

@@ -5,6 +5,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import exceptions.TamanhoException;
+
 import javax.swing.JTabbedPane;
 
 public class JPrograma extends JFrame {
@@ -54,15 +56,15 @@ public class JPrograma extends JFrame {
 		tabbedPane.addTab("Inicio", null, panelInicio, null);
 		
 		
-		tabbedPane.addTab("Cliente", new JClienteTodos());
+		try {
+			tabbedPane.addTab("Cliente", new JClienteTodos());
+			tabbedPane.addTab("Funcionario", new JFuncionarioTodos());
+			tabbedPane.addTab("Produto", new JProdutoTodos());
+			tabbedPane.addTab("Venda", new JVendaTodos());
+			
+		} catch (TamanhoException e) {
+			e.printStackTrace();
+		}
 		
-		
-		tabbedPane.addTab("Funcionario", new JFuncionarioInserir());
-		
-		
-		tabbedPane.addTab("Produto", new JProdutoInserir());
-		
-		
-		tabbedPane.addTab("Venda", new JVendaInserir());
 	}
 }

@@ -4,7 +4,6 @@ import base.Produto;
 
 
 import exceptions.SemPosicaoParaInserirException;
-import exceptions.TamanhoException;
 
 public class RepositorioProdutoArray {
 	private Produto[] produto;
@@ -77,7 +76,20 @@ public class RepositorioProdutoArray {
 		throw e;
 	}
 
-	public Produto[] todosProdutos() throws TamanhoException {
-		return this.produto;
+	public String[][] todosProdutos() {
+		int i = 0;
+		String[][] produtos = new String [produto.length][9];
+		
+		while (produto[i] != null){
+			
+			produtos[i][0] = Integer.toString(produto[i].getId());
+			produtos[i][1] = produto[i].getNome();
+			produtos[i][2] = produto[i].getMarca();
+			produtos[i][3] = Float.toString(produto[i].getValorCompra());
+			produtos[i][4] = Float.toString(produto[i].getValorVenda());
+			
+			i++;
+		}
+		return produtos;
 	}
 }

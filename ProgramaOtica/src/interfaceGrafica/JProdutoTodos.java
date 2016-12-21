@@ -1,55 +1,52 @@
 package interfaceGrafica;
 
-
 import javax.swing.JLabel;
-
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 
 import exceptions.TamanhoException;
 import programa.Fachada;
-import repositorios.RepositorioClienteArray;
+import repositorios.RepositorioProdutoArray;
 
-import javax.swing.JScrollBar;
-
-public class JClienteTodos extends JPanel {
+public class JProdutoTodos extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTable table;
 
-	public JClienteTodos() throws TamanhoException {
+	public JProdutoTodos() throws TamanhoException {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 0, 720, 528);
 		add(tabbedPane);
 		
-		JPanel panelClienteTodos = new JPanel();
-		tabbedPane.addTab("Todos", null, panelClienteTodos, null);
+		JPanel panelJProdutoTodos = new JPanel();
+		tabbedPane.addTab("Todos", null, panelJProdutoTodos, null);
 		
-		String [] colunas = {"id", "Estado", "cidade", "Rua", "Cep", "Nascimento", "Nome", "CPF", "Telefone"};
+		String [] colunas = {"id", "nome", "cpf", "telefone"};
 		String [][] dados = null;
 		
-		RepositorioClienteArray clientes = new RepositorioClienteArray();
+		RepositorioProdutoArray produtos = new RepositorioProdutoArray();
 
 		Fachada instance = Fachada.getInstance();
 		Fachada fachada = instance;
 		
-		clientes = fachada.todosClientes();
-		dados = clientes.todosClientes();
+		produtos = fachada.todosProdutos();
+		dados = produtos.todosProdutos();
 		
 		
-		panelClienteTodos.setLayout(null);
+		panelJProdutoTodos.setLayout(null);
 		
 		table = new JTable(dados, colunas);
 		table.setBounds(0, 0, 680, 528);
 		
-		panelClienteTodos.add(table);
+		panelJProdutoTodos.add(table);
 		
 		JScrollBar scrollBar = new JScrollBar();
 		scrollBar.setBounds(680, 0, 17, 277);
-		panelClienteTodos.add(scrollBar);
+		panelJProdutoTodos.add(scrollBar);
 		
 
 		
@@ -77,4 +74,5 @@ public class JClienteTodos extends JPanel {
 		JLabel lblNewLabel_1 = new JLabel("Procurar");
 		panelClienteProcurar.add(lblNewLabel_1);
 	}
+
 }

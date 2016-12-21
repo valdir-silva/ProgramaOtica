@@ -117,18 +117,18 @@ public class ProgramaOtica {
 						case 5://Mostrar todos
 							int i = 0;
 							RepositorioClienteArray clientes = new RepositorioClienteArray();
-							Cliente[] tempC5;
+							String[][] tempC5= null;
 							clientes = fachada.todosClientes();
 							tempC5 = clientes.todosClientes();
 							
 							
-							while(tempC5[i] != null){
+							while(tempC5[i][1] != null){
 								try {
-									JOptionPane.showMessageDialog(null,"id do cliente: " + tempC5[i].getId() + "\nnome: " + tempC5[i].getNome() +"\nnascimento: " 
-									+ tempC5[i].getNascimento() + "\ncpf: " + tempC5[i].getCpf() + "\ntelefone: " 
-									+ tempC5[i].getTelefone() + "\ncep: " + tempC5[i].getEndereco().getCep() 
-									+ "\nestado: " + tempC5[i].getEndereco().getEstado() + "\ncidade: " 
-									+ tempC5[i].getEndereco().getCidade() + "\nrua: " + tempC5[i].getEndereco().getRua() + "\n");
+									JOptionPane.showMessageDialog(null,"id do cliente: " + tempC5[i][0] + "\nnome: " + tempC5[i][1] +"\nnascimento: " 
+									+ tempC5[i][2] + "\ncpf: " + tempC5[i][3] + "\ntelefone: " 
+									+ tempC5[i][4] + "\ncep: " + tempC5[i][5] 
+									+ "\nestado: " + tempC5[i][6] + "\ncidade: " 
+									+ tempC5[i][7] + "\nrua: " + tempC5[i][8] + "\n");
 									i++;
 								}
 								catch (NullPointerException e){
@@ -212,15 +212,15 @@ public class ProgramaOtica {
 						case 5://todos
 							int i = 0;
 							RepositorioFuncionarioArray funcionarios = new RepositorioFuncionarioArray();
-							Funcionario[] tempF5;
+							String[][] tempF5;
 							funcionarios = fachada.todosFuncionarios();
 							tempF5 = funcionarios.todosFuncionarios();
 							
 							
-							while(tempF5[i] != null){
+							while(tempF5[i][1] != null){
 								try {
-									JOptionPane.showMessageDialog(null,"id do funcionario: " + tempF5[i].getId() + "\nnome: " + tempF5[i].getNome() + "\ncpf: " 
-									+ tempF5[i].getCpf() + "\ntelefone: " + tempF5[i].getTelefone());
+									JOptionPane.showMessageDialog(null,"id do funcionario: " + tempF5[i][0] + "\nnome: " + tempF5[i][1] + "\ncpf: " 
+									+ tempF5[i][2] + "\ntelefone: " + tempF5[i][3]);
 									i++;
 								}
 								catch (NullPointerException e){
@@ -304,15 +304,15 @@ public class ProgramaOtica {
 						case 5:
 							int i = 0;
 							RepositorioProdutoArray produtos = new RepositorioProdutoArray();
-							Produto[] tempP5;
+							String[][] tempP5;
 							produtos = fachada.todosProdutos();
 							tempP5 = produtos.todosProdutos();
 							
 							
-							while(tempP5[i] != null){
+							while(tempP5[i][1] != null){
 								try {
-									JOptionPane.showMessageDialog(null,"id do produto: " + tempP5[i].getId() + "\nnome: " + tempP5[i].getNome() + "\nmarca: " + tempP5[i].getMarca() 
-									+ "\nvalor de compra: " + tempP5[i].getValorCompra() + "\nvalor de venda: " + tempP5[i].getValorVenda());
+									JOptionPane.showMessageDialog(null,"id do produto: " + tempP5[i][0] + "\nnome: " + tempP5[i][1] + "\nmarca: " + tempP5[i][2] 
+									+ "\nvalor de compra: " + tempP5[i][3] + "\nvalor de venda: " + tempP5[i][4]);
 									i++;
 								}
 								catch (NullPointerException e){
@@ -402,20 +402,20 @@ public class ProgramaOtica {
 						case 5:
 							int i = 0;
 							RepositorioVendaArray vendas = new RepositorioVendaArray();
-							Venda[] tempV5;
+							String[][] tempV5;
 							vendas = fachada.todasVendas();
 							tempV5 = vendas.todasVendas();
 							
 							
-							while(tempV5[i] != null) {
+							while(tempV5[i][1] != null) {
 								try {
 									Cliente cliente = new Cliente();
 									Produto produto = new Produto();
 									//procura seus respectivos objetos, pelo seu id
-									cliente = fachada.procurarCliente(tempV5[i].getCliente());
-									produto = fachada.procurarProduto(tempV5[i].getProduto());
+									cliente = fachada.procurarCliente(Integer.parseInt(tempV5[i][1]));
+									produto = fachada.procurarProduto(Integer.parseInt(tempV5[i][2]));
 									
-									JOptionPane.showMessageDialog(null, "id da venda: " + tempV5[i].getId() +"\nnome Cliente: " 
+									JOptionPane.showMessageDialog(null, "id da venda: " + tempV5[i][0] +"\nnome Cliente: " 
 									+ cliente.getNome() + "\nId Cliente:"+ cliente.getId() 
 									+ "\nnome produto: " + produto.getNome() + "\nId Produto:" + produto.getId());
 									i++;

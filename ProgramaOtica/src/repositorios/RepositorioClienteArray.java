@@ -75,9 +75,26 @@ public class RepositorioClienteArray {
 		NullPointerException e = new NullPointerException();
 		throw e;
 	}
-
-	public Cliente[] todosClientes() throws TamanhoException {
-		return this.cliente;
+	
+	public String[][] todosClientes() throws TamanhoException {
+		int i = 0;
+		String[][] clientes = new String [cliente.length][9];
+		
+		while (cliente[i] != null){
+			
+			clientes[i][0] = Integer.toString(cliente[i].getId());
+			clientes[i][1] = cliente[i].getNome();
+			clientes[i][2] = cliente[i].getNascimento();
+			clientes[i][3] = cliente[i].getCpf();
+			clientes[i][4] = cliente[i].getTelefone();
+			clientes[i][5] = cliente[i].getEndereco().getCep();
+			clientes[i][6] = cliente[i].getEndereco().getEstado();
+			clientes[i][7] = cliente[i].getEndereco().getCidade();
+			clientes[i][8] = cliente[i].getEndereco().getRua();
+			
+			i++;
+		}
+		return clientes;
 	}
 
 	

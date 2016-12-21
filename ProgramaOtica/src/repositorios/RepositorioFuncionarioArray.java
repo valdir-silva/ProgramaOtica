@@ -3,8 +3,8 @@ package repositorios;
 import base.Funcionario;
 
 
+
 import exceptions.SemPosicaoParaInserirException;
-import exceptions.TamanhoException;
 
 public class RepositorioFuncionarioArray  {
 	private Funcionario[] funcionario;
@@ -77,7 +77,18 @@ public class RepositorioFuncionarioArray  {
 		throw e;
 	}
 	
-	public Funcionario[] todosFuncionarios() throws TamanhoException {
-		return this.funcionario;
+	public String[][] todosFuncionarios() {
+		int i = 0;
+		String[][] funcionarios = new String [funcionario.length][9];
+		
+		while (funcionario[i] != null){
+			
+			funcionarios[i][0] = Integer.toString(funcionario[i].getId());
+			funcionarios[i][1] = funcionario[i].getNome();
+			funcionarios[i][3] = funcionario[i].getCpf();
+			funcionarios[i][4] = funcionario[i].getTelefone();
+			i++;
+		}
+		return funcionarios;
 	}
 }
