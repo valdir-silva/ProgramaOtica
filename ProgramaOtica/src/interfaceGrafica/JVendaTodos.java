@@ -1,6 +1,5 @@
 package interfaceGrafica;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JTabbedPane;
@@ -47,31 +46,13 @@ public class JVendaTodos extends JPanel {
 		scrollBar.setBounds(680, 0, 17, 277);
 		panelVendaTodos.add(scrollBar);
 		
-
+		tabbedPane.addTab("Inserir", new JVendaInserir());
 		
-		JPanel panelClienteInserir = new JPanel();
-		tabbedPane.addTab("Inserir", null, panelClienteInserir, null);
+		tabbedPane.addTab("Atualizar", new JVendaAtualizar());
+				
+		tabbedPane.addTab("Remover", new JVendaRemover());
 		
-		JLabel lblInserir = new JLabel("Inserir");
-		panelClienteInserir.add(lblInserir);
-		
-		JPanel panelClienteAtualizar = new JPanel();
-		tabbedPane.addTab("Atualizar", null, panelClienteAtualizar, null);
-		
-		JLabel lblNewLabel = new JLabel("Atualizar");
-		panelClienteAtualizar.add(lblNewLabel);
-		
-		JPanel panelClienteRemover = new JPanel();
-		tabbedPane.addTab("Remover", null, panelClienteRemover, null);
-		
-		JLabel lblRemover = new JLabel("Remover");
-		panelClienteRemover.add(lblRemover);
-		
-		JPanel panelClienteProcurar = new JPanel();
-		tabbedPane.addTab("Procurar", null, panelClienteProcurar, null);
-		
-		JLabel lblNewLabel_1 = new JLabel("Procurar");
-		panelClienteProcurar.add(lblNewLabel_1);
+		tabbedPane.addTab("Procurar", new JVendaProcurar());
 	}
 
 }

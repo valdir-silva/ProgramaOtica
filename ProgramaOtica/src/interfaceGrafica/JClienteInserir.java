@@ -6,7 +6,6 @@ import javax.swing.JTabbedPane;
 
 public class JClienteInserir extends JPanel {
 
-
 	private static final long serialVersionUID = 1L;
 	private static JClienteInserir instance;
 	
@@ -24,7 +23,7 @@ public class JClienteInserir extends JPanel {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 450, 300);
+		tabbedPane.setBounds(0, 0, 720, 528);
 		add(tabbedPane);
 		
 		JPanel panelClienteInserir = new JPanel();
@@ -33,22 +32,5 @@ public class JClienteInserir extends JPanel {
 		JLabel lblInserir = new JLabel("Inserir");
 		panelClienteInserir.add(lblInserir);
 		
-		JPanel panelClienteAtualizar = new JPanel();
-		tabbedPane.addTab("Atualizar", null, panelClienteAtualizar, null);
-		
-		JLabel lblNewLabel = new JLabel("Atualizar");
-		panelClienteAtualizar.add(lblNewLabel);
-		
-		JPanel panelClienteRemover = new JPanel();
-		tabbedPane.addTab("Remover", null, panelClienteRemover, null);
-		
-		JLabel lblRemover = new JLabel("Remover");
-		panelClienteRemover.add(lblRemover);
-		
-		JPanel panelClienteProcurar = new JPanel();
-		tabbedPane.addTab("Procurar", null, panelClienteProcurar, null);
-		
-		JLabel lblNewLabel_1 = new JLabel("Procurar");
-		panelClienteProcurar.add(lblNewLabel_1);
 	}
 }

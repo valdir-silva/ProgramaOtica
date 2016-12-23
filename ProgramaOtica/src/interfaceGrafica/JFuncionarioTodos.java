@@ -1,6 +1,6 @@
 package interfaceGrafica;
 
-import javax.swing.JLabel;
+
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JTabbedPane;
@@ -50,28 +50,12 @@ public class JFuncionarioTodos extends JPanel {
 		
 
 		
-		JPanel panelClienteInserir = new JPanel();
-		tabbedPane.addTab("Inserir", null, panelClienteInserir, null);
+		tabbedPane.addTab("Inserir", new JFuncionarioInserir());
 		
-		JLabel lblInserir = new JLabel("Inserir");
-		panelClienteInserir.add(lblInserir);
+		tabbedPane.addTab("Atualizar", new JFuncionarioAtualizar());
+				
+		tabbedPane.addTab("Remover", new JFuncionarioRemover());
 		
-		JPanel panelClienteAtualizar = new JPanel();
-		tabbedPane.addTab("Atualizar", null, panelClienteAtualizar, null);
-		
-		JLabel lblNewLabel = new JLabel("Atualizar");
-		panelClienteAtualizar.add(lblNewLabel);
-		
-		JPanel panelClienteRemover = new JPanel();
-		tabbedPane.addTab("Remover", null, panelClienteRemover, null);
-		
-		JLabel lblRemover = new JLabel("Remover");
-		panelClienteRemover.add(lblRemover);
-		
-		JPanel panelClienteProcurar = new JPanel();
-		tabbedPane.addTab("Procurar", null, panelClienteProcurar, null);
-		
-		JLabel lblNewLabel_1 = new JLabel("Procurar");
-		panelClienteProcurar.add(lblNewLabel_1);
+		tabbedPane.addTab("Procurar", new JFuncionarioProcurar());
 	}
 }

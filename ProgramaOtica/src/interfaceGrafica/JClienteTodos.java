@@ -1,17 +1,13 @@
 package interfaceGrafica;
 
-
-import javax.swing.JLabel;
-
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 
 import exceptions.TamanhoException;
 import programa.Fachada;
 import repositorios.RepositorioClienteArray;
-
-import javax.swing.JScrollBar;
 
 public class JClienteTodos extends JPanel {
 
@@ -52,29 +48,14 @@ public class JClienteTodos extends JPanel {
 		panelClienteTodos.add(scrollBar);
 		
 
+		tabbedPane.addTab("Inserir", new JClienteInserir());
 		
-		JPanel panelClienteInserir = new JPanel();
-		tabbedPane.addTab("Inserir", null, panelClienteInserir, null);
+		tabbedPane.addTab("Atualizar", new JClienteAtualizar());
+				
+		tabbedPane.addTab("Remover", new JClienteRemover());
 		
-		JLabel lblInserir = new JLabel("Inserir");
-		panelClienteInserir.add(lblInserir);
-		
-		JPanel panelClienteAtualizar = new JPanel();
-		tabbedPane.addTab("Atualizar", null, panelClienteAtualizar, null);
-		
-		JLabel lblNewLabel = new JLabel("Atualizar");
-		panelClienteAtualizar.add(lblNewLabel);
-		
-		JPanel panelClienteRemover = new JPanel();
-		tabbedPane.addTab("Remover", null, panelClienteRemover, null);
-		
-		JLabel lblRemover = new JLabel("Remover");
-		panelClienteRemover.add(lblRemover);
-		
-		JPanel panelClienteProcurar = new JPanel();
-		tabbedPane.addTab("Procurar", null, panelClienteProcurar, null);
-		
-		JLabel lblNewLabel_1 = new JLabel("Procurar");
-		panelClienteProcurar.add(lblNewLabel_1);
+		tabbedPane.addTab("Procurar", new JClienteProcurar());
+	
 	}
+
 }

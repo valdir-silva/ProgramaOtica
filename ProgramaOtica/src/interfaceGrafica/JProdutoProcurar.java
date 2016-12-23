@@ -5,14 +5,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-public class JVendaRemover extends JPanel {
+public class JProdutoProcurar extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private static JVendaRemover instance;
+	private static JProdutoProcurar instance;
 	
-	public static JVendaRemover getInstance() {
+	public static JProdutoProcurar getInstance() {
 		if (instance == null) {
-			instance = new JVendaRemover();
+			instance = new JProdutoProcurar();
 			return instance;
 		}
 		else {
@@ -20,18 +20,19 @@ public class JVendaRemover extends JPanel {
 		}
 	}
 
-	public JVendaRemover() {
+	public JProdutoProcurar() {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 0, 720, 528);
 		add(tabbedPane);
 		
-		JPanel panelVendaRemover = new JPanel();
-		tabbedPane.addTab("Remover", null, panelVendaRemover, null);
+		JPanel panelProdutoProcurar = new JPanel();
+		tabbedPane.addTab("Procurar", null, panelProdutoProcurar, null);
 		
-		JLabel lblInserir = new JLabel("Remover");
-		panelVendaRemover.add(lblInserir);
+		JLabel lblInserir = new JLabel("Procurar");
+		panelProdutoProcurar.add(lblInserir);
 		
 	}
+	
 }
