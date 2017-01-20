@@ -23,7 +23,9 @@ public class JClienteTodos extends JPanel {
 		
 		JPanel panelClienteTodos = new JPanel();
 		tabbedPane.addTab("Todos", null, panelClienteTodos, null);
-		
+		///////////
+		//Tabela///
+		///////////		
 		String [] colunas = {"id", "Estado", "cidade", "Rua", "Cep", "Nascimento", "Nome", "CPF", "Telefone"};
 		String [][] dados = null;
 		
@@ -34,7 +36,6 @@ public class JClienteTodos extends JPanel {
 		
 		clientes = fachada.todosClientes();
 		dados = clientes.todosClientes();
-		
 		
 		panelClienteTodos.setLayout(null);
 		
