@@ -14,6 +14,7 @@ import base.Endereco;
 import conecaoBanco.PersistenceMechanismRDBMS;
 import exceptions.PersistenceMechanismException;
 import exceptions.TamanhoException;
+import interfaceGrafica.JInicio;
 import interfaces.IRepositorioCliente;
 import exceptions.RepositorioException;
 import exceptions.RepositorioJaExisteException;
@@ -22,10 +23,23 @@ import exceptions.SemPosicaoParaInserirException;
 public class RepositorioClienteBanco implements IRepositorioCliente {
 	private static RepositorioClienteBanco instance;
 	private PersistenceMechanismRDBMS pm;//variavel para utilizar o banco
+	private JInicio instanceInicio = new JInicio();
 	
 	private RepositorioClienteBanco() {
 		try {
-			pm = PersistenceMechanismRDBMS.getInstance();//instancia a conexão
+			//pm = PersistenceMechanismRDBMS.getInstance();
+			pm = instanceInicio.getMinhaInstancia();//instancia a conexão
+			pm.connect();//conecta o banco de dados com o java
+		} catch (PersistenceMechanismException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private RepositorioClienteBanco(String server, String user, String key) {
+		try {
+			//pm = PersistenceMechanismRDBMS.getInstance();
+			pm = instanceInicio.getMinhaInstancia(server, user, key);//instancia a conexão
 			pm.connect();//conecta o banco de dados com o java
 		} catch (PersistenceMechanismException e) {
 			e.printStackTrace();

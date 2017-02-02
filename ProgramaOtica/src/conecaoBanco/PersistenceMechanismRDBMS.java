@@ -23,7 +23,10 @@ public class PersistenceMechanismRDBMS implements IPersistenceMechanism {
     private String login;
     private String senha;
     private boolean indisponivel;
-
+    //dados do banco
+    private String user;
+    private String key;
+    //fim banco
     private PersistenceMechanismRDBMS(String url, String login, String senha, String classeDoDriver)
             throws PersistenceMechanismException {
         conexoesAlocadas = new HashMap();
@@ -38,18 +41,45 @@ public class PersistenceMechanismRDBMS implements IPersistenceMechanism {
             throw new PersistenceMechanismException("EXC_CLASSE_NAO_ENCONTRADA");
         }
     }
-    
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
 	public static synchronized PersistenceMechanismRDBMS getInstance()
 			throws PersistenceMechanismException {
 		if (singleton==null) {
 			singleton = new PersistenceMechanismRDBMS(
-					"jdbc:mysql://localhost:3306/programa",
+					"jdbc:mysql://localhost:3306/programa?useSSL=false",
 				    "root", "", 
 					"com.mysql.jdbc.Driver");
 		}
 		return singleton;
 	}
     
+	public static synchronized PersistenceMechanismRDBMS getInstance(String server, String user, String key)
+			throws PersistenceMechanismException {
+		if (singleton==null) {
+			singleton = new PersistenceMechanismRDBMS(
+					server + "?useSSL=false",
+				    "root", "", 
+					"com.mysql.jdbc.Driver");
+		}
+		return singleton;
+	}
+	
     public synchronized void connect() throws PersistenceMechanismException {
         if (conexoesCriadas == null) {
         	System.out.println("Connecting to database");

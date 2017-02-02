@@ -1,6 +1,7 @@
 package interfaceGrafica;
 
 import javax.swing.JLabel;
+
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
