@@ -14,7 +14,7 @@ public class JClienteTodos extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTable table;
 
-	public JClienteTodos() throws TamanhoException {
+	public JClienteTodos(String server, String user, String key) throws TamanhoException {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -31,7 +31,7 @@ public class JClienteTodos extends JPanel {
 		
 		RepositorioClienteArray clientes = new RepositorioClienteArray();
 
-		Fachada instance = Fachada.getInstance();
+		Fachada instance = Fachada.getInstance(server, user, key);
 		Fachada fachada = instance;
 		
 		clientes = fachada.todosClientes();
@@ -49,13 +49,13 @@ public class JClienteTodos extends JPanel {
 		panelClienteTodos.add(scrollBar);
 		
 
-		tabbedPane.addTab("Inserir", new JClienteInserir());
+		tabbedPane.addTab("Inserir", new JClienteInserir(server, user, key));
 		
-		tabbedPane.addTab("Atualizar", new JClienteAtualizar());
+		tabbedPane.addTab("Atualizar", new JClienteAtualizar(server, user, key));
 				
-		tabbedPane.addTab("Remover", new JClienteRemover());
+		tabbedPane.addTab("Remover", new JClienteRemover(server, user, key));
 		
-		tabbedPane.addTab("Procurar", new JClienteProcurar());
+		tabbedPane.addTab("Procurar", new JClienteProcurar(server, user, key));
 	
 	}
 

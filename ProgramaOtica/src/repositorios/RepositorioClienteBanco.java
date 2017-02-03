@@ -25,10 +25,11 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 	private PersistenceMechanismRDBMS pm;//variavel para utilizar o banco
 	private JInicio instanceInicio = new JInicio();
 	
-	private RepositorioClienteBanco() {
+	private RepositorioClienteBanco(String server, String user, String key) {
 		try {
 			//pm = PersistenceMechanismRDBMS.getInstance();
-			pm = instanceInicio.getMinhaInstancia();//instancia a conexão
+			
+			pm = instanceInicio.getMinhaInstancia(server,user,key);//instancia a conexão
 			pm.connect();//conecta o banco de dados com o java
 		} catch (PersistenceMechanismException e) {
 			e.printStackTrace();
@@ -36,7 +37,7 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 		
 	}
 	
-	private RepositorioClienteBanco(String server, String user, String key) {
+	/*private RepositorioClienteBanco(String server, String user, String key) {
 		try {
 			//pm = PersistenceMechanismRDBMS.getInstance();
 			pm = instanceInicio.getMinhaInstancia(server, user, key);//instancia a conexão
@@ -45,11 +46,12 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 			e.printStackTrace();
 		}
 		
-	}
+	}*/
 	
-	public static RepositorioClienteBanco getInstance() {//metodo singleton
+	public static RepositorioClienteBanco getInstance(String server, String user, String key) {//metodo singleton
 		if (instance == null){// se for instancia unica instancia
-			instance = new RepositorioClienteBanco();
+			instance = new RepositorioClienteBanco(server, user, key);
+			
 		}
 		return instance;
 	}

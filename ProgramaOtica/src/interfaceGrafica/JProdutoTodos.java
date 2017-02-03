@@ -14,7 +14,7 @@ public class JProdutoTodos extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTable table;
 
-	public JProdutoTodos() throws TamanhoException {
+	public JProdutoTodos(String server, String user, String key) throws TamanhoException {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -29,7 +29,7 @@ public class JProdutoTodos extends JPanel {
 		
 		RepositorioProdutoArray produtos = new RepositorioProdutoArray();
 
-		Fachada instance = Fachada.getInstance();
+		Fachada instance = Fachada.getInstance(server, user, key);
 		Fachada fachada = instance;
 		
 		produtos = fachada.todosProdutos();

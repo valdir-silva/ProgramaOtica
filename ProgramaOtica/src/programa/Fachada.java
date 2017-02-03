@@ -28,9 +28,9 @@ public class Fachada {
 	private ControleFuncionarios funcionarios;
 	private ControleProdutos produtos;
 	private ControleVendas vendas;
-	
-	private Fachada () {
-		RepositorioClienteBanco instanceCliente = RepositorioClienteBanco.getInstance();
+
+	private Fachada (String server, String user, String key) {
+		RepositorioClienteBanco instanceCliente = RepositorioClienteBanco.getInstance(server, user, key);
 		IRepositorioCliente repositorioCliente = instanceCliente;
 		clientes = new ControleClientes (repositorioCliente);
 		
@@ -57,9 +57,9 @@ public class Fachada {
 	}
 	
 	// Singleton method 
-	public synchronized static Fachada getInstance () {
+	public synchronized static Fachada getInstance (String server, String user, String key) {
 		if (instance == null) {
-			instance = new Fachada();
+			instance = new Fachada(server,user,key);
 		}
 		return instance;
 	}

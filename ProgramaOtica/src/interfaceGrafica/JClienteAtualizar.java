@@ -29,9 +29,9 @@ public class JClienteAtualizar extends JPanel {
 	private JTextField textFieldCidade;
 	private JTextField textFieldRua;
 	
-	public static JClienteAtualizar getInstance() {
+	public static JClienteAtualizar getInstance(String server, String user, String key) {
 		if (instance == null) {
-			instance = new JClienteAtualizar();
+			instance = new JClienteAtualizar(server, user, key);
 			return instance;
 		}
 		else {
@@ -39,7 +39,7 @@ public class JClienteAtualizar extends JPanel {
 		}
 	}
 
-	public JClienteAtualizar() {
+	public JClienteAtualizar(String server, String user, String key) {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -131,7 +131,7 @@ public class JClienteAtualizar extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				Cliente cliente = new Cliente();
 				Endereco endereco = new Endereco();
-				Fachada instance = Fachada.getInstance();
+				Fachada instance = Fachada.getInstance(server, user, key);
 				Fachada fachada = instance;
 				try {
 					cliente.setNome(textFieldNome.getText());

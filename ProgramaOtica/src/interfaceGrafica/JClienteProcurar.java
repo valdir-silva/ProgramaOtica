@@ -9,9 +9,9 @@ public class JClienteProcurar extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private static JClienteProcurar instance;
 	
-	public static JClienteProcurar getInstance() {
+	public static JClienteProcurar getInstance(String server, String user, String key) {
 		if (instance == null) {
-			instance = new JClienteProcurar();
+			instance = new JClienteProcurar(server, user, key);
 			return instance;
 		}
 		else {
@@ -19,7 +19,7 @@ public class JClienteProcurar extends JPanel {
 		}
 	}
 
-	public JClienteProcurar() {
+	public JClienteProcurar(String server, String user, String key) {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);

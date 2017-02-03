@@ -26,10 +26,14 @@ public class JInicio extends JFrame {
 	private JLabel lblKey;
 	private JTextField txtKey;
     private PersistenceMechanismRDBMS minhaInstancia;
-	//...
+    public String key; //variavel publica para trasmitir dados do server para o metodo getMinhaInstancia
+    public String server;
+    public String user;
 
-    public PersistenceMechanismRDBMS getMinhaInstancia(String server, String user, String key) {
+
+	public PersistenceMechanismRDBMS getMinhaInstancia(String server, String user, String key) {
 		try {
+			System.out.println("minha instancia" + this.server + server);
 			minhaInstancia = PersistenceMechanismRDBMS.getInstance(server, user, key);
 		} catch (PersistenceMechanismException e) {
 			e.printStackTrace();
@@ -41,7 +45,7 @@ public class JInicio extends JFrame {
 	public PersistenceMechanismRDBMS getMinhaInstancia() {
 		try {
 			minhaInstancia = PersistenceMechanismRDBMS.getInstance();
-			
+			//minhaInstancia.setUrl(teste);
 		} catch (PersistenceMechanismException e) {
 			e.printStackTrace();
 		}
@@ -49,8 +53,6 @@ public class JInicio extends JFrame {
 		return minhaInstancia;
 	}
 	
-	
-
 	/**
 	 * Launch the application.
 	 */
@@ -81,10 +83,13 @@ public class JInicio extends JFrame {
 		JButton btnPrograma = new JButton("Programa");
 		btnPrograma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				server = txtServer.getText();
+				user = txtUser.getText();
+				key = txtKey.getText();
 				
-				JPrograma programa = new JPrograma();
+				JPrograma programa = new JPrograma(server, user, key);
 				programa.setVisible(true);
-				//setVisible(false);//Apenas deixa a tela invisível
+				setVisible(false);//Apenas deixa a tela invisível
 				dispose();//caso não precise voltar para tela
 				
 			}
@@ -93,14 +98,6 @@ public class JInicio extends JFrame {
 		contentPane.add(btnPrograma);
 		
 		txtServer = new JTextField();
-		txtServer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String server;
-			    String user;
-			    String key;
-				server = txtServer.getText();
-			}
-		});
 		txtServer.setBounds(166, 55, 86, 20);
 		contentPane.add(txtServer);
 		txtServer.setColumns(10);
@@ -127,4 +124,5 @@ public class JInicio extends JFrame {
 		contentPane.add(txtKey);
 		txtKey.setColumns(10);
 	}
+	
 }

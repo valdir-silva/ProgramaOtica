@@ -43,7 +43,7 @@ public class RepositorioVendaBanco implements IRepositorioVenda {
 	public void inserir (Venda venda) throws RepositorioException, NullPointerException, TamanhoException {
 		//Statement é usado para utilizar os comandos sql no java
 		try {
-			Fachada fachada = Fachada.getInstance();
+			Fachada fachada = Fachada.getInstance("","",""); // ERROOOOOOOORRR
 			//se o cliente o produto e a venda não existirem, insira
 			if (fachada.procurarCliente(venda.getCliente()) != null) {
 				if(fachada.procurarProduto(venda.getProduto()) != null) {
@@ -110,7 +110,7 @@ public class RepositorioVendaBanco implements IRepositorioVenda {
 	public void atualizar (Venda venda) throws RepositorioException, TamanhoException {
 		try {
 			//recebo uma venda e passo apenas o id do cliente e do produto, para o banco
-			Fachada fachada = Fachada.getInstance();
+			Fachada fachada = Fachada.getInstance("","",""); // ERROOOOOOOOOOOOOOOOOOOOR
 			//se venda, cliente e produto existirem, atualize
 			if (procurarVenda(venda.getId()) != null) {
 				if (fachada.procurarCliente(venda.getCliente()) != null) {

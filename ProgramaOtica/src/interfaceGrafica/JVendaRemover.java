@@ -10,9 +10,9 @@ public class JVendaRemover extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private static JVendaRemover instance;
 	
-	public static JVendaRemover getInstance() {
+	public static JVendaRemover getInstance(String server, String user, String key) {
 		if (instance == null) {
-			instance = new JVendaRemover();
+			instance = new JVendaRemover(server,user, key);
 			return instance;
 		}
 		else {
@@ -20,7 +20,7 @@ public class JVendaRemover extends JPanel {
 		}
 	}
 
-	public JVendaRemover() {
+	public JVendaRemover(String server, String user, String key) {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);

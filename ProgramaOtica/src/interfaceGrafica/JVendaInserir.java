@@ -7,11 +7,11 @@ import javax.swing.JTabbedPane;
 public class JVendaInserir extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private static JClienteInserir instance;
+	private static JVendaInserir instance;
 	
-	public static JClienteInserir getInstance() {
+	public static JVendaInserir getInstance(String server, String user, String key) {
 		if (instance == null) {
-			instance = new JClienteInserir();
+			instance = new JVendaInserir(server, user, key);
 			return instance;
 		}
 		else {
@@ -19,7 +19,7 @@ public class JVendaInserir extends JPanel {
 		}
 	}
 
-	public JVendaInserir() {
+	public JVendaInserir(String server, String user, String key) {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);

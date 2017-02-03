@@ -22,7 +22,7 @@ public class ProgramaOtica {
 	public static void main(String[] args) throws TamanhoException, NullPointerException, SemPosicaoParaInserirException, RepositorioException {
 		
 		boolean run = true;//start false to use the loggin
-		Fachada instance = Fachada.getInstance();
+		Fachada instance = Fachada.getInstance("","","");
 		Fachada fachada = instance;
 				
 		while (run) {

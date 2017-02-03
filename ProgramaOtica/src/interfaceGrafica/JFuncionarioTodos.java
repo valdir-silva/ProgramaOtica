@@ -15,7 +15,7 @@ public class JFuncionarioTodos extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTable table;
 
-	public JFuncionarioTodos() throws TamanhoException {
+	public JFuncionarioTodos(String server, String user, String key) throws TamanhoException {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -30,7 +30,7 @@ public class JFuncionarioTodos extends JPanel {
 		
 		RepositorioFuncionarioArray funcionarios = new RepositorioFuncionarioArray();
 
-		Fachada instance = Fachada.getInstance();
+		Fachada instance = Fachada.getInstance(server, user, key);
 		Fachada fachada = instance;
 		
 		funcionarios = fachada.todosFuncionarios();

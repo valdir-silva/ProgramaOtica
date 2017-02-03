@@ -19,14 +19,12 @@ public class PersistenceMechanismRDBMS implements IPersistenceMechanism {
     private Connection conexoesLivres[];
     private HashMap conexoesAlocadas;
     private String classeDoDriver;
-    private String url;
-    private String login;
-    private String senha;
-    private boolean indisponivel;
-    //dados do banco
-    private String user;
-    private String key;
-    //fim banco
+    private static String url;
+    private static String login;
+    private static String senha;
+    
+	private boolean indisponivel;
+	
     private PersistenceMechanismRDBMS(String url, String login, String senha, String classeDoDriver)
             throws PersistenceMechanismException {
         conexoesAlocadas = new HashMap();
@@ -42,21 +40,6 @@ public class PersistenceMechanismRDBMS implements IPersistenceMechanism {
         }
     }
 
-	public String getUser() {
-		return user;
-	}
-
-	public void setUser(String user) {
-		this.user = user;
-	}
-
-	public String getKey() {
-		return key;
-	}
-
-	public void setKey(String key) {
-		this.key = key;
-	}
 
 	public static synchronized PersistenceMechanismRDBMS getInstance()
 			throws PersistenceMechanismException {
@@ -82,7 +65,6 @@ public class PersistenceMechanismRDBMS implements IPersistenceMechanism {
 	
     public synchronized void connect() throws PersistenceMechanismException {
         if (conexoesCriadas == null) {
-        	System.out.println("Connecting to database");
             try {
                 conexoesLivres = new Connection[PersistenceMechanismRDBMS.numConexoes];
                 conexoesCriadas = new Connection[PersistenceMechanismRDBMS.numConexoes];

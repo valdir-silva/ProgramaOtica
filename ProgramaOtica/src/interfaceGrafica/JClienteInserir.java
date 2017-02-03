@@ -31,9 +31,9 @@ public class JClienteInserir extends JPanel {
 	private JTextField textFieldCidade;
 	private JTextField textFieldRua;
 	
-	public static JClienteInserir getInstance() {
+	public static JClienteInserir getInstance(String server, String user, String key) {
 		if (instance == null) {
-			instance = new JClienteInserir();
+			instance = new JClienteInserir(server, user, key);
 			return instance;
 		}
 		else {
@@ -41,7 +41,7 @@ public class JClienteInserir extends JPanel {
 		}
 	}
 
-	public JClienteInserir() {
+	public JClienteInserir(String server, String user, String key) {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -133,7 +133,7 @@ public class JClienteInserir extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				Cliente cliente = new Cliente();
 				Endereco endereco = new Endereco();
-				Fachada instance = Fachada.getInstance();
+				Fachada instance = Fachada.getInstance(server, user, key);
 				Fachada fachada = instance;
 				try {
 					cliente.setNome(textFieldNome.getText());

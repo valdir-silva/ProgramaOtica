@@ -19,7 +19,7 @@ public class JPrograma extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JPrograma frame = new JPrograma();
+					JPrograma frame = new JPrograma("","",""); //talvez precise trazer as variaveis prak
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -30,7 +30,7 @@ public class JPrograma extends JFrame {
 	
 	public static JPrograma getInstance() {
 		if(instance == null) {
-			instance = new JPrograma();
+			instance = new JPrograma("","",""); //talvez precise trazer as variaveis prak
 			return instance;
 		}else {	
 			return instance;
@@ -40,7 +40,7 @@ public class JPrograma extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public JPrograma() {
+	public JPrograma(String server, String user, String key) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 720, 528);
 		contentPane = new JPanel();
@@ -57,10 +57,10 @@ public class JPrograma extends JFrame {
 		
 		
 		try {
-			tabbedPane.addTab("Cliente", new JClienteTodos());
-			tabbedPane.addTab("Funcionario", new JFuncionarioTodos());
-			tabbedPane.addTab("Produto", new JProdutoTodos());
-			tabbedPane.addTab("Venda", new JVendaTodos());
+			tabbedPane.addTab("Cliente", new JClienteTodos(server, user, key));
+			tabbedPane.addTab("Funcionario", new JFuncionarioTodos(server, user, key));
+			tabbedPane.addTab("Produto", new JProdutoTodos(server, user, key));
+			tabbedPane.addTab("Venda", new JVendaTodos(server, user, key));
 			
 		} catch (TamanhoException e) {
 			e.printStackTrace();

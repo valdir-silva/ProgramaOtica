@@ -14,7 +14,7 @@ public class JVendaTodos extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTable table;
 
-	public JVendaTodos() throws TamanhoException {
+	public JVendaTodos(String server, String user, String key) throws TamanhoException {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -29,7 +29,7 @@ public class JVendaTodos extends JPanel {
 		
 		RepositorioVendaArray vendas = new RepositorioVendaArray();
 
-		Fachada instance = Fachada.getInstance();
+		Fachada instance = Fachada.getInstance(server, user, key);
 		Fachada fachada = instance;
 		
 		vendas = fachada.todasVendas();
@@ -46,13 +46,13 @@ public class JVendaTodos extends JPanel {
 		scrollBar.setBounds(680, 0, 17, 277);
 		panelVendaTodos.add(scrollBar);
 		
-		tabbedPane.addTab("Inserir", new JVendaInserir());
+		tabbedPane.addTab("Inserir", new JVendaInserir(server, user, key));
 		
-		tabbedPane.addTab("Atualizar", new JVendaAtualizar());
+		tabbedPane.addTab("Atualizar", new JVendaAtualizar(server, user, key));
 				
-		tabbedPane.addTab("Remover", new JVendaRemover());
+		tabbedPane.addTab("Remover", new JVendaRemover(server, user, key));
 		
-		tabbedPane.addTab("Procurar", new JVendaProcurar());
+		tabbedPane.addTab("Procurar", new JVendaProcurar(server, user, key));
 	}
 
 }

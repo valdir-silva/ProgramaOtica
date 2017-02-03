@@ -11,9 +11,9 @@ public class JVendaAtualizar extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private static JVendaAtualizar instance;
 	
-	public static JVendaAtualizar getInstance() {
+	public static JVendaAtualizar getInstance(String server, String user, String key) {
 		if (instance == null) {
-			instance = new JVendaAtualizar();
+			instance = new JVendaAtualizar(server, user, key);
 			return instance;
 		}
 		else {
@@ -21,7 +21,7 @@ public class JVendaAtualizar extends JPanel {
 		}
 	}
 
-	public JVendaAtualizar() {
+	public JVendaAtualizar(String server, String user, String key) {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
