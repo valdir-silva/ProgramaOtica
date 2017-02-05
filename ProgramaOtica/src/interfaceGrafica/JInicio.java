@@ -1,6 +1,6 @@
 package interfaceGrafica;
 
-import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -11,7 +11,6 @@ import conecaoBanco.PersistenceMechanismRDBMS;
 import exceptions.PersistenceMechanismException;
 
 import javax.swing.JButton;
-import javax.swing.JDesktopPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
@@ -20,6 +19,10 @@ import java.awt.Color;
 
 public class JInicio extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtServer;
 	private JTextField txtUser;
