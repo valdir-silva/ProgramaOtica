@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.JButton;
 
 public class JClienteRemover extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -47,7 +48,7 @@ public class JClienteRemover extends JPanel {
 		lblNewLabel_1.setBounds(336, 5, 68, 14);
 		panelClienteRemover.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel = new JLabel("id:");
+		JLabel lblNewLabel = new JLabel("ide:");
 		lblNewLabel.setBounds(44, 95, 46, 14);
 		panelClienteRemover.add(lblNewLabel);
 		
@@ -55,5 +56,9 @@ public class JClienteRemover extends JPanel {
 		textField.setBounds(66, 92, 86, 20);
 		panelClienteRemover.add(textField);
 		textField.setColumns(10);
+		
+		JButton btnRemover = new JButton("remover");
+		btnRemover.setBounds(162, 91, 89, 23);
+		panelClienteRemover.add(btnRemover);
 	}
 }
