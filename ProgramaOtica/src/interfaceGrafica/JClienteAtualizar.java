@@ -61,74 +61,74 @@ public class JClienteAtualizar extends JPanel {
 		panelClienteAtualizar.add(lblAtualizar);
 		
 		JLabel lblNome = new JLabel("nome");
-		lblNome.setBounds(10, 57, 47, 14);
+		lblNome.setBounds(10, 66, 47, 14);
 		panelClienteAtualizar.add(lblNome);
 		
 		JLabel lblDataDeNascimento = new JLabel("data de nascimento");
-		lblDataDeNascimento.setBounds(257, 57, 122, 14);
+		lblDataDeNascimento.setBounds(257, 66, 122, 14);
 		panelClienteAtualizar.add(lblDataDeNascimento);
 		
 		textFieldNome = new JTextField();
-		textFieldNome.setBounds(46, 54, 201, 20);
+		textFieldNome.setBounds(46, 63, 201, 20);
 		panelClienteAtualizar.add(textFieldNome);
 		textFieldNome.setColumns(10);
 		
 		textFieldNascimento = new JTextField();
-		textFieldNascimento.setBounds(375, 54, 111, 20);
+		textFieldNascimento.setBounds(375, 63, 111, 20);
 		panelClienteAtualizar.add(textFieldNascimento);
 		textFieldNascimento.setColumns(10);
 		
 		JLabel lblCpf = new JLabel("cpf");
-		lblCpf.setBounds(10, 97, 26, 14);
+		lblCpf.setBounds(10, 106, 26, 14);
 		panelClienteAtualizar.add(lblCpf);
 		
 		textFieldCpf = new JTextField();
 		textFieldCpf.setColumns(10);
-		textFieldCpf.setBounds(35, 94, 97, 20);
+		textFieldCpf.setBounds(35, 103, 97, 20);
 		panelClienteAtualizar.add(textFieldCpf);
 		
 		JLabel lblTelefone = new JLabel("telefone");
-		lblTelefone.setBounds(164, 100, 51, 14);
+		lblTelefone.setBounds(164, 109, 51, 14);
 		panelClienteAtualizar.add(lblTelefone);
 		
 		textFieldTelefone = new JTextField();
-		textFieldTelefone.setBounds(214, 97, 86, 20);
+		textFieldTelefone.setBounds(214, 106, 86, 20);
 		panelClienteAtualizar.add(textFieldTelefone);
 		textFieldTelefone.setColumns(10);
 		
 		JLabel lblCep = new JLabel("cep");
-		lblCep.setBounds(10, 132, 33, 14);
+		lblCep.setBounds(10, 141, 33, 14);
 		panelClienteAtualizar.add(lblCep);
 		
 		textFieldCep = new JTextField();
-		textFieldCep.setBounds(40, 129, 92, 20);
+		textFieldCep.setBounds(40, 138, 92, 20);
 		panelClienteAtualizar.add(textFieldCep);
 		textFieldCep.setColumns(10);
 		
 		JLabel lblEstado = new JLabel("estado");
-		lblEstado.setBounds(160, 132, 55, 14);
+		lblEstado.setBounds(160, 141, 55, 14);
 		panelClienteAtualizar.add(lblEstado);
 		
 		textFieldEstado = new JTextField();
-		textFieldEstado.setBounds(214, 129, 101, 20);
+		textFieldEstado.setBounds(214, 138, 101, 20);
 		panelClienteAtualizar.add(textFieldEstado);
 		textFieldEstado.setColumns(10);
 		
 		JLabel lblCidade = new JLabel("cidade");
-		lblCidade.setBounds(10, 169, 47, 14);
+		lblCidade.setBounds(10, 178, 47, 14);
 		panelClienteAtualizar.add(lblCidade);
 		
 		textFieldCidade = new JTextField();
-		textFieldCidade.setBounds(46, 166, 86, 20);
+		textFieldCidade.setBounds(46, 175, 86, 20);
 		panelClienteAtualizar.add(textFieldCidade);
 		textFieldCidade.setColumns(10);
 		
 		JLabel lblRua = new JLabel("rua");
-		lblRua.setBounds(146, 169, 33, 14);
+		lblRua.setBounds(146, 178, 33, 14);
 		panelClienteAtualizar.add(lblRua);
 		
 		textFieldRua = new JTextField();
-		textFieldRua.setBounds(189, 166, 162, 20);
+		textFieldRua.setBounds(189, 175, 162, 20);
 		panelClienteAtualizar.add(textFieldRua);
 		textFieldRua.setColumns(10);
 		
@@ -159,15 +159,15 @@ public class JClienteAtualizar extends JPanel {
 				}
 			}
 		});
-		btnAtualizarCliente.setBounds(355, 248, 131, 23);
+		btnAtualizarCliente.setBounds(355, 257, 131, 23);
 		panelClienteAtualizar.add(btnAtualizarCliente);
 		
 		JLabel lblId = new JLabel("id:");
-		lblId.setBounds(10, 32, 26, 14);
+		lblId.setBounds(10, 29, 26, 14);
 		panelClienteAtualizar.add(lblId);
 		
 		txtId = new JTextField();
-		txtId.setBounds(46, 29, 86, 20);
+		txtId.setBounds(46, 26, 86, 20);
 		panelClienteAtualizar.add(txtId);
 		txtId.setColumns(10);
 		
@@ -185,12 +185,18 @@ public class JClienteAtualizar extends JPanel {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				//fazer essa parte buscar no banco e preencher todos os campos
+				//busca no banco e preenche todos os campos
 				textFieldNome.setText(cliente.getNome());
 				textFieldNascimento.setText(cliente.getNascimento());
+				textFieldCpf.setText(cliente.getCpf());
+				textFieldTelefone.setText(cliente.getTelefone());
+				textFieldCep.setText(cliente.getEndereco().getCep());
+				textFieldEstado.setText(cliente.getEndereco().getEstado());
+				textFieldCidade.setText(cliente.getEndereco().getCidade());
+				textFieldRua.setText(cliente.getEndereco().getRua());
 			}
 		});
-		btnCarregar.setBounds(139, 28, 89, 23);
+		btnCarregar.setBounds(139, 25, 89, 23);
 		panelClienteAtualizar.add(btnCarregar);
 		
 	}
