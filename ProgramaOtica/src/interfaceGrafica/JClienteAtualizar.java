@@ -28,6 +28,12 @@ public class JClienteAtualizar extends JPanel {
 	private JTextField textFieldEstado;
 	private JTextField textFieldCidade;
 	private JTextField textFieldRua;
+	private JTextField txtId;
+	//declaração de objetos aqui para ser possível usar nos dois métodos (carregar e atualizar)
+	Cliente cliente = new Cliente();
+	Endereco endereco = new Endereco();
+	Fachada fachada;
+	//..
 	
 	public static JClienteAtualizar getInstance(String server, String user, String key) {
 		if (instance == null) {
@@ -129,10 +135,13 @@ public class JClienteAtualizar extends JPanel {
 		JButton btnAtualizarCliente = new JButton("Atualizar Cliente");
 		btnAtualizarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				/*(teste) estou testando sem a instance pq aparentemente é redundante
 				Cliente cliente = new Cliente();
 				Endereco endereco = new Endereco();
 				Fachada instance = Fachada.getInstance(server, user, key);
 				Fachada fachada = instance;
+				*/
+				fachada = Fachada.getInstance(server, user, key);
 				try {
 					cliente.setNome(textFieldNome.getText());
 					cliente.setNascimento(textFieldNascimento.getText());
@@ -152,6 +161,34 @@ public class JClienteAtualizar extends JPanel {
 		});
 		btnAtualizarCliente.setBounds(355, 248, 131, 23);
 		panelClienteAtualizar.add(btnAtualizarCliente);
+		
+		JLabel lblId = new JLabel("id:");
+		lblId.setBounds(10, 32, 26, 14);
+		panelClienteAtualizar.add(lblId);
+		
+		txtId = new JTextField();
+		txtId.setBounds(46, 29, 86, 20);
+		panelClienteAtualizar.add(txtId);
+		txtId.setColumns(10);
+		
+		JButton btnCarregar = new JButton("carregar");
+		btnCarregar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String idS;
+				int id=0;
+				//idS = txtId.getText();
+				//id = (int)idS;
+				try {
+					cliente = fachada.procurarCliente(id);
+				} catch (NullPointerException | RepositorioException | TamanhoException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				//fazer essa parte buscar no banco e preencher todos os campos
+			}
+		});
+		btnCarregar.setBounds(139, 28, 89, 23);
+		panelClienteAtualizar.add(btnCarregar);
 		
 	}
 }

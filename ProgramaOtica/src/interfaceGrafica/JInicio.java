@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import java.awt.Color;
 
 public class JInicio extends JFrame {
 
@@ -83,9 +84,16 @@ public class JInicio extends JFrame {
 		JButton btnPrograma = new JButton("Programa");
 		btnPrograma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				server = txtServer.getText();
-				user = txtUser.getText();
-				key = txtKey.getText();
+				if(txtServer.getText().equals("")){
+					server = "jdbc:mysql://localhost:3306/programa";
+					user = "root";
+					key="";
+				}
+				else{
+					server = txtServer.getText();
+					user = txtUser.getText();
+					key = txtKey.getText();			
+				}
 				
 				JPrograma programa = new JPrograma(server, user, key);
 				programa.setVisible(true);
@@ -94,35 +102,54 @@ public class JInicio extends JFrame {
 				
 			}
 		});
-		btnPrograma.setBounds(335, 227, 89, 23);
+		btnPrograma.setBounds(312, 227, 112, 23);
 		contentPane.add(btnPrograma);
 		
 		txtServer = new JTextField();
-		txtServer.setBounds(166, 55, 86, 20);
+		txtServer.setBounds(143, 90, 201, 20);
 		contentPane.add(txtServer);
 		txtServer.setColumns(10);
 		
 		txtUser = new JTextField();
-		txtUser.setBounds(166, 86, 86, 20);
+		txtUser.setBounds(143, 121, 201, 20);
 		contentPane.add(txtUser);
 		txtUser.setColumns(10);
 		
 		JLabel lblServer = new JLabel("server");
-		lblServer.setBounds(103, 58, 46, 14);
+		lblServer.setBounds(80, 93, 46, 14);
 		contentPane.add(lblServer);
 		
 		lblUser = new JLabel("user");
-		lblUser.setBounds(103, 89, 46, 14);
+		lblUser.setBounds(80, 124, 46, 14);
 		contentPane.add(lblUser);
 		
 		lblKey = new JLabel("key");
-		lblKey.setBounds(103, 114, 46, 14);
+		lblKey.setBounds(80, 149, 46, 14);
 		contentPane.add(lblKey);
 		
 		txtKey = new JTextField();
-		txtKey.setBounds(166, 117, 86, 20);
+		txtKey.setBounds(143, 152, 201, 20);
 		contentPane.add(txtKey);
 		txtKey.setColumns(10);
+		
+		JLabel lbldeixeEmBranco = new JLabel("*Deixe em branco para localhost");
+		lbldeixeEmBranco.setForeground(Color.LIGHT_GRAY);
+		lbldeixeEmBranco.setBounds(10, 236, 201, 14);
+		contentPane.add(lbldeixeEmBranco);
+		
+		JButton btnWhiteofdarkcom = new JButton("whiteofdark.com");
+		btnWhiteofdarkcom.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				txtServer.setText("jdbc:mysql://whiteofdark.com:3306/whiteofd_programa");
+				txtUser.setText("whiteofd_ark");
+				txtKey.setText("1!2@3#");
+			}
+		});
+		btnWhiteofdarkcom.setBounds(54, 11, 139, 23);
+		contentPane.add(btnWhiteofdarkcom);
+		
+		JLabel lblNvem = new JLabel("N\u00FAvem:");
+		lblNvem.setBounds(10, 15, 46, 14);
+		contentPane.add(lblNvem);
 	}
-	
 }

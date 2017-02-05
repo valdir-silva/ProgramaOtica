@@ -57,7 +57,7 @@ public class PersistenceMechanismRDBMS implements IPersistenceMechanism {
 		if (singleton==null) {
 			singleton = new PersistenceMechanismRDBMS(
 					server + "?useSSL=false",
-				    "root", "", 
+					user, key, 
 					"com.mysql.jdbc.Driver");
 		}
 		return singleton;
@@ -114,7 +114,7 @@ public class PersistenceMechanismRDBMS implements IPersistenceMechanism {
         }            
     }
     /**
-     * Libera o canal de comunica��o
+     * Libera o canal de comunicacao
      */
 	public synchronized void releaseCommunicationChannel() throws PersistenceMechanismException {
 		releaseCommunicationChannel(false);
