@@ -176,8 +176,8 @@ public class JClienteAtualizar extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				String idS;
 				int id=0;
-				//idS = txtId.getText();
-				//id = (int)idS;
+				idS = txtId.getText();
+				id = Integer.parseInt(idS);
 				try {
 					cliente = fachada.procurarCliente(id);
 				} catch (NullPointerException | RepositorioException | TamanhoException e) {
@@ -185,6 +185,8 @@ public class JClienteAtualizar extends JPanel {
 					e.printStackTrace();
 				}
 				//fazer essa parte buscar no banco e preencher todos os campos
+				textFieldNome.setText(cliente.getNome());
+				textFieldNascimento.setText(cliente.getNascimento());
 			}
 		});
 		btnCarregar.setBounds(139, 28, 89, 23);
