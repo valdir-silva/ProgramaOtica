@@ -178,6 +178,7 @@ public class JClienteAtualizar extends JPanel {
 				int id=0;
 				idS = txtId.getText();
 				id = Integer.parseInt(idS);
+				fachada = Fachada.getInstance(server, user, key);
 				try {
 					cliente = fachada.procurarCliente(id);
 				} catch (NullPointerException | RepositorioException | TamanhoException e) {
