@@ -57,7 +57,7 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 	}
 	
 	public void inserir (Cliente cliente) throws RepositorioException, RepositorioJaExisteException {
-		//Statement é usado para utilizar os comandos sql no java
+		//Statement é usado para utilizar os comandos sql no java.
 		try {
 			if (procurarCliente(cliente.getId()) == null) {
 				Statement statement = (Statement) pm.getCommunicationChannel();
