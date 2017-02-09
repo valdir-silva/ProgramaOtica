@@ -17,7 +17,7 @@ public class PersistenceMechanismRDBMS implements IPersistenceMechanism {
         
     private Connection conexoesCriadas[];
     private Connection conexoesLivres[];
-    private HashMap<Object, Object> conexoesAlocadas;
+    private HashMap conexoesAlocadas;
     private String classeDoDriver;
     private static String url;
     private static String login;
@@ -27,7 +27,11 @@ public class PersistenceMechanismRDBMS implements IPersistenceMechanism {
 	
     private PersistenceMechanismRDBMS(String url, String login, String senha, String classeDoDriver)
             throws PersistenceMechanismException {
-        conexoesAlocadas = new HashMap<Object, Object>();
+        this.url = url;
+        this.login = login;
+        this.senha = senha;
+
+    	conexoesAlocadas = new HashMap();
         this.setClasseDoDriver(classeDoDriver);
         indisponivel = false;
         try {
