@@ -20,10 +20,15 @@ import repositorios.RepositorioVendaArray;
 
 public class ProgramaOtica {
 	public static void main(String[] args) throws TamanhoException, NullPointerException, SemPosicaoParaInserirException, RepositorioException {
+		//jdbc:mysql://localhost:3306/programa
+		//root
+		//""
+		String server = "jdbc:mysql://whiteofdark.com:3306/whiteofd_programa";
+		String user = "whiteofd_ark";
+		String key = "1!2@3#";
 		
 		boolean run = true;//start false to use the loggin
-		Fachada instance = Fachada.getInstance("","","");
-		Fachada fachada = instance;
+		Fachada fachada = Fachada.getInstance(server, user, key);
 				
 		while (run) {
 			int opcao;
@@ -191,7 +196,7 @@ public class ProgramaOtica {
 						case 3://remover
 							int deletaF = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
 							try {
-							fachada.removerFuncionario(deletaF);
+								fachada.removerFuncionario(deletaF);
 							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
@@ -301,7 +306,7 @@ public class ProgramaOtica {
 								JOptionPane.showMessageDialog(null, e);
 							}
 							break;
-						case 5:
+						case 5://Mostrar Todos
 							int i = 0;
 							RepositorioProdutoArray produtos = new RepositorioProdutoArray();
 							String[][] tempP5;
@@ -399,7 +404,7 @@ public class ProgramaOtica {
 								JOptionPane.showMessageDialog(null, e);
 							}
 							break;
-						case 5:
+						case 5://Mostrar Todos
 							int i = 0;
 							RepositorioVendaArray vendas = new RepositorioVendaArray();
 							String[][] tempV5;
@@ -409,15 +414,9 @@ public class ProgramaOtica {
 							
 							while(tempV5[i][1] != null) {
 								try {
-									Cliente cliente = new Cliente();
-									Produto produto = new Produto();
-									//procura seus respectivos objetos, pelo seu id
-									cliente = fachada.procurarCliente(Integer.parseInt(tempV5[i][1]));
-									produto = fachada.procurarProduto(Integer.parseInt(tempV5[i][2]));
 									
-									JOptionPane.showMessageDialog(null, "id da venda: " + tempV5[i][0] +"\nnome Cliente: " 
-									+ cliente.getNome() + "\nId Cliente:"+ cliente.getId() 
-									+ "\nnome produto: " + produto.getNome() + "\nId Produto:" + produto.getId());
+									JOptionPane.showMessageDialog(null, "id da venda: " + tempV5[i][0] +"\nId Cliente: " 
+									+ tempV5[i][1] + "\n Id produto: " + tempV5[i][2] );
 									i++;
 								}
 								catch (NullPointerException e){

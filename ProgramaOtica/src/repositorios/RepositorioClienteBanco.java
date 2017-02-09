@@ -27,8 +27,6 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 	
 	private RepositorioClienteBanco(String server, String user, String key) {
 		try {
-			//pm = PersistenceMechanismRDBMS.getInstance();
-			
 			pm = instanceInicio.getMinhaInstancia(server,user,key);//instancia a conexão
 			pm.connect();//conecta o banco de dados com o java
 		} catch (PersistenceMechanismException e) {
@@ -40,7 +38,6 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 	public static RepositorioClienteBanco getInstance(String server, String user, String key) {//metodo singleton
 		if (instance == null){// se for instancia unica instancia
 			instance = new RepositorioClienteBanco(server, user, key);
-			
 		}
 		return instance;
 	}
@@ -78,9 +75,6 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 	
 	public void removerCliente (int id) throws RepositorioException {
 		try {
-			//Cliente cliente = new Cliente();
-			//if(procurarCliente(cliente.getId()) != null) {
-			//estava criando um novo objeto e depois verificando se um atributo dele era nulo, sempre ia dar nulo
 			if(procurarCliente(id) != null) {
 				Statement statement = (Statement) pm.getCommunicationChannel();
 				statement.executeUpdate("DELETE from cliente WHERE id = '" + id + "'");

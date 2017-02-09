@@ -24,6 +24,8 @@ public class JFuncionarioInserir extends JPanel {
 	private JTextField textFieldNome;
 	private JTextField textFieldCpf;
 	private JTextField textFieldTelefone;
+	Funcionario funcionario = new Funcionario();
+	Fachada fachada;
 	
 	public static JFuncionarioInserir getInstance(String server, String user, String key) {
 		if (instance == null) {
@@ -80,9 +82,7 @@ public class JFuncionarioInserir extends JPanel {
 		JButton btnInserirFuncionario = new JButton("Inserir Funcionario");
 		btnInserirFuncionario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Funcionario funcionario = new Funcionario();
-				Fachada instance = Fachada.getInstance(server, user, key);
-				Fachada fachada = instance;
+				fachada = Fachada.getInstance(server, user, key);
 				try {
 					funcionario.setNome(textFieldNome.getText());
 					funcionario.setCpf(textFieldCpf.getText());

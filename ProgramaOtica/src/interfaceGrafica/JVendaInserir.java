@@ -76,13 +76,8 @@ public class JVendaInserir extends JPanel {
 				try {
 					venda.setCliente(Integer.parseInt(textFieldIdCliente.getText()));
 					venda.setProduto(Integer.parseInt(textFieldIdProduto.getText()));
-					try {
-						fachada.inserir(venda);
-					} catch (NullPointerException | SemPosicaoParaInserirException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				} catch (TamanhoException | RepositorioException e) {
+					fachada.inserir(venda);
+				} catch (TamanhoException | RepositorioException | NullPointerException | SemPosicaoParaInserirException e) {
 					e.printStackTrace();
 				}
 			}

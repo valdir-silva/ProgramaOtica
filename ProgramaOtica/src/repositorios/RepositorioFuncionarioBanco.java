@@ -12,6 +12,7 @@ import base.Funcionario;
 import conecaoBanco.PersistenceMechanismRDBMS;
 import exceptions.PersistenceMechanismException;
 import exceptions.TamanhoException;
+import interfaceGrafica.JInicio;
 import interfaces.IRepositorioFuncionario;
 import exceptions.RepositorioException;
 import exceptions.RepositorioJaExisteException;
@@ -20,10 +21,11 @@ import exceptions.SemPosicaoParaInserirException;
 public class RepositorioFuncionarioBanco implements IRepositorioFuncionario {
 	private static RepositorioFuncionarioBanco instance;
 	private PersistenceMechanismRDBMS pm;//variavel para utilizar o banco
+	private JInicio instanceInicio = new JInicio();
 	
-	private RepositorioFuncionarioBanco() {
+	private RepositorioFuncionarioBanco(String server, String user, String key) {
 		try {
-			pm = PersistenceMechanismRDBMS.getInstance();//instancia a conexão
+			pm = instanceInicio.getMinhaInstancia(server, user, key);//instancia a conexão
 			pm.connect();//conecta o banco de dados com o java
 		} catch (PersistenceMechanismException e) {
 			e.printStackTrace();
@@ -31,9 +33,9 @@ public class RepositorioFuncionarioBanco implements IRepositorioFuncionario {
 		
 	}
 	
-	public static RepositorioFuncionarioBanco getInstance() {//metodo singleton
+	public static RepositorioFuncionarioBanco getInstance(String server, String user, String key) {//metodo singleton
 		if (instance == null){// se for instancia unica instancia
-			instance = new RepositorioFuncionarioBanco();
+			instance = new RepositorioFuncionarioBanco(server, user, key);
 		}
 		return instance;
 	}
@@ -68,8 +70,7 @@ public class RepositorioFuncionarioBanco implements IRepositorioFuncionario {
 	
 	public void removerFuncionario (int id) throws RepositorioException {
 		try {
-			Funcionario funcionario = new Funcionario();
-			if(procurarFuncionario(funcionario.getId()) != null) {
+			if(procurarFuncionario(id) != null) {
 				Statement statement = (Statement) pm.getCommunicationChannel();
 				statement.executeUpdate("DELETE from funcionario WHERE id = '" + id + "'");				
 			}else {

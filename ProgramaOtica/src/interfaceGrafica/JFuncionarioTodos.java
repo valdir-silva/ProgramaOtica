@@ -1,8 +1,12 @@
 package interfaceGrafica;
 
 
+import java.awt.event.ActionEvent;
+
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 
@@ -25,30 +29,35 @@ public class JFuncionarioTodos extends JPanel {
 		JPanel panelFuncionarioTodos = new JPanel();
 		tabbedPane.addTab("Todos", null, panelFuncionarioTodos, null);
 		
-		String [] colunas = {"id", "nome", "cpf", "telefone"};
-		String [][] dados = null;
 		
-		RepositorioFuncionarioArray funcionarios = new RepositorioFuncionarioArray();
-
-		Fachada instance = Fachada.getInstance(server, user, key);
-		Fachada fachada = instance;
+					///////////
+					//Tabela///
+					///////////		
 		
-		funcionarios = fachada.todosFuncionarios();
-		dados = funcionarios.todosFuncionarios();
-		
-		
-		panelFuncionarioTodos.setLayout(null);
-		
-		table = new JTable(dados, colunas);
-		table.setBounds(0, 0, 680, 528);
-		
-		panelFuncionarioTodos.add(table);
-		
-		JScrollBar scrollBar = new JScrollBar();
-		scrollBar.setBounds(680, 0, 17, 277);
-		panelFuncionarioTodos.add(scrollBar);
-		
-
+					String [] colunas = {"id", "nome", "cpf", "telefone"};
+					String [][] dados = null;
+					
+					RepositorioFuncionarioArray funcionarios = new RepositorioFuncionarioArray();
+			
+					Fachada instance = Fachada.getInstance(server, user, key);
+					Fachada fachada = instance;
+					
+					try {
+						funcionarios = fachada.todosFuncionarios();
+						dados = funcionarios.todosFuncionarios();
+					} catch (TamanhoException e) {
+						e.printStackTrace();
+					}
+					
+					
+					
+					panelFuncionarioTodos.setLayout(null);
+					
+					table = new JTable(dados, colunas);
+					table.setBounds(0, 0, 680, 528);
+					
+					panelFuncionarioTodos.add(table);
+			
 		
 		tabbedPane.addTab("Inserir", new JFuncionarioInserir(server, user, key));
 		

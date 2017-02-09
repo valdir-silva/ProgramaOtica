@@ -23,9 +23,9 @@ public class RepositorioVendaBanco implements IRepositorioVenda {
 	private static RepositorioVendaBanco instance;
 	private PersistenceMechanismRDBMS pm;//variavel para utilizar o banco
 	
-	private RepositorioVendaBanco() {
+	private RepositorioVendaBanco(String server, String user, String key) {
 		try {
-			pm = PersistenceMechanismRDBMS.getInstance();//instancia a conexão
+			pm = PersistenceMechanismRDBMS.getInstance(server, user, key);//instancia a conexão
 			pm.connect();//conecta o banco de dados com o java
 		} catch (PersistenceMechanismException e) {
 			e.printStackTrace();
@@ -33,44 +33,34 @@ public class RepositorioVendaBanco implements IRepositorioVenda {
 		
 	}
 	
-	public static RepositorioVendaBanco getInstance() {//metodo singleton
+	public static RepositorioVendaBanco getInstance(String server, String user, String key) {//metodo singleton
 		if (instance == null){// se for instancia unica instancia
-			instance = new RepositorioVendaBanco();
+			instance = new RepositorioVendaBanco(server, user, key);
 		}
 		return instance;
 	}
 	
 	public void inserir (Venda venda) throws RepositorioException, NullPointerException, TamanhoException {
-		//Statement é usado para utilizar os comandos sql no java
+		//Statement é usado para utilizar os comandos sql no java.
 		try {
-			Fachada fachada = Fachada.getInstance("","",""); // ERROOOOOOOORRR
-			//se o cliente o produto e a venda não existirem, insira
-			if (fachada.procurarCliente(venda.getCliente()) != null) {
-				if(fachada.procurarProduto(venda.getProduto()) != null) {
-					if (procurarVenda(venda.getId()) == null){
-						Statement statement = (Statement) pm.getCommunicationChannel();
-						statement.executeUpdate("INSERT INTO venda (id_cliente, id_produto)"
-								+ "VALUES ('" + venda.getCliente() + "', '" 
-								+ venda.getProduto() +"')");
-					}else { 
-						RepositorioJaExisteException e = new RepositorioJaExisteException();
-						throw e;
-					}
-				}else {//se produto não existir
-					NullPointerException e = new NullPointerException();
-					throw e;
-				}
-			}else {//se cliente não existir
-				NullPointerException e = new NullPointerException();
+			if (procurarVenda(venda.getId()) == null){
+				Statement statement = (Statement) pm.getCommunicationChannel();
+				statement.executeUpdate("INSERT INTO venda (id_cliente, id_produto)"
+						+ "VALUES ('" + venda.getCliente() + "', '" 
+						+ venda.getProduto() +"')");
+			}else { 
+				RepositorioJaExisteException e = new RepositorioJaExisteException();
 				throw e;
 			}
-			
 		} catch(PersistenceMechanismException e){
 		    throw new RepositorioException(e);
 		} catch (SQLException e) {
 		    throw new RepositorioException(e);
-		} catch (RepositorioJaExisteException e) {
+		} catch (TamanhoException e) {
 			e.printStackTrace();
+		} catch (RepositorioJaExisteException e1) {
+			
+			e1.printStackTrace();
 		} finally {
 		    try {
 				pm.releaseCommunicationChannel();
@@ -78,13 +68,12 @@ public class RepositorioVendaBanco implements IRepositorioVenda {
 				throw new RepositorioException(ex);
 			}
 		}
-		JOptionPane.showMessageDialog(null, "Venda inserida com sucesso");
+		JOptionPane.showMessageDialog(null, "Cliente inserido com sucesso");				
 	}
 	
 	public void removerVenda (int id) throws RepositorioException {
 		try {
-			Venda venda = new Venda();
-			if(procurarVenda(venda.getId()) != null) {
+			if(procurarVenda(id) != null) {
 				Statement statement = (Statement) pm.getCommunicationChannel();
 				statement.executeUpdate("DELETE from venda WHERE id = '" + id + "'");				
 			}else {

@@ -1,13 +1,16 @@
 package interfaceGrafica;
 
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
+
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 
 import exceptions.TamanhoException;
 import programa.Fachada;
 import repositorios.RepositorioClienteArray;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class JClienteTodos extends JPanel {
 
@@ -23,32 +26,43 @@ public class JClienteTodos extends JPanel {
 		
 		JPanel panelClienteTodos = new JPanel();
 		tabbedPane.addTab("Todos", null, panelClienteTodos, null);
-		///////////
-		//Tabela///
-		///////////		
-		String [] colunas = {"id", "Estado", "cidade", "Rua", "Cep", "Nascimento", "Nome", "CPF", "Telefone"};
-		String [][] dados = null;
-		
-		RepositorioClienteArray clientes = new RepositorioClienteArray();
 
-		Fachada instance = Fachada.getInstance(server, user, key);
-		Fachada fachada = instance;
-		
-		clientes = fachada.todosClientes();
-		dados = clientes.todosClientes();
-		
-		panelClienteTodos.setLayout(null);
-		
-		table = new JTable(dados, colunas);
-		table.setBounds(0, 0, 680, 528);
-		
-		panelClienteTodos.add(table);
-		
-		JScrollBar scrollBar = new JScrollBar();
-		scrollBar.setBounds(680, 0, 17, 277);
-		panelClienteTodos.add(scrollBar);
-		
+		JButton btnMostrarTodos = new JButton("Mostrar Todos");
+		btnMostrarTodos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				///////////
+				//Tabela///
+				///////////		
+				String [] colunas = {"id", "Estado", "cidade", "Rua", "Cep", "Nascimento", "Nome", "CPF", "Telefone"};
+				String [][] dados = null;
+				
+				RepositorioClienteArray clientes = new RepositorioClienteArray();
 
+				Fachada instance = Fachada.getInstance(server, user, key);
+				Fachada fachada = instance;
+				
+				try {
+					clientes = fachada.todosClientes();
+					dados = clientes.todosClientes();
+				} catch (TamanhoException e) {
+					e.printStackTrace();
+				}
+				
+				
+				panelClienteTodos.setLayout(null);
+				
+				table = new JTable(dados, colunas);
+				table.setBounds(0, 0, 680, 528);
+				
+				panelClienteTodos.add(table);	
+				
+			}
+		});
+		btnMostrarTodos.setBounds(10, 11, 101, 23);
+		panelClienteTodos.add(btnMostrarTodos);
+		
+		
+		
 		tabbedPane.addTab("Inserir", new JClienteInserir(server, user, key));
 		
 		tabbedPane.addTab("Atualizar", new JClienteAtualizar(server, user, key));
@@ -58,5 +72,4 @@ public class JClienteTodos extends JPanel {
 		tabbedPane.addTab("Procurar", new JClienteProcurar(server, user, key));
 	
 	}
-
 }

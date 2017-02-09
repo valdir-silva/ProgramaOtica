@@ -102,13 +102,8 @@ public class JProdutoInserir extends JPanel {
 					produto.setMarca(textFieldMarca.getText());
 					produto.setValorCompra(Float.parseFloat(textFieldValorCompra.getText()));
 					produto.setValorVenda(Float.parseFloat(textFieldValorVenda.getText()));
-					try {
-						fachada.inserir(produto);
-					} catch (SemPosicaoParaInserirException | RepositorioJaExisteException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				} catch (TamanhoException | RepositorioException e) {
+					fachada.inserir(produto);
+				} catch (SemPosicaoParaInserirException | RepositorioJaExisteException | TamanhoException | RepositorioException e) {
 					e.printStackTrace();
 				}
 			}

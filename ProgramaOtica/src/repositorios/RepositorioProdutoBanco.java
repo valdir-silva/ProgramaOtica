@@ -24,9 +24,9 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 	private static RepositorioProdutoBanco instance;
 	private PersistenceMechanismRDBMS pm;//variavel para utilizar o banco
 	
-	private RepositorioProdutoBanco() {
+	private RepositorioProdutoBanco(String server, String user, String key) {
 		try {
-			pm = PersistenceMechanismRDBMS.getInstance();//instancia a conexão
+			pm = PersistenceMechanismRDBMS.getInstance(server, user, key);//instancia a conexão
 			pm.connect();//conecta o banco de dados com o java
 		} catch (PersistenceMechanismException e) {
 			e.printStackTrace();
@@ -34,9 +34,9 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 		
 	}
 	
-	public static RepositorioProdutoBanco getInstance() {//metodo singleton
+	public static RepositorioProdutoBanco getInstance(String server, String user, String key) {//metodo singleton
 		if (instance == null){// se for instancia unica instancia
-			instance = new RepositorioProdutoBanco();
+			instance = new RepositorioProdutoBanco(server, user, key);
 		}
 		return instance;
 	}
@@ -72,8 +72,7 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 	
 	public void removerProduto (int id) throws RepositorioException {
 		try {
-			Produto produto = new Produto();
-			if(procurarProduto(produto.getId()) != null) {
+			if(procurarProduto(id) != null) {
 				Statement statement = (Statement) pm.getCommunicationChannel();
 				statement.executeUpdate("DELETE from produto WHERE id = '" + id + "'");				
 			}else {

@@ -18,11 +18,10 @@ import java.awt.event.ActionEvent;
 public class JClienteRemover extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private static JClienteRemover instance;
-	private JTextField textFieldId;
 	private static String server;
 	private static String user;
 	private static String key;
-	private JTextField txtId;
+	private JTextField textFieldId;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -50,7 +49,7 @@ public class JClienteRemover extends JPanel {
 	
 	public JClienteRemover(String server, String user, String key) {
 		setLayout(null);
-		
+
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 0, 720, 528);
 		add(tabbedPane);
@@ -64,33 +63,27 @@ public class JClienteRemover extends JPanel {
 		panelClienteRemover.add(lblRemover);
 		
 		JLabel lblId = new JLabel("id:");
-		lblId.setBounds(44, 95, 46, 14);
+		lblId.setBounds(44, 95, 32, 14);
 		panelClienteRemover.add(lblId);
-		
-		textFieldId = new JTextField();
-		textFieldId.setBounds(66, 92, 86, 20);
-		panelClienteRemover.add(textFieldId);
-		textFieldId.setColumns(10);
 
 		JLabel lblNewLabel = new JLabel("id:");
 		lblNewLabel.setBounds(44, 95, 46, 14);
 		panelClienteRemover.add(lblNewLabel);
 		
-		txtId = new JTextField();
-		txtId.setBounds(66, 92, 86, 20);
-		panelClienteRemover.add(txtId);
-		txtId.setColumns(10);
+		textFieldId = new JTextField();
+		textFieldId.setBounds(84, 92, 68, 20);
+		panelClienteRemover.add(textFieldId);
+		textFieldId.setColumns(10);
 		
 		JButton btnRemover = new JButton("remover");
 		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String idS;
 				int id=0;
-				idS = txtId.getText();
-				id = Integer.parseInt(idS);
-				Fachada instance = Fachada.getInstance(server, user, key);
-				Fachada fachada = instance;
+				
+				id = Integer.parseInt(textFieldId.getText());
 				try {
+					Fachada fachada = Fachada.getInstance(server, user, key);
+				
 					fachada.removerCliente(id);
 				} catch (RepositorioException e) {
 					// TODO Auto-generated catch block
@@ -100,5 +93,6 @@ public class JClienteRemover extends JPanel {
 		});
 		btnRemover.setBounds(162, 91, 89, 23);
 		panelClienteRemover.add(btnRemover);
+		
 	}
 }

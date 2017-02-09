@@ -34,26 +34,18 @@ public class Fachada {
 		IRepositorioCliente repositorioCliente = instanceCliente;
 		clientes = new ControleClientes (repositorioCliente);
 		
-		RepositorioFuncionarioBanco instanceFuncionario = RepositorioFuncionarioBanco.getInstance();
+		RepositorioFuncionarioBanco instanceFuncionario = RepositorioFuncionarioBanco.getInstance(server, user, key);
 		IRepositorioFuncionario repositorioFuncionario = instanceFuncionario;
 		funcionarios = new ControleFuncionarios (repositorioFuncionario);
 		
-		RepositorioProdutoBanco instanceProduto = RepositorioProdutoBanco.getInstance();
+		RepositorioProdutoBanco instanceProduto = RepositorioProdutoBanco.getInstance(server, user, key);
 		IRepositorioProduto repositorioProduto = instanceProduto;
 		produtos = new ControleProdutos (repositorioProduto);
 		
-		RepositorioVendaBanco instanceVenda = RepositorioVendaBanco.getInstance();
+		RepositorioVendaBanco instanceVenda = RepositorioVendaBanco.getInstance(server, user, key);
 		IRepositorioVenda repositorioVenda = instanceVenda;
 		vendas = new ControleVendas (repositorioVenda);
 		
-		/*IRepositorioFuncionario repositorioFornecedores = new RepositorioFuncionarioArray();
-		fornecedores = new ControleFuncionarios (repositorioFornecedores);
-		
-		IRepositorioProduto repositorioProdutos = new RepositorioProdutoArray();
-		produtos = new ControleProdutos (repositorioProdutos);
-		
-		IRepositorioVenda repositorioVendas = new RepositorioVendaArray();
-		vendas = new ControleVendas (repositorioVendas);*/
 	}
 	
 	// Singleton method 
