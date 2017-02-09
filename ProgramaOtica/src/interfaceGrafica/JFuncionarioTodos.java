@@ -50,12 +50,12 @@ public class JFuncionarioTodos extends JPanel {
 		
 
 		
-		tabbedPane.addTab("Inserir", new JFuncionarioInserir());
+		tabbedPane.addTab("Inserir", new JFuncionarioInserir(server, user, key));
 		
-		tabbedPane.addTab("Atualizar", new JFuncionarioAtualizar());
+		tabbedPane.addTab("Atualizar", new JFuncionarioAtualizar(server, user, key));
 				
-		tabbedPane.addTab("Remover", new JFuncionarioRemover());
+		tabbedPane.addTab("Remover", new JFuncionarioRemover(server, user, key));
 		
-		tabbedPane.addTab("Procurar", new JFuncionarioProcurar());
+		tabbedPane.addTab("Procurar", new JFuncionarioProcurar(server, user, key));
 	}
 }

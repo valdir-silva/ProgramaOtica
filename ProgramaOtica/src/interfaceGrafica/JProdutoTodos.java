@@ -24,7 +24,7 @@ public class JProdutoTodos extends JPanel {
 		JPanel panelJProdutoTodos = new JPanel();
 		tabbedPane.addTab("Todos", null, panelJProdutoTodos, null);
 		
-		String [] colunas = {"id", "nome", "cpf", "telefone"};
+		String [] colunas = {"id", "Nome", "Marca", "ValorCompra", "ValorVenda"};
 		String [][] dados = null;
 		
 		RepositorioProdutoArray produtos = new RepositorioProdutoArray();
@@ -49,13 +49,13 @@ public class JProdutoTodos extends JPanel {
 		
 
 		
-		tabbedPane.addTab("Inserir", new JProdutoInserir());
+		tabbedPane.addTab("Inserir", new JProdutoInserir(server, user, key));
 		
-		tabbedPane.addTab("Atualizar", new JProdutoAtualizar());
+		tabbedPane.addTab("Atualizar", new JProdutoAtualizar(server, user, key));
 				
-		tabbedPane.addTab("Remover", new JProdutoRemover());
+		tabbedPane.addTab("Remover", new JProdutoRemover(server, user, key));
 		
-		tabbedPane.addTab("Procurar", new JProdutoProcurar());
+		tabbedPane.addTab("Procurar", new JProdutoProcurar(server, user, key));
 	}
 
 }

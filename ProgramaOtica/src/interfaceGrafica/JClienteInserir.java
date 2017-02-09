@@ -30,6 +30,11 @@ public class JClienteInserir extends JPanel {
 	private JTextField textFieldEstado;
 	private JTextField textFieldCidade;
 	private JTextField textFieldRua;
+	//declaração de objetos aqui para ser possível usar nos dois métodos (carregar e atualizar)
+	private Cliente cliente = new Cliente();
+	private Endereco endereco = new Endereco();
+	private Fachada fachada;
+	//..
 	
 	public static JClienteInserir getInstance(String server, String user, String key) {
 		if (instance == null) {
@@ -131,10 +136,8 @@ public class JClienteInserir extends JPanel {
 		JButton btnInserirCliente = new JButton("Inserir Cliente");
 		btnInserirCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Cliente cliente = new Cliente();
-				Endereco endereco = new Endereco();
-				Fachada instance = Fachada.getInstance(server, user, key);
-				Fachada fachada = instance;
+				
+				fachada = Fachada.getInstance(server, user, key);
 				try {
 					cliente.setNome(textFieldNome.getText());
 					cliente.setNascimento(textFieldNascimento.getText());

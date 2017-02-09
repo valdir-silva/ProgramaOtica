@@ -30,9 +30,9 @@ public class JClienteAtualizar extends JPanel {
 	private JTextField textFieldRua;
 	private JTextField txtId;
 	//declaração de objetos aqui para ser possível usar nos dois métodos (carregar e atualizar)
-	Cliente cliente = new Cliente();
-	Endereco endereco = new Endereco();
-	Fachada fachada;
+	private Cliente cliente = new Cliente();
+	private Endereco endereco = new Endereco();
+	private Fachada fachada;
 	//..
 	
 	public static JClienteAtualizar getInstance(String server, String user, String key) {
@@ -135,12 +135,6 @@ public class JClienteAtualizar extends JPanel {
 		JButton btnAtualizarCliente = new JButton("Atualizar Cliente");
 		btnAtualizarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				/*(teste) estou testando sem a instance pq aparentemente é redundante
-				Cliente cliente = new Cliente();
-				Endereco endereco = new Endereco();
-				Fachada instance = Fachada.getInstance(server, user, key);
-				Fachada fachada = instance;
-				*/
 				fachada = Fachada.getInstance(server, user, key);
 				try {
 					cliente.setNome(textFieldNome.getText());
