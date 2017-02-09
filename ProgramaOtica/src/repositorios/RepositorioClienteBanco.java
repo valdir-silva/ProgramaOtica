@@ -46,7 +46,7 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 	}
 	
 	public void inserir (Cliente cliente) throws RepositorioException, RepositorioJaExisteException {
-		//Statement é usado para utilizar os comandos sql no java
+		//Statement é usado para utilizar os comandos sql no java.
 		try {
 			if (procurarCliente(cliente.getId()) == null) {
 				Statement statement = (Statement) pm.getCommunicationChannel();
@@ -78,8 +78,10 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 	
 	public void removerCliente (int id) throws RepositorioException {
 		try {
-			Cliente cliente = new Cliente();
-			if(procurarCliente(cliente.getId()) != null) {
+			//Cliente cliente = new Cliente();
+			//if(procurarCliente(cliente.getId()) != null) {
+			//estava criando um novo objeto e depois verificando se um atributo dele era nulo, sempre ia dar nulo
+			if(procurarCliente(id) != null) {
 				Statement statement = (Statement) pm.getCommunicationChannel();
 				statement.executeUpdate("DELETE from cliente WHERE id = '" + id + "'");
 			}else {
