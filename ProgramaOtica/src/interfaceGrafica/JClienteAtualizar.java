@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 
 import base.Cliente;
 import base.Endereco;
+import exceptions.IdNaoExisteException;
 import exceptions.RepositorioException;
 import exceptions.TamanhoException;
 import programa.Fachada;
@@ -148,7 +149,6 @@ public class JClienteAtualizar extends JPanel {
 					cliente.setEndereco(endereco);
 					fachada.atualizar(cliente);
 				} catch (TamanhoException | RepositorioException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -168,15 +168,15 @@ public class JClienteAtualizar extends JPanel {
 		JButton btnCarregar = new JButton("carregar");
 		btnCarregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String idS;
 				int id=0;
-				idS = txtId.getText();
-				id = Integer.parseInt(idS);
+				id = Integer.parseInt(txtId.getText());
+				
 				fachada = Fachada.getInstance(server, user, key);
 				try {
 					cliente = fachada.procurarCliente(id);
 				} catch (NullPointerException | RepositorioException | TamanhoException e) {
-					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IdNaoExisteException e) {
 					e.printStackTrace();
 				}
 				//busca no banco e preenche todos os campos

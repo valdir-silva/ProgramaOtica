@@ -1,10 +1,5 @@
 package interfaceGrafica;
 
-import java.awt.event.ActionEvent;
-
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -28,34 +23,29 @@ public class JProdutoTodos extends JPanel {
 		JPanel panelJProdutoTodos = new JPanel();
 		tabbedPane.addTab("Todos", null, panelJProdutoTodos, null);
 		
-				///////////
-				//Tabela///
-				///////////
-				String [] colunas = {"id", "Nome", "Marca", "ValorCompra", "ValorVenda"};
-				String [][] dados = null;
+		///////////
+		//Tabela///
+		///////////
+		String [] colunas = {"id", "Nome", "Marca", "ValorCompra", "ValorVenda"};
+		String [][] dados = null;
 				
-				RepositorioProdutoArray produtos = new RepositorioProdutoArray();
-		
-				Fachada instance = Fachada.getInstance(server, user, key);
-				Fachada fachada = instance;
+		RepositorioProdutoArray produtos = new RepositorioProdutoArray();
+		Fachada fachada = Fachada.getInstance(server, user, key);
 				
-				try {
-					produtos = fachada.todosProdutos();
-					dados = produtos.todosProdutos();
-				} catch (TamanhoException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
+		try {
+			produtos = fachada.todosProdutos();
+			dados = produtos.todosProdutos();
+		} catch (TamanhoException e) {
+			e.printStackTrace();
+		}
 				
 				
-				panelJProdutoTodos.setLayout(null);
+		panelJProdutoTodos.setLayout(null);
 				
-				table = new JTable(dados, colunas);
-				table.setBounds(0, 0, 680, 528);
+		table = new JTable(dados, colunas);
+		table.setBounds(0, 0, 680, 528);
 				
-				panelJProdutoTodos.add(table);		
-		
+		panelJProdutoTodos.add(table);		
 
 		
 		tabbedPane.addTab("Inserir", new JProdutoInserir(server, user, key));

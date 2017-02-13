@@ -1,5 +1,8 @@
 package programa;
 
+import java.awt.HeadlessException;
+
+
 import javax.swing.JOptionPane;
 
 
@@ -9,6 +12,7 @@ import base.Endereco;
 import base.Funcionario;
 import base.Produto;
 import base.Venda;
+import exceptions.IdNaoExisteException;
 import exceptions.RepositorioException;
 import exceptions.RepositorioJaExisteException;
 import exceptions.SemPosicaoParaInserirException;
@@ -95,7 +99,11 @@ public class ProgramaOtica {
 							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
-							}
+							} catch (HeadlessException e) {
+								e.printStackTrace();
+							} catch (IdNaoExisteException e) {
+								e.printStackTrace();
+							} 
 							break;
 						case 3://remover
 							int deletaC = Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
@@ -117,6 +125,8 @@ public class ProgramaOtica {
 							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
+							} catch (IdNaoExisteException e) {
+								e.printStackTrace();
 							}
 							break;
 						case 5://Mostrar todos
@@ -191,6 +201,10 @@ public class ProgramaOtica {
 							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
+							} catch (HeadlessException e) {
+								e.printStackTrace();
+							} catch (IdNaoExisteException e) {
+								e.printStackTrace();
 							}
 							break;
 						case 3://remover
@@ -212,6 +226,8 @@ public class ProgramaOtica {
 							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
+							} catch (IdNaoExisteException e) {
+								e.printStackTrace();
 							}
 							break;
 						case 5://todos
@@ -402,6 +418,8 @@ public class ProgramaOtica {
 							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
+							} catch (IdNaoExisteException e) {
+								e.printStackTrace();
 							}
 							break;
 						case 5://Mostrar Todos

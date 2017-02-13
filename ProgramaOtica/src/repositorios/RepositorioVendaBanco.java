@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 
 
 
+
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -11,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import base.Venda;
 import conecaoBanco.PersistenceMechanismRDBMS;
+import exceptions.IdNaoExisteException;
 import exceptions.PersistenceMechanismException;
 import exceptions.TamanhoException;
 import interfaces.IRepositorioVenda;
@@ -68,7 +70,7 @@ public class RepositorioVendaBanco implements IRepositorioVenda {
 				throw new RepositorioException(ex);
 			}
 		}
-		JOptionPane.showMessageDialog(null, "Cliente inserido com sucesso");				
+		JOptionPane.showMessageDialog(null, "Venda inserida com sucesso");				
 	}
 	
 	public void removerVenda (int id) throws RepositorioException {
@@ -125,6 +127,10 @@ public class RepositorioVendaBanco implements IRepositorioVenda {
 			throw new RepositorioException(e);
 		} catch (SQLException e) {
 			throw new RepositorioException(e);
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		} catch (IdNaoExisteException e) {
+			e.printStackTrace();
 		} finally {
 			try {
 				pm.releaseCommunicationChannel();

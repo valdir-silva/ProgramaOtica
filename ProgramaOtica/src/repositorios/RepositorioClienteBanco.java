@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import base.Cliente;
 import base.Endereco;
 import conecaoBanco.PersistenceMechanismRDBMS;
+import exceptions.IdNaoExisteException;
 import exceptions.PersistenceMechanismException;
 import exceptions.TamanhoException;
 import interfaceGrafica.JInicio;
@@ -63,6 +64,8 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 		    throw new RepositorioException(e);
 		} catch (TamanhoException e) {
 			e.printStackTrace();
+		} catch (IdNaoExisteException e) {
+			e.printStackTrace();
 		} finally {
 		    try {
 				pm.releaseCommunicationChannel();
@@ -73,7 +76,7 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 		JOptionPane.showMessageDialog(null, "Cliente inserido com sucesso");
 	}
 	
-	public void removerCliente (int id) throws RepositorioException {
+	public void removerCliente (int id) throws RepositorioException{
 		try {
 			if(procurarCliente(id) != null) {
 				Statement statement = (Statement) pm.getCommunicationChannel();
@@ -87,6 +90,8 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 		} catch (SQLException e) {
 			throw new RepositorioException(e);
 		} catch (TamanhoException e) {
+			e.printStackTrace();
+		} catch (IdNaoExisteException e) {
 			e.printStackTrace();
 		} finally {
 			try {
@@ -119,6 +124,8 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 			throw new RepositorioException(e);
 		} catch (TamanhoException e) {
 			e.printStackTrace();
+		} catch (IdNaoExisteException e) {
+			e.printStackTrace();
 		} finally {
 			try {
 				pm.releaseCommunicationChannel();
@@ -129,7 +136,7 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 		JOptionPane.showMessageDialog(null, "Cliente atualizado com sucesso");
 	}
 	
-	public Cliente procurarCliente (int id) throws RepositorioException, TamanhoException {
+	public Cliente procurarCliente (int id) throws RepositorioException, TamanhoException, IdNaoExisteException {
 		Cliente cliente = null; 
 		Endereco endereco = null;
 		
@@ -152,7 +159,11 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 				cliente.setTelefone(resultset.getString("telefone"));
 			}
 			resultset.close();
-
+			
+			if(cliente != null)
+				return cliente;
+			else throw new IdNaoExisteException();
+			
 		} catch (PersistenceMechanismException e) {
 			throw new RepositorioException(e);
 		} catch (SQLException e) {
@@ -165,7 +176,6 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 			}
 		}
 		
-		return cliente;
 	}
 
 	public RepositorioClienteArray todosClientes() throws TamanhoException {

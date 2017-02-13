@@ -9,7 +9,7 @@ public class RepositorioException extends Exception {
 	private Exception exception;
 
     public RepositorioException(Exception exception) {
-        super("Exceï¿½ï¿½o encapsulada");
+        super("Exceção encapsulada");
         this.exception = exception;
     }
 

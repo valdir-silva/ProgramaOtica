@@ -1,7 +1,7 @@
 package programa;
 
 import base.Cliente;
-
+import exceptions.IdNaoExisteException;
 import exceptions.RepositorioException;
 import exceptions.RepositorioJaExisteException;
 import exceptions.SemPosicaoParaInserirException;
@@ -24,7 +24,7 @@ public class ControleClientes {
 		this.clientes.atualizar(cliente);
 	}
 	
-	public Cliente procurarCliente (int id) throws NullPointerException, RepositorioException, TamanhoException {
+	public Cliente procurarCliente (int id) throws NullPointerException, RepositorioException, TamanhoException, IdNaoExisteException {
 		return this.clientes.procurarCliente(id);
 	}
 	

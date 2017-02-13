@@ -2,9 +2,11 @@ package programa;
 
 import base.Cliente;
 
+
 import base.Funcionario;
 import base.Produto;
 import base.Venda;
+import exceptions.IdNaoExisteException;
 import exceptions.RepositorioException;
 import exceptions.RepositorioJaExisteException;
 import exceptions.SemPosicaoParaInserirException;
@@ -68,7 +70,7 @@ public class Fachada {
 		this.clientes.atualizar(cliente);
 	}
 	
-	public Cliente procurarCliente (int id) throws NullPointerException, RepositorioException, TamanhoException {
+	public Cliente procurarCliente (int id) throws NullPointerException, RepositorioException, TamanhoException, IdNaoExisteException {
 		return this.clientes.procurarCliente(id);
 	}
 	
@@ -92,7 +94,7 @@ public class Fachada {
 		this.funcionarios.atualizar(funcionario);
 	}
 	
-	public Funcionario procurarFuncionario (int id) throws NullPointerException, RepositorioException, TamanhoException {
+	public Funcionario procurarFuncionario (int id) throws NullPointerException, RepositorioException, TamanhoException, IdNaoExisteException {
 		return this.funcionarios.procurarFuncionario(id);
 	}
 	

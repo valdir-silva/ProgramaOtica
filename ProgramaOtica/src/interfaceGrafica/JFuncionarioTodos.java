@@ -1,11 +1,6 @@
 package interfaceGrafica;
 
 
-import java.awt.event.ActionEvent;
-
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -30,17 +25,17 @@ public class JFuncionarioTodos extends JPanel {
 		tabbedPane.addTab("Todos", null, panelFuncionarioTodos, null);
 		
 		
-					///////////
-					//Tabela///
-					///////////		
+		///////////
+		//Tabela///
+		///////////		
 		
-					String [] colunas = {"id", "nome", "cpf", "telefone"};
-					String [][] dados = null;
-					
-					RepositorioFuncionarioArray funcionarios = new RepositorioFuncionarioArray();
+		String [] colunas = {"id", "nome", "cpf", "telefone"};
+		String [][] dados = null;
 			
-					Fachada instance = Fachada.getInstance(server, user, key);
-					Fachada fachada = instance;
+		RepositorioFuncionarioArray funcionarios = new RepositorioFuncionarioArray();
+			
+		Fachada instance = Fachada.getInstance(server, user, key);
+		Fachada fachada = instance;
 					
 					try {
 						funcionarios = fachada.todosFuncionarios();

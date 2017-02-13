@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 
 import base.Funcionario;
 import conecaoBanco.PersistenceMechanismRDBMS;
+import exceptions.IdNaoExisteException;
 import exceptions.PersistenceMechanismException;
 import exceptions.TamanhoException;
 import interfaceGrafica.JInicio;
@@ -58,6 +59,8 @@ public class RepositorioFuncionarioBanco implements IRepositorioFuncionario {
 		    throw new RepositorioException(e);
 		} catch (TamanhoException e) {
 			e.printStackTrace();
+		} catch (IdNaoExisteException e) {
+			e.printStackTrace();
 		} finally {
 		    try {
 				pm.releaseCommunicationChannel();
@@ -82,6 +85,8 @@ public class RepositorioFuncionarioBanco implements IRepositorioFuncionario {
 		} catch (SQLException e) {
 			throw new RepositorioException(e);
 		} catch (TamanhoException e) {
+			e.printStackTrace();
+		} catch (IdNaoExisteException e) {
 			e.printStackTrace();
 		} finally {
 			try {
@@ -110,6 +115,8 @@ public class RepositorioFuncionarioBanco implements IRepositorioFuncionario {
 			throw new RepositorioException(e);
 		} catch (TamanhoException e) {
 			e.printStackTrace();
+		} catch (IdNaoExisteException e) {
+			e.printStackTrace();
 		} finally {
 			try {
 				pm.releaseCommunicationChannel();
@@ -120,7 +127,7 @@ public class RepositorioFuncionarioBanco implements IRepositorioFuncionario {
 		JOptionPane.showMessageDialog(null, "funcionario atualizado com sucesso");
 	}
 	
-	public Funcionario procurarFuncionario (int id) throws RepositorioException, TamanhoException {
+	public Funcionario procurarFuncionario (int id) throws RepositorioException, TamanhoException, IdNaoExisteException {
 		Funcionario funcionario = null; 
 		try {
 			Statement statement = (Statement) pm.getCommunicationChannel();
@@ -133,6 +140,11 @@ public class RepositorioFuncionarioBanco implements IRepositorioFuncionario {
 				funcionario.setNome(resultset.getString("nome"));
 				funcionario.setTelefone(resultset.getString("telefone"));
 			}
+			resultset.close();
+			
+			if(funcionario != null)
+				return funcionario;
+			else throw new IdNaoExisteException();
 
 		} catch (PersistenceMechanismException e) {
 			throw new RepositorioException(e);
@@ -145,8 +157,6 @@ public class RepositorioFuncionarioBanco implements IRepositorioFuncionario {
 				throw new RepositorioException(ex);
 			}
 		}
-		
-		return funcionario;
 	}
 	
 	public RepositorioFuncionarioArray todosFuncionarios() throws TamanhoException {

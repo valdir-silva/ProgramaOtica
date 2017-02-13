@@ -1,7 +1,7 @@
 package programa;
 
 import base.Funcionario;
-
+import exceptions.IdNaoExisteException;
 import exceptions.RepositorioException;
 import exceptions.RepositorioJaExisteException;
 import exceptions.SemPosicaoParaInserirException;
@@ -24,7 +24,7 @@ public class ControleFuncionarios implements IRepositorioFuncionario{
 		this.funcionarios.atualizar(funcionario);
 	}
 
-	public Funcionario procurarFuncionario(int id) throws NullPointerException, RepositorioException, TamanhoException {
+	public Funcionario procurarFuncionario(int id) throws NullPointerException, RepositorioException, TamanhoException, IdNaoExisteException {
 		return this.funcionarios.procurarFuncionario(id);
 	}
 

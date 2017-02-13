@@ -12,6 +12,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import base.Funcionario;
+import exceptions.IdNaoExisteException;
 import exceptions.RepositorioException;
 import exceptions.TamanhoException;
 import programa.Fachada;
@@ -126,7 +127,7 @@ setLayout(null);
 				fachada = Fachada.getInstance(server, user, key);
 				try {
 					funcionario = fachada.procurarFuncionario(id);
-				} catch (NullPointerException | RepositorioException | TamanhoException e) {
+				} catch (NullPointerException | RepositorioException | TamanhoException | IdNaoExisteException e) {
 
 					e.printStackTrace();
 				}
