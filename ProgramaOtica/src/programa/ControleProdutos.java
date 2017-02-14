@@ -1,7 +1,7 @@
 package programa;
 
 import base.Produto;
-
+import exceptions.IdNaoExisteException;
 import exceptions.RepositorioException;
 import exceptions.RepositorioJaExisteException;
 import exceptions.SemPosicaoParaInserirException;
@@ -28,7 +28,7 @@ public class ControleProdutos implements IRepositorioProduto {
 		this.produtos.atualizar(produto);
 	}
 	
-	public Produto procurarProduto (int id) throws NullPointerException, RepositorioException, TamanhoException {
+	public Produto procurarProduto (int id) throws NullPointerException, RepositorioException, TamanhoException, IdNaoExisteException {
 		return this.produtos.procurarProduto(id);
 	}
 

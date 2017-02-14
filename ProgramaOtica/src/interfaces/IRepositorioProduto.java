@@ -1,7 +1,7 @@
 package interfaces;
 
 import base.Produto;
-
+import exceptions.IdNaoExisteException;
 import exceptions.RepositorioException;
 import exceptions.RepositorioJaExisteException;
 import exceptions.SemPosicaoParaInserirException;
@@ -12,6 +12,6 @@ public interface IRepositorioProduto {
 	public void inserir (Produto produto) throws SemPosicaoParaInserirException, RepositorioException, RepositorioJaExisteException;
 	public void removerProduto (int id) throws RepositorioException;
 	public void atualizar (Produto produto) throws NullPointerException, RepositorioException;
-	public Produto procurarProduto (int id) throws NullPointerException, RepositorioException, TamanhoException;
+	public Produto procurarProduto (int id) throws NullPointerException, RepositorioException, TamanhoException, IdNaoExisteException;
 	public RepositorioProdutoArray todosProdutos () throws TamanhoException;
 }

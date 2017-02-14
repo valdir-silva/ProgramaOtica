@@ -118,7 +118,7 @@ public class Fachada {
 		this.produtos.atualizar(produto);
 	}
 	
-	public Produto procurarProduto (int id) throws NullPointerException, RepositorioException, TamanhoException {
+	public Produto procurarProduto (int id) throws NullPointerException, RepositorioException, TamanhoException, IdNaoExisteException {
 		return this.produtos.procurarProduto(id);
 	}
 	
@@ -142,7 +142,7 @@ public class Fachada {
 		this.vendas.atualizar(produto);
 	}
 	
-	public Venda procurarVenda (int id) throws NullPointerException, RepositorioException, TamanhoException {
+	public Venda procurarVenda (int id) throws NullPointerException, RepositorioException, TamanhoException, IdNaoExisteException {
 		return this.vendas.procurarVenda(id);
 	}
 	

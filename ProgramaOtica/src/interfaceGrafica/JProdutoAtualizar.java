@@ -11,6 +11,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import base.Produto;
+import exceptions.IdNaoExisteException;
 import exceptions.RepositorioException;
 import exceptions.TamanhoException;
 import programa.Fachada;
@@ -132,7 +133,7 @@ public class JProdutoAtualizar extends JPanel {
 				fachada = Fachada.getInstance(server, user, key);
 				try {
 					produto = fachada.procurarProduto(id);
-				} catch (NullPointerException | RepositorioException | TamanhoException e) {
+				} catch (NullPointerException | RepositorioException | TamanhoException | IdNaoExisteException e) {
 
 					e.printStackTrace();
 				}

@@ -299,6 +299,12 @@ public class ProgramaOtica {
 							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
+							} catch (HeadlessException e) {
+								e.printStackTrace();
+							} catch (NumberFormatException e) {
+								e.printStackTrace();
+							} catch (IdNaoExisteException e) {
+								e.printStackTrace();
 							}
 							break;
 						case 3://remover
@@ -320,6 +326,8 @@ public class ProgramaOtica {
 							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
+							} catch (IdNaoExisteException e) {
+								e.printStackTrace();
 							}
 							break;
 						case 5://Mostrar Todos
@@ -389,6 +397,12 @@ public class ProgramaOtica {
 							} catch (TamanhoException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
+							} catch (NumberFormatException e) {
+								e.printStackTrace();
+							} catch (HeadlessException e) {
+								e.printStackTrace();
+							} catch (IdNaoExisteException e) {
+								e.printStackTrace();
 							}
 							break;
 						case 3://remover

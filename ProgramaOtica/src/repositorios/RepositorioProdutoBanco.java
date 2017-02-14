@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 
 import base.Produto;
 import conecaoBanco.PersistenceMechanismRDBMS;
+import exceptions.IdNaoExisteException;
 import exceptions.PersistenceMechanismException;
 //import exceptions.RemocaoNaoConcluidaException;
 //import exceptions.SemPosicaoParaInserirException;
@@ -60,6 +61,8 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 		    throw new RepositorioException(e);
 		} catch (TamanhoException e) {
 			e.printStackTrace();
+		} catch (IdNaoExisteException e) {
+			e.printStackTrace();
 		} finally {
 		    try {
 				pm.releaseCommunicationChannel();
@@ -84,6 +87,8 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 		} catch (SQLException e) {
 			throw new RepositorioException(e);
 		} catch (TamanhoException e) {
+			e.printStackTrace();
+		} catch (IdNaoExisteException e) {
 			e.printStackTrace();
 		} finally {
 			try {
@@ -113,6 +118,8 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 			throw new RepositorioException(e);
 		} catch (TamanhoException e) {
 			e.printStackTrace();
+		} catch (IdNaoExisteException e) {
+			e.printStackTrace();
 		} finally {
 			try {
 				pm.releaseCommunicationChannel();
@@ -123,7 +130,7 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 		JOptionPane.showMessageDialog(null, "Produto atualizado com sucesso");
 	}
 	
-	public Produto procurarProduto (int id) throws RepositorioException, TamanhoException {
+	public Produto procurarProduto (int id) throws RepositorioException, TamanhoException, IdNaoExisteException {
 		Produto produto = null; 
 		try {
 			Statement statement = (Statement) pm.getCommunicationChannel();
@@ -137,6 +144,12 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 				produto.setValorVenda(resultset.getFloat("valor_venda"));
 				produto.setNome(resultset.getString("nome"));
 			}
+			resultset.close();
+			
+			if(produto != null) 
+				return produto;
+			else throw new IdNaoExisteException();
+		
 
 		} catch (PersistenceMechanismException e) {
 			throw new RepositorioException(e);
@@ -149,8 +162,6 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 				throw new RepositorioException(ex);
 			}
 		}
-		
-		return produto;
 	}
 	
 	public RepositorioProdutoArray todosProdutos() throws TamanhoException {

@@ -1,7 +1,7 @@
 package programa;
 
 import base.Venda;
-
+import exceptions.IdNaoExisteException;
 import exceptions.RepositorioException;
 import exceptions.SemPosicaoParaInserirException;
 import exceptions.TamanhoException;
@@ -27,7 +27,7 @@ public class ControleVendas implements IRepositorioVenda {
 		this.vendas.atualizar(venda);
 	}
 	
-	public Venda procurarVenda (int id) throws NullPointerException, RepositorioException, TamanhoException {
+	public Venda procurarVenda (int id) throws NullPointerException, RepositorioException, TamanhoException, IdNaoExisteException {
 		return this.vendas.procurarVenda(id);
 	}
 	

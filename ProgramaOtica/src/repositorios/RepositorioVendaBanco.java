@@ -63,6 +63,8 @@ public class RepositorioVendaBanco implements IRepositorioVenda {
 		} catch (RepositorioJaExisteException e1) {
 			
 			e1.printStackTrace();
+		} catch (IdNaoExisteException e) {
+			e.printStackTrace();
 		} finally {
 		    try {
 				pm.releaseCommunicationChannel();
@@ -87,6 +89,8 @@ public class RepositorioVendaBanco implements IRepositorioVenda {
 		} catch (SQLException e) {
 			throw new RepositorioException(e);
 		} catch (TamanhoException e) {
+			e.printStackTrace();
+		} catch (IdNaoExisteException e) {
 			e.printStackTrace();
 		} finally {
 			try {
@@ -141,7 +145,7 @@ public class RepositorioVendaBanco implements IRepositorioVenda {
 		JOptionPane.showMessageDialog(null, "Venda atualizada com sucesso");
 	}
 	
-	public Venda procurarVenda (int id) throws RepositorioException, TamanhoException {
+	public Venda procurarVenda (int id) throws RepositorioException, TamanhoException, IdNaoExisteException {
 		Venda venda = null;
 		
 		try {
@@ -154,6 +158,11 @@ public class RepositorioVendaBanco implements IRepositorioVenda {
 				venda.setCliente(resultset.getInt("id_cliente"));
 				venda.setProduto(resultset.getInt("id_produto"));
 			}
+			resultset.close();
+			
+			if(venda != null)
+				return venda;
+			else throw new IdNaoExisteException();
 
 		} catch (PersistenceMechanismException e) {
 			throw new RepositorioException(e);
@@ -167,7 +176,6 @@ public class RepositorioVendaBanco implements IRepositorioVenda {
 			}
 		}
 		
-		return venda;
 	}
 	
 	public RepositorioVendaArray todasVendas() throws TamanhoException {
