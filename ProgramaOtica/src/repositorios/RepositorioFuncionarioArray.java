@@ -37,18 +37,12 @@ public class RepositorioFuncionarioArray  {
 	}
 
 	public void removerFuncionario(int id) {
-		boolean found = false;
-		for (int i = 0;i < this.funcionario.length;i++){
+		for (int i = 0; i < this.funcionario.length;i++){
 			if (this.funcionario[i].getId() == id){
 				this.funcionario[i] = null;
 				indice--;
-				found = true;
 				break;
 			}
-		}
-		if (!found) {//se não removeu!!
-			NullPointerException e = new NullPointerException();
-			throw e;
 		}
 	}
 
@@ -79,7 +73,7 @@ public class RepositorioFuncionarioArray  {
 	
 	public String[][] todosFuncionarios() {
 		int i = 0;
-		String[][] funcionarios = new String [funcionario.length][9];
+		String[][] funcionarios = new String [funcionario.length][5];
 		
 		while (funcionario[i] != null){
 			

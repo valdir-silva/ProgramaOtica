@@ -24,11 +24,11 @@ import exceptions.SemPosicaoParaInserirException;
 public class RepositorioClienteBanco implements IRepositorioCliente {
 	private static RepositorioClienteBanco instance;
 	private PersistenceMechanismRDBMS pm;//variavel para utilizar o banco
-	private JInicio instanceInicio = new JInicio();
+	private JInicio instanceInicio = JInicio.getInstance();
 	
 	private RepositorioClienteBanco(String server, String user, String key) {
 		try {
-			pm = instanceInicio.getMinhaInstancia(server,user,key);//instancia a conexão
+			pm = instanceInicio.getInstance(server,user,key);//instancia a conexão
 			pm.connect();//conecta o banco de dados com o java
 		} catch (PersistenceMechanismException e) {
 			e.printStackTrace();
@@ -45,27 +45,19 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 	
 	public void inserir (Cliente cliente) throws RepositorioException, RepositorioJaExisteException {
 		//Statement é usado para utilizar os comandos sql no java.
-		try {
-			if (procurarCliente(cliente.getId()) == null) {
-				Statement statement = (Statement) pm.getCommunicationChannel();
-				statement.executeUpdate("INSERT INTO cliente (estado, cidade, rua, cep, nascimento, nome, cpf, telefone)"
-						+ "VALUES ('"+ cliente.getEndereco().getEstado() + "', '" + cliente.getEndereco().getCidade() 
-						+ "', '" + cliente.getEndereco().getRua() + "', '" + cliente.getEndereco().getCep()
-						+ "', '" + cliente.getNascimento() + "', '" + cliente.getNome()+ "', '" + cliente.getCpf()
-						+ "', '" + cliente.getTelefone()+ "')");
-				
-			}else {
-				RepositorioJaExisteException e = new RepositorioJaExisteException();
-				throw e;
-			}
+		try {// nao faz sentido testar se já existe, sendo que o id nem foi gerado
+			Statement statement = (Statement) pm.getCommunicationChannel();
+			statement.executeUpdate("INSERT INTO cliente (estado, cidade, rua, cep, nascimento, nome, cpf, telefone)"
+					+ "VALUES ('"+ cliente.getEndereco().getEstado() + "', '" + cliente.getEndereco().getCidade() 
+					+ "', '" + cliente.getEndereco().getRua() + "', '" + cliente.getEndereco().getCep()
+					+ "', '" + cliente.getNascimento() + "', '" + cliente.getNome()+ "', '" + cliente.getCpf()
+					+ "', '" + cliente.getTelefone()+ "')");
+			
+			JOptionPane.showMessageDialog(null, "Cliente inserido com sucesso");
 		} catch(PersistenceMechanismException e){
 		    throw new RepositorioException(e);
 		} catch (SQLException e) {
 		    throw new RepositorioException(e);
-		} catch (TamanhoException e) {
-			e.printStackTrace();
-		} catch (IdNaoExisteException e) {
-			e.printStackTrace();
 		} finally {
 		    try {
 				pm.releaseCommunicationChannel();
@@ -73,7 +65,7 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 				throw new RepositorioException(ex);
 			}
 		}
-		JOptionPane.showMessageDialog(null, "Cliente inserido com sucesso");
+		
 	}
 	
 	public void removerCliente (int id) throws RepositorioException{
@@ -81,6 +73,8 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 			if(procurarCliente(id) != null) {
 				Statement statement = (Statement) pm.getCommunicationChannel();
 				statement.executeUpdate("DELETE from cliente WHERE id = '" + id + "'");
+				
+				JOptionPane.showMessageDialog(null, "Cliente removido com sucesso");
 			}else {
 				NullPointerException e = new NullPointerException();
 				throw e;
@@ -100,7 +94,7 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 				throw new RepositorioException(ex);
 			}
 		}
-		JOptionPane.showMessageDialog(null, "Cliente removido com sucesso");
+		
 	}
 	
 	public void atualizar (Cliente cliente) throws RepositorioException {
@@ -114,6 +108,7 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 						+ cliente.getNome()+ "', cpf ='" + cliente.getCpf() + "', telefone ='" + cliente.getTelefone() 
 						+ "' WHERE id = '" + cliente.getId() + "'");
 				
+				JOptionPane.showMessageDialog(null, "Cliente atualizado com sucesso");
 			}else {//se produto não existir
 				NullPointerException e = new NullPointerException();
 				throw e;
@@ -133,7 +128,7 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 				throw new RepositorioException(ex);
 			}
 		}
-		JOptionPane.showMessageDialog(null, "Cliente atualizado com sucesso");
+		
 	}
 	
 	public Cliente procurarCliente (int id) throws RepositorioException, TamanhoException, IdNaoExisteException {
@@ -162,7 +157,8 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 			
 			if(cliente != null)
 				return cliente;
-			else throw new IdNaoExisteException();
+			else 
+				throw new IdNaoExisteException();
 			
 		} catch (PersistenceMechanismException e) {
 			throw new RepositorioException(e);
@@ -190,19 +186,19 @@ public class RepositorioClienteBanco implements IRepositorioCliente {
 			while (resultset.next()){
 				Cliente cliente = new Cliente();
 				Endereco endereco = new Endereco();
-				
-				cliente.setId(resultset.getInt("id"));
-				cliente.setCpf(resultset.getString("cpf"));
-				endereco.setCep(resultset.getString("cep"));
-				endereco.setCidade(resultset.getString("cidade"));
-				endereco.setEstado(resultset.getString("estado"));
-				endereco.setRua(resultset.getString("rua"));
-				cliente.setEndereco(endereco);
-				cliente.setNascimento(resultset.getString("nascimento"));
-				cliente.setNome(resultset.getString("nome"));
-				cliente.setTelefone(resultset.getString("telefone"));
-				
 				try {//insere em clientes todos os clientes
+					
+					cliente.setId(resultset.getInt("id"));
+					cliente.setCpf(resultset.getString("cpf"));
+					endereco.setCep(resultset.getString("cep"));
+					endereco.setCidade(resultset.getString("cidade"));
+					endereco.setEstado(resultset.getString("estado"));
+					endereco.setRua(resultset.getString("rua"));
+					cliente.setEndereco(endereco);
+					cliente.setNascimento(resultset.getString("nascimento"));
+					cliente.setNome(resultset.getString("nome"));
+					cliente.setTelefone(resultset.getString("telefone"));
+				
 					clientes.inserir(cliente);
 				} catch (SemPosicaoParaInserirException e) {
 					e.printStackTrace();

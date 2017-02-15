@@ -6,6 +6,7 @@ public class Produto extends Identificacao{
 	private String marca;
 	private float valorCompra;
 	private float valorVenda;
+	private int quantidade;
 	
 	public Produto() {
 		super();
@@ -55,5 +56,13 @@ public class Produto extends Identificacao{
 	
 	public void setValorVenda(float valorVenda) {
 		this.valorVenda = valorVenda;
+	}
+
+	public int getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
 	}
 }

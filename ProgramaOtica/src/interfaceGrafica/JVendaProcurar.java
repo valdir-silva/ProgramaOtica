@@ -38,7 +38,7 @@ public class JVendaProcurar extends JPanel {
 		}
 	}
 
-	public JVendaProcurar(String server, String user, String key) {
+	private JVendaProcurar(String server, String user, String key) {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);

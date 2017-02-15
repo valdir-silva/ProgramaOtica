@@ -27,6 +27,7 @@ public class JProdutoProcurar extends JPanel {
 	//declaração de objetos aqui para ser possível usar nos dois métodos (carregar e atualizar)
 	Produto produto = new Produto();
 	Fachada fachada;
+	private JTextField textFieldQuantidade;
 	//..
 	
 	public static JProdutoProcurar getInstance(String server, String user, String key) {
@@ -39,7 +40,7 @@ public class JProdutoProcurar extends JPanel {
 		}
 	}
 
-	public JProdutoProcurar(String server, String user, String key) {
+	private JProdutoProcurar(String server, String user, String key) {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -90,6 +91,15 @@ public class JProdutoProcurar extends JPanel {
 		panelProdutoProcurar.add(textFieldValorVenda);
 		textFieldValorVenda.setColumns(10);
 		
+		JLabel lblQuantidade = new JLabel("Quantidade");
+		lblQuantidade.setBounds(10, 220, 66, 14);
+		panelProdutoProcurar.add(lblQuantidade);
+		
+		textFieldQuantidade = new JTextField();
+		textFieldQuantidade.setBounds(95, 217, 86, 20);
+		panelProdutoProcurar.add(textFieldQuantidade);
+		textFieldQuantidade.setColumns(10);
+		
 		JLabel lblId = new JLabel("id:");
 		lblId.setBounds(10, 29, 26, 14);
 		panelProdutoProcurar.add(lblId);
@@ -115,12 +125,11 @@ public class JProdutoProcurar extends JPanel {
 				textFieldMarca.setText(produto.getMarca());
 				textFieldValorCompra.setText(Float.toString(produto.getValorCompra()));
 				textFieldValorVenda.setText(Float.toString(produto.getValorVenda()));
+				textFieldQuantidade.setText(Integer.toString(produto.getQuantidade()));
 			}
 		});
 		btnProcurar.setBounds(139, 25, 89, 23);
 		panelProdutoProcurar.add(btnProcurar);
-
 		
 	}
-	
 }

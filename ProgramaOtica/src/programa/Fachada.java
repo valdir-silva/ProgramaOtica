@@ -7,6 +7,7 @@ import base.Funcionario;
 import base.Produto;
 import base.Venda;
 import exceptions.IdNaoExisteException;
+import exceptions.QuantidadeProdutoInvalidaException;
 import exceptions.RepositorioException;
 import exceptions.RepositorioJaExisteException;
 import exceptions.SemPosicaoParaInserirException;
@@ -134,7 +135,7 @@ public class Fachada {
 	////Venda////
 	/////////////
 
-	public void inserir (Venda produto) throws SemPosicaoParaInserirException, RepositorioException, NullPointerException, TamanhoException {
+	public void inserir (Venda produto) throws SemPosicaoParaInserirException, RepositorioException, NullPointerException, TamanhoException, QuantidadeProdutoInvalidaException {
 		this.vendas.inserir(produto);
 	}
 	

@@ -10,6 +10,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import base.Venda;
+import exceptions.QuantidadeProdutoInvalidaException;
 import exceptions.RepositorioException;
 import exceptions.SemPosicaoParaInserirException;
 import exceptions.TamanhoException;
@@ -35,7 +36,7 @@ public class JVendaInserir extends JPanel {
 		}
 	}
 
-	public JVendaInserir(String server, String user, String key) {
+	private JVendaInserir(String server, String user, String key) {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -77,7 +78,7 @@ public class JVendaInserir extends JPanel {
 					venda.setCliente(Integer.parseInt(textFieldIdCliente.getText()));
 					venda.setProduto(Integer.parseInt(textFieldIdProduto.getText()));
 					fachada.inserir(venda);
-				} catch (TamanhoException | RepositorioException | NullPointerException | SemPosicaoParaInserirException e) {
+				} catch (TamanhoException | RepositorioException | NullPointerException | SemPosicaoParaInserirException | QuantidadeProdutoInvalidaException e) {
 					e.printStackTrace();
 				}
 			}

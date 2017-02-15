@@ -46,7 +46,7 @@ public class JClienteAtualizar extends JPanel {
 		}
 	}
 
-	public JClienteAtualizar(String server, String user, String key) {
+	private JClienteAtualizar(String server, String user, String key) {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);

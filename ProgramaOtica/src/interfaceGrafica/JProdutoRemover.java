@@ -47,7 +47,7 @@ public class JProdutoRemover extends JPanel {
 		}
 	}
 
-	public JProdutoRemover(String server, String user, String key) {
+	private JProdutoRemover(String server, String user, String key) {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);

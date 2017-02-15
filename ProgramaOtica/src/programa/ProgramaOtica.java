@@ -13,6 +13,7 @@ import base.Funcionario;
 import base.Produto;
 import base.Venda;
 import exceptions.IdNaoExisteException;
+import exceptions.QuantidadeProdutoInvalidaException;
 import exceptions.RepositorioException;
 import exceptions.RepositorioJaExisteException;
 import exceptions.SemPosicaoParaInserirException;
@@ -268,6 +269,7 @@ public class ProgramaOtica {
 								tempP1.setMarca(JOptionPane.showInputDialog("Qual a marca?"));
 								tempP1.setValorCompra(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Compra?")));
 								tempP1.setValorVenda(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Venda?")));
+								tempP1.setQuantidade(Integer.parseInt(JOptionPane.showInputDialog("Qual a quantidade desse produto?")));
 								fachada.inserir(tempP1);
 							} catch (TamanhoException e) {
 								e.printStackTrace();
@@ -288,6 +290,7 @@ public class ProgramaOtica {
 									tempP2.setMarca(JOptionPane.showInputDialog("Qual a marca?"));
 									tempP2.setValorCompra(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Compra?")));
 									tempP2.setValorVenda(Float.parseFloat(JOptionPane.showInputDialog("Qual o Valor de Venda?")));
+									tempP2.setQuantidade(Integer.parseInt(JOptionPane.showInputDialog("Qual a quantidade desse produto?")));
 									fachada.atualizar(tempP2);									
 								}else {
 									NullPointerException e = new NullPointerException();
@@ -322,7 +325,7 @@ public class ProgramaOtica {
 							try {
 								tempP4 = fachada.procurarProduto(buscaP);
 								JOptionPane.showMessageDialog(null,"id do produto: " + tempP4.getId() + "\nnome: " + tempP4.getNome() + "\nmarca: " + tempP4.getMarca() 
-								+ "\nvalor de compra: " + tempP4.getValorCompra() + "\nvalor de venda: " + tempP4.getValorVenda());
+								+ "\nvalor de compra: " + tempP4.getValorCompra() + "\nvalor de venda: " + tempP4.getValorVenda() + "\n Quantidade em estoque: " + tempP4.getQuantidade());
 							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
@@ -341,7 +344,7 @@ public class ProgramaOtica {
 							while(tempP5[i][1] != null){
 								try {
 									JOptionPane.showMessageDialog(null,"id do produto: " + tempP5[i][0] + "\nnome: " + tempP5[i][1] + "\nmarca: " + tempP5[i][2] 
-									+ "\nvalor de compra: " + tempP5[i][3] + "\nvalor de venda: " + tempP5[i][4]);
+									+ "\nvalor de compra: " + tempP5[i][3] + "\nvalor de venda: " + tempP5[i][4] + "\n Quantidade: " + tempP5[i][5]);
 									i++;
 								}
 								catch (NullPointerException e){
@@ -355,6 +358,7 @@ public class ProgramaOtica {
 							break;
 					}
 					break;
+					
 				case 4://Venda
 					int opcaoVenda = Integer.parseInt(JOptionPane.showInputDialog("    VENDA\n 1. Inserir\n 2. Atualizar\n 3. Remover\n 4. Procurar\n 5. Todos\n 0. Voltar Menu"));
 					switch(opcaoVenda){
@@ -376,6 +380,8 @@ public class ProgramaOtica {
 							} catch (TamanhoException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
+							} catch (QuantidadeProdutoInvalidaException e) {
+								e.printStackTrace();
 							}
 							break;
 						case 2://atualizar

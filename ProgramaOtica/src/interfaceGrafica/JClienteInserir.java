@@ -46,7 +46,7 @@ public class JClienteInserir extends JPanel {
 		}
 	}
 
-	public JClienteInserir(String server, String user, String key) {
+	private JClienteInserir(String server, String user, String key) {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);

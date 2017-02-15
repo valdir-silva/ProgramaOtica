@@ -38,7 +38,7 @@ public class JFuncionarioProcurar extends JPanel {
 		}
 	}
 
-	public JFuncionarioProcurar(String server, String user, String key) {
+	private JFuncionarioProcurar(String server, String user, String key) {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);

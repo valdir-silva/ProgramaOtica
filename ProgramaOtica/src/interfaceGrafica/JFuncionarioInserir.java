@@ -37,7 +37,7 @@ public class JFuncionarioInserir extends JPanel {
 		}
 	}
 
-	public JFuncionarioInserir(String server, String user, String key) {
+	private JFuncionarioInserir(String server, String user, String key) {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);

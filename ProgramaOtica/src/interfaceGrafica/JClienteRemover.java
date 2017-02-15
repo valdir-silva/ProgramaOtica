@@ -47,7 +47,7 @@ public class JClienteRemover extends JPanel {
 		}
 	}
 	
-	public JClienteRemover(String server, String user, String key) {
+	private JClienteRemover(String server, String user, String key) {
 		setLayout(null);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -86,7 +86,6 @@ public class JClienteRemover extends JPanel {
 				
 					fachada.removerCliente(id);
 				} catch (RepositorioException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

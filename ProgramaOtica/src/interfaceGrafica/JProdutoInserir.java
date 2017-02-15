@@ -28,6 +28,7 @@ public class JProdutoInserir extends JPanel {
 	//declaração de objetos aqui para ser possível usar nos dois métodos (carregar e atualizar)
 	Produto produto = new Produto();
 	Fachada fachada;
+	private JTextField textFieldQuantidade;
 	//..
 
 	
@@ -41,7 +42,7 @@ public class JProdutoInserir extends JPanel {
 		}
 	}
 
-	public JProdutoInserir(String server, String user, String key) {
+	private JProdutoInserir(String server, String user, String key) {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -92,6 +93,14 @@ public class JProdutoInserir extends JPanel {
 		panelProdutoInserir.add(textFieldValorVenda);
 		textFieldValorVenda.setColumns(10);
 		
+		JLabel lblQuantidade = new JLabel("Quantidade");
+		lblQuantidade.setBounds(11, 223, 76, 14);
+		panelProdutoInserir.add(lblQuantidade);
+		
+		textFieldQuantidade = new JTextField();
+		textFieldQuantidade.setBounds(95, 220, 86, 20);
+		panelProdutoInserir.add(textFieldQuantidade);
+		textFieldQuantidade.setColumns(10);
 		
 		JButton btnInserirProduto = new JButton("Inserir Produto");
 		btnInserirProduto.addActionListener(new ActionListener() {
@@ -102,6 +111,7 @@ public class JProdutoInserir extends JPanel {
 					produto.setMarca(textFieldMarca.getText());
 					produto.setValorCompra(Float.parseFloat(textFieldValorCompra.getText()));
 					produto.setValorVenda(Float.parseFloat(textFieldValorVenda.getText()));
+					produto.setQuantidade(Integer.parseInt(textFieldQuantidade.getText()));
 					fachada.inserir(produto);
 				} catch (SemPosicaoParaInserirException | RepositorioJaExisteException | TamanhoException | RepositorioException e) {
 					e.printStackTrace();
@@ -110,7 +120,7 @@ public class JProdutoInserir extends JPanel {
 		});
 		btnInserirProduto.setBounds(355, 257, 131, 23);
 		panelProdutoInserir.add(btnInserirProduto);
-		
+				
 	}
 
 }

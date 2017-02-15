@@ -1,7 +1,10 @@
 package interfaceGrafica;
 
 
+import java.awt.GridLayout;
+
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 
@@ -13,8 +16,19 @@ public class JFuncionarioTodos extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTable table;
+	private static JFuncionarioTodos instance;
 
-	public JFuncionarioTodos(String server, String user, String key) throws TamanhoException {
+	static JFuncionarioTodos getInstance(String server, String user, String key) throws TamanhoException {
+		if (instance == null) {
+			instance = new JFuncionarioTodos(server, user, key);
+			return instance;
+		}
+		else {
+			return instance;
+		}
+	}
+	
+	private JFuncionarioTodos(String server, String user, String key) throws TamanhoException {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -23,7 +37,7 @@ public class JFuncionarioTodos extends JPanel {
 		
 		JPanel panelFuncionarioTodos = new JPanel();
 		tabbedPane.addTab("Todos", null, panelFuncionarioTodos, null);
-		
+		panelFuncionarioTodos.setLayout((new GridLayout(1, 1)));
 		
 		///////////
 		//Tabela///
@@ -33,33 +47,27 @@ public class JFuncionarioTodos extends JPanel {
 		String [][] dados = null;
 			
 		RepositorioFuncionarioArray funcionarios = new RepositorioFuncionarioArray();
-			
-		Fachada instance = Fachada.getInstance(server, user, key);
-		Fachada fachada = instance;
+		Fachada fachada = Fachada.getInstance(server, user, key);
 					
-					try {
-						funcionarios = fachada.todosFuncionarios();
-						dados = funcionarios.todosFuncionarios();
-					} catch (TamanhoException e) {
-						e.printStackTrace();
-					}
+		try {
+			funcionarios = fachada.todosFuncionarios();
+			dados = funcionarios.todosFuncionarios();
+		} catch (TamanhoException e) {
+			e.printStackTrace();
+		}
 					
+		table = new JTable(dados, colunas);
 					
-					
-					panelFuncionarioTodos.setLayout(null);
-					
-					table = new JTable(dados, colunas);
-					table.setBounds(0, 0, 680, 528);
-					
-					panelFuncionarioTodos.add(table);
+		JScrollPane scrollPane = new JScrollPane(table);
+		panelFuncionarioTodos.add(scrollPane);
 			
 		
-		tabbedPane.addTab("Inserir", new JFuncionarioInserir(server, user, key));
+		tabbedPane.addTab("Inserir", JFuncionarioInserir.getInstance(server, user, key));
 		
-		tabbedPane.addTab("Atualizar", new JFuncionarioAtualizar(server, user, key));
+		tabbedPane.addTab("Atualizar", JFuncionarioAtualizar.getInstance(server, user, key));
 				
-		tabbedPane.addTab("Remover", new JFuncionarioRemover(server, user, key));
+		tabbedPane.addTab("Remover", JFuncionarioRemover.getInstance(server, user, key));
 		
-		tabbedPane.addTab("Procurar", new JFuncionarioProcurar(server, user, key));
+		tabbedPane.addTab("Procurar", JFuncionarioProcurar.getInstance(server, user, key));
 	}
 }

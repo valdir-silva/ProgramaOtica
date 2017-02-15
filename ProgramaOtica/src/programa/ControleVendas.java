@@ -2,6 +2,7 @@ package programa;
 
 import base.Venda;
 import exceptions.IdNaoExisteException;
+import exceptions.QuantidadeProdutoInvalidaException;
 import exceptions.RepositorioException;
 import exceptions.SemPosicaoParaInserirException;
 import exceptions.TamanhoException;
@@ -15,7 +16,7 @@ public class ControleVendas implements IRepositorioVenda {
 		this.vendas = repositorioVenda;
 	}
 	
-	public void inserir (Venda venda) throws SemPosicaoParaInserirException, RepositorioException, NullPointerException, TamanhoException {
+	public void inserir (Venda venda) throws SemPosicaoParaInserirException, RepositorioException, NullPointerException, TamanhoException, QuantidadeProdutoInvalidaException {
 		this.vendas.inserir(venda);
 	}
 	

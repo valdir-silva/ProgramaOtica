@@ -76,6 +76,7 @@ public class RepositorioVendaArray {
 		NullPointerException e = new NullPointerException();
 		throw e;
 	}
+	
 	public String[][] todasVendas() throws TamanhoException {
 		int i = 0;
 		String[][] vendas = new String [venda.length][9];

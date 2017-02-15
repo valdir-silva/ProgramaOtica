@@ -87,6 +87,7 @@ public class RepositorioProdutoArray {
 			produtos[i][2] = produto[i].getMarca();
 			produtos[i][3] = Float.toString(produto[i].getValorCompra());
 			produtos[i][4] = Float.toString(produto[i].getValorVenda());
+			produtos[i][5] = Integer.toString(produto[i].getQuantidade());
 			
 			i++;
 		}

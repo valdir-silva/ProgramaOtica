@@ -78,7 +78,7 @@ public class JLogin extends JFrame {
 				String funcionarioLogin = "095";
 				String funcionarioSenha = "math";
 				if(login.equals(funcionarioLogin) && senha.equals(funcionarioSenha)) {
-					JInicio inicio = new JInicio();
+					JInicio inicio = JInicio.getInstance();
 					inicio.setVisible(true);
 					dispose();//caso não precise voltar para tela
 				}

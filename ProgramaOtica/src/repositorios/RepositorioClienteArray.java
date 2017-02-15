@@ -36,19 +36,13 @@ public class RepositorioClienteArray {
 	}
 	
 	public void removerCliente (int id) {
-//		boolean found = false;
 		for (int i = 0; i < this.cliente.length; i++){
 			if (this.cliente[i].getId() == id) {
 				this.cliente[i] = null;
 				indice--;
-//				found = true;
 				break;
 			}
 		}
-//		if (!found) {//se não removeu!!
-//			RemocaoNaoConcluidaException e = new RemocaoNaoConcluidaException();
-//			throw e;
-//		}
 	}
 	
 	public void atualizar (Cliente cliente) throws NullPointerException {
@@ -96,7 +90,4 @@ public class RepositorioClienteArray {
 		}
 		return clientes;
 	}
-
-	
-	
 }

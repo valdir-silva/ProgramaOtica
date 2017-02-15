@@ -28,6 +28,7 @@ public class JProdutoAtualizar extends JPanel {
 	//declaração de objetos aqui para ser possível usar nos dois métodos (carregar e atualizar)
 	Produto produto = new Produto();
 	Fachada fachada;
+	private JTextField textFieldQuantidade;
 	//..
 	
 	public static JProdutoAtualizar getInstance(String server, String user, String key) {
@@ -40,7 +41,7 @@ public class JProdutoAtualizar extends JPanel {
 		}
 	}
 
-	public JProdutoAtualizar(String server, String user, String key) {
+	private JProdutoAtualizar(String server, String user, String key) {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -91,6 +92,15 @@ public class JProdutoAtualizar extends JPanel {
 		panelProdutoAtualizar.add(textFieldValorVenda);
 		textFieldValorVenda.setColumns(10);
 		
+		JLabel lblQuantidade = new JLabel("Quantidade");
+		lblQuantidade.setBounds(11, 220, 76, 14);
+		panelProdutoAtualizar.add(lblQuantidade);
+		
+		textFieldQuantidade = new JTextField();
+		textFieldQuantidade.setBounds(95, 217, 86, 20);
+		panelProdutoAtualizar.add(textFieldQuantidade);
+		textFieldQuantidade.setColumns(10);
+		
 		
 		JButton btnAtualizarProduto = new JButton("Atualizar Produto");
 		btnAtualizarProduto.addActionListener(new ActionListener() {
@@ -107,6 +117,8 @@ public class JProdutoAtualizar extends JPanel {
 					produto.setMarca(textFieldMarca.getText());
 					produto.setValorCompra(Float.parseFloat(textFieldValorCompra.getText()));
 					produto.setValorVenda(Float.parseFloat(textFieldValorVenda.getText()));
+					produto.setQuantidade(Integer.parseInt(textFieldQuantidade.getText()));
+					
 					fachada.atualizar(produto);
 				} catch (TamanhoException | RepositorioException e) {
 					e.printStackTrace();
@@ -142,11 +154,11 @@ public class JProdutoAtualizar extends JPanel {
 				textFieldMarca.setText(produto.getMarca());
 				textFieldValorCompra.setText(Float.toString(produto.getValorCompra()));
 				textFieldValorVenda.setText(Float.toString(produto.getValorVenda()));
+				textFieldQuantidade.setText(Integer.toString(produto.getQuantidade()));
 			}
 		});
 		btnCarregar.setBounds(139, 25, 89, 23);
 		panelProdutoAtualizar.add(btnCarregar);
-
 		
 	}
 }

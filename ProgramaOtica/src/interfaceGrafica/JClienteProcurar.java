@@ -44,7 +44,7 @@ public class JClienteProcurar extends JPanel {
 		}
 	}
 
-	public JClienteProcurar(String server, String user, String key) {
+	private JClienteProcurar(String server, String user, String key) {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);

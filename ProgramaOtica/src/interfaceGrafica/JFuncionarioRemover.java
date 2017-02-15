@@ -47,7 +47,7 @@ public class JFuncionarioRemover extends JPanel {
 		}
 	}
 
-	public JFuncionarioRemover(String server, String user, String key) {
+	private JFuncionarioRemover(String server, String user, String key) {
 		setLayout(null);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);

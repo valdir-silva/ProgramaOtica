@@ -40,8 +40,8 @@ public class JFuncionarioAtualizar extends JPanel {
 		}
 	}
 
-	public JFuncionarioAtualizar(String server, String user, String key) {
-setLayout(null);
+	private JFuncionarioAtualizar(String server, String user, String key) {
+		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 0, 720, 528);

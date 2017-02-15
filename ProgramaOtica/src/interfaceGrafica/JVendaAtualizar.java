@@ -39,7 +39,7 @@ public class JVendaAtualizar extends JPanel {
 		}
 	}
 
-	public JVendaAtualizar(String server, String user, String key) {
+	private JVendaAtualizar(String server, String user, String key) {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);

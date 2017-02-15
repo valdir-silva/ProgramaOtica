@@ -16,6 +16,7 @@ import exceptions.PersistenceMechanismException;
 //import exceptions.RemocaoNaoConcluidaException;
 //import exceptions.SemPosicaoParaInserirException;
 import exceptions.TamanhoException;
+import interfaceGrafica.JInicio;
 import interfaces.IRepositorioProduto;
 import exceptions.RepositorioException;
 import exceptions.RepositorioJaExisteException;
@@ -24,10 +25,11 @@ import exceptions.SemPosicaoParaInserirException;
 public class RepositorioProdutoBanco implements IRepositorioProduto {
 	private static RepositorioProdutoBanco instance;
 	private PersistenceMechanismRDBMS pm;//variavel para utilizar o banco
+	private JInicio instanceInicio = JInicio.getInstance();
 	
 	private RepositorioProdutoBanco(String server, String user, String key) {
 		try {
-			pm = PersistenceMechanismRDBMS.getInstance(server, user, key);//instancia a conexão
+			pm = instanceInicio.getInstance(server, user, key);//instancia a conexão
 			pm.connect();//conecta o banco de dados com o java
 		} catch (PersistenceMechanismException e) {
 			e.printStackTrace();
@@ -45,24 +47,16 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 	public void inserir (Produto produto) throws RepositorioException, RepositorioJaExisteException {
 		//Statement é usado para utilizar os comandos sql no java
 		try {
-			if (procurarProduto(produto.getId()) == null) {
-				Statement statement = (Statement) pm.getCommunicationChannel();
-				statement.executeUpdate("INSERT INTO produto (marca, valor_compra, valor_venda, nome)"
-						+ "VALUES ('"+ produto.getMarca() + "', '"+ produto.getValorCompra() 
-						+ "', '" + produto.getValorVenda() + "', '" + produto.getNome() + "')");	
-			}else {
-				RepositorioJaExisteException e = new RepositorioJaExisteException();
-				throw e;
-			}
-			
+			Statement statement = (Statement) pm.getCommunicationChannel();
+			statement.executeUpdate("INSERT INTO produto (marca, valor_compra, valor_venda, nome, quantidade)"
+					+ "VALUES ('"+ produto.getMarca() + "', '"+ produto.getValorCompra() 
+					+ "', '" + produto.getValorVenda() + "', '" + produto.getNome() + "', '" + produto.getQuantidade() + "')");	
+		
+			JOptionPane.showMessageDialog(null, "Produto inserido com sucesso");
 		} catch(PersistenceMechanismException e){
 		    throw new RepositorioException(e);
 		} catch (SQLException e) {
 		    throw new RepositorioException(e);
-		} catch (TamanhoException e) {
-			e.printStackTrace();
-		} catch (IdNaoExisteException e) {
-			e.printStackTrace();
 		} finally {
 		    try {
 				pm.releaseCommunicationChannel();
@@ -70,14 +64,14 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 				throw new RepositorioException(ex);
 			}
 		}
-		JOptionPane.showMessageDialog(null, "Produto inserido com sucesso");
 	}
 	
 	public void removerProduto (int id) throws RepositorioException {
 		try {
 			if(procurarProduto(id) != null) {
 				Statement statement = (Statement) pm.getCommunicationChannel();
-				statement.executeUpdate("DELETE from produto WHERE id = '" + id + "'");				
+				statement.executeUpdate("DELETE from produto WHERE id = '" + id + "'");
+				JOptionPane.showMessageDialog(null, "Produto removido com sucesso");
 			}else {
 				NullPointerException e = new NullPointerException();
 				throw e;
@@ -97,7 +91,7 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 				throw new RepositorioException(ex);
 			}
 		}
-		JOptionPane.showMessageDialog(null, "Produto removido com sucesso");
+		
 	}
 	
 	public void atualizar (Produto produto) throws RepositorioException {
@@ -106,8 +100,11 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 				Statement statement = (Statement) pm.getCommunicationChannel();
 				statement.executeUpdate("UPDATE produto SET marca = '"+ produto.getMarca() + "', valor_compra ='"
 				+ produto.getValorCompra() + "', valor_venda ='" 
-				+ produto.getValorVenda() + "', nome ='" + produto.getNome() + "' WHERE id = '" 
-				+ produto.getId() +"'");				
+				+ produto.getValorVenda() + "', nome ='" + produto.getNome() + "', quantidade ='" + produto.getQuantidade() 
+				+ "' WHERE id = '" 
+				+ produto.getId() +"'");
+				
+				JOptionPane.showMessageDialog(null, "Produto atualizado com sucesso");
 			}else {//se produto não existir
 				NullPointerException e = new NullPointerException();
 				throw e;
@@ -127,7 +124,7 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 				throw new RepositorioException(ex);
 			}
 		}
-		JOptionPane.showMessageDialog(null, "Produto atualizado com sucesso");
+		
 	}
 	
 	public Produto procurarProduto (int id) throws RepositorioException, TamanhoException, IdNaoExisteException {
@@ -143,6 +140,7 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 				produto.setValorCompra(resultset.getFloat("valor_compra"));
 				produto.setValorVenda(resultset.getFloat("valor_venda"));
 				produto.setNome(resultset.getString("nome"));
+				produto.setQuantidade(resultset.getInt("quantidade"));
 			}
 			resultset.close();
 			
@@ -166,7 +164,7 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 	
 	public RepositorioProdutoArray todosProdutos() throws TamanhoException {
 		
-		RepositorioProdutoArray produtos = null;
+		RepositorioProdutoArray produtos = new RepositorioProdutoArray();
 		try {
 			Statement statement;
 			ResultSet resultset;
@@ -174,7 +172,6 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 			resultset = statement.executeQuery("SELECT * FROM produto ");
 			
 			while (resultset.next()){
-				produtos = new RepositorioProdutoArray();
 				Produto produto = new Produto();
 				
 				produto.setId(resultset.getInt("id"));
@@ -182,6 +179,7 @@ public class RepositorioProdutoBanco implements IRepositorioProduto {
 				produto.setValorCompra(resultset.getFloat("valor_compra"));
 				produto.setValorVenda(resultset.getFloat("valor_venda"));
 				produto.setNome(resultset.getString("nome"));
+				produto.setQuantidade(resultset.getInt("quantidade"));
 				
 				try {
 					produtos.inserir(produto);

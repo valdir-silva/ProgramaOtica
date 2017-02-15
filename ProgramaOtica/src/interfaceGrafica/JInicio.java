@@ -19,10 +19,8 @@ import java.awt.Color;
 
 public class JInicio extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	private static JInicio instance;
 	private JPanel contentPane;
 	private JTextField txtServer;
 	private JTextField txtUser;
@@ -35,7 +33,7 @@ public class JInicio extends JFrame {
     public String user;
 
 
-	public PersistenceMechanismRDBMS getMinhaInstancia(String server, String user, String key) {
+	public PersistenceMechanismRDBMS getInstance(String server, String user, String key) {
 		try {
 			System.out.println("minha instancia" + this.server + server);
 			minhaInstancia = PersistenceMechanismRDBMS.getInstance(server, user, key);
@@ -73,10 +71,16 @@ public class JInicio extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
-	public JInicio() {
+	public static JInicio getInstance() {
+		if(instance == null) {
+			instance = new JInicio(); //talvez precise trazer as variaveis prak
+			return instance;
+		}else {	
+			return instance;
+		}
+	}
+	
+	private JInicio() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -98,7 +102,7 @@ public class JInicio extends JFrame {
 					key = txtKey.getText();			
 				}
 				
-				JPrograma programa = new JPrograma(server, user, key);
+				JPrograma programa = JPrograma.getInstance(server, user, key);
 				programa.setVisible(true);
 				setVisible(false);//Apenas deixa a tela invisível
 				dispose();//caso não precise voltar para tela

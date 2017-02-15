@@ -28,7 +28,7 @@ public class JVendaRemover extends JPanel {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JFuncionarioRemover frame = new JFuncionarioRemover(server, user, key);
+					JFuncionarioRemover frame = JFuncionarioRemover.getInstance(server, user, key);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,7 +47,7 @@ public class JVendaRemover extends JPanel {
 		}
 	}
 
-	public JVendaRemover(String server, String user, String key) {
+	private JVendaRemover(String server, String user, String key) {
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
