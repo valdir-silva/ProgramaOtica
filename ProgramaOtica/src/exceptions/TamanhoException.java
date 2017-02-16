@@ -1,5 +1,7 @@
 package exceptions;
 
+import javax.swing.JOptionPane;
+
 public class TamanhoException extends Exception{
 	/*
 	 *Cliente:
@@ -23,6 +25,7 @@ public class TamanhoException extends Exception{
 
 	public TamanhoException () {
 		super("Tamanho nao confere!!");
+		JOptionPane.showMessageDialog(null, "Tamanho nao confere!!");
 	}
 	
 }

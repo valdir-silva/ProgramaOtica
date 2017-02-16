@@ -1,13 +1,10 @@
 package base;
 
-import exceptions.RepositorioException;
-
-
-import exceptions.TamanhoException;
-
 public class Venda extends Identificacao {
 	private int IdCliente;
-	private int IdProduto;
+	private float total;
+	private String data;
+	private ItemVenda[] vendas = new ItemVenda[10];
 	
 	public Venda() {
 		super();
@@ -20,21 +17,37 @@ public class Venda extends Identificacao {
 	public void setId(int id) {
 		super.setId(id);
 	}
-	
-	public int getCliente() {
+
+	public int getIdCliente() {
 		return IdCliente;
 	}
-	
-	public void setCliente(int IdCliente) throws NullPointerException, RepositorioException, TamanhoException {
-		this.IdCliente = IdCliente;
+
+	public void setIdCliente(int idCliente) {
+		IdCliente = idCliente;
 	}
-	
-	public int getProduto() {
-		return IdProduto;
+
+	public ItemVenda[] getVendas() {
+		return vendas;
 	}
-	
-	public void setProduto(int IdProduto) {
-		this.IdProduto = IdProduto;
+
+	public void setVendas(ItemVenda[] vendas) {
+		this.vendas = vendas;
+	}
+
+	public float getTotal() {
+		return total;
+	}
+
+	public void setTotal(float total) {
+		this.total = total;
+	}
+
+	public String getData() {
+		return data;
+	}
+
+	public void setData(String data) {
+		this.data = data;
 	}
 	
 }

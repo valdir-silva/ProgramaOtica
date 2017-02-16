@@ -1,26 +1,24 @@
 package repositorios;
 
 import base.ItemVenda;
-import base.Venda;
-
 
 import exceptions.SemPosicaoParaInserirException;
 import exceptions.TamanhoException;
 
-public class RepositorioVendaArray {
-	private Venda[] venda;
+public class RepositorioItemVendaArray {
+	private ItemVenda[] venda;
 	private int indice;
 	
-	public RepositorioVendaArray () {
-		this.venda = new Venda[100];
+	public RepositorioItemVendaArray () {
+		this.venda = new ItemVenda[100];
 	}
 	
-	public void inserir (Venda venda) throws SemPosicaoParaInserirException {
+	public void inserir (ItemVenda venda) throws SemPosicaoParaInserirException {
 		boolean found = false;
 		if (this.venda[indice] == null){//se a posição esta vaga coloque
 			this.venda[indice] = venda;
 			found = true;
-			indice++;			
+			indice++;	
 		}else {//se não estiver procure em todas as posições do array se tem posisao livre
 			for (int i = 0; i < this.venda.length; i++){
 				if (this.venda[i] == null){
@@ -37,7 +35,7 @@ public class RepositorioVendaArray {
 		}
 	}
 	
-	public void removerVenda (int id) {
+	public void removerItemVenda (int id) {
 		boolean found = false;
 		for (int i = 0; i < this.venda.length; i++){
 			if (this.venda[i].getId() == id) {
@@ -53,7 +51,7 @@ public class RepositorioVendaArray {
 		}
 	}
 	
-	public void atualizar (Venda venda) throws NullPointerException {
+	public void atualizar (ItemVenda venda) throws NullPointerException {
 		boolean found = false;
 		for (int i = 0; i < this.venda.length; i++){
 			if (this.venda[i].getId() == venda.getId()) {
@@ -68,7 +66,7 @@ public class RepositorioVendaArray {
 		}
 	}
 	
-	public Venda procurarVenda (int id) throws NullPointerException {
+	public ItemVenda procurarItemVenda (int id) throws NullPointerException {
 		for (int i = 0; i < this.venda.length; i++){
 			if(this.venda[i].getId() == id) {
 				return this.venda[i];
@@ -78,32 +76,16 @@ public class RepositorioVendaArray {
 		throw e;
 	}
 	
-	public String[][] todasVendas() throws TamanhoException {
+	public String[][] todosItensVenda() throws TamanhoException {
 		int i = 0;
-		int a = 0;
 		String[][] vendas = new String [venda.length][9];
-		String itens = null;
 		
 		while (venda[i] != null){
 			
 			vendas[i][0] = Integer.toString(venda[i].getId());
-			vendas[i][1] = Integer.toString(venda[i].getIdCliente());
-			vendas[i][2] = Float.toString(venda[i].getTotal());
-			vendas[i][3] = venda[i].getData();
-			
-			ItemVenda itemVenda[] = new ItemVenda[10];
-			while(venda[i].getVendas()[a] != null) {//em quanto existir itens de venda
-				itemVenda[a].setIdVenda(venda[i].getVendas()[a].getIdVenda());
-				itemVenda[a].setIdProduto(venda[i].getVendas()[a].getIdProduto());
-				itemVenda[a].setQuantidade(venda[i].getVendas()[a].getQuantidade());
-				
-				
-				itens += ", " + Integer.toString(itemVenda[a].getId()) + Integer.toString(itemVenda[a].getIdVenda()) 
-				+ Integer.toString(itemVenda[a].getIdProduto()) + Integer.toString(itemVenda[a].getQuantidade()) ;
-				a++;
-			}
-			
-			vendas[i][4] = itens; 
+			vendas[i][1] = Integer.toString(venda[i].getIdVenda());
+			vendas[i][2] = Integer.toString(venda[i].getIdProduto());
+			vendas[i][3] = Integer.toString(venda[i].getQuantidade());
 			
 			i++;
 		}

@@ -1,5 +1,7 @@
 package exceptions;
 
+import javax.swing.JOptionPane;
+
 public class IdNaoExisteException extends Exception{
 
 	/**
@@ -9,5 +11,6 @@ public class IdNaoExisteException extends Exception{
 	
 	public IdNaoExisteException() {
 		super("Id procurado não existe!!");
+		JOptionPane.showMessageDialog(null, "Id procurado não existe!!");
 	}
 }

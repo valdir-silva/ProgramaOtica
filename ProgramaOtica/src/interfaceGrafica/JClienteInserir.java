@@ -150,7 +150,6 @@ public class JClienteInserir extends JPanel {
 					cliente.setEndereco(endereco);
 					fachada.inserir(cliente);
 				} catch (TamanhoException | SemPosicaoParaInserirException | RepositorioException | RepositorioJaExisteException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

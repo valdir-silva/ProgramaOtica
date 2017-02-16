@@ -1,5 +1,7 @@
 package exceptions;
 
+import javax.swing.JOptionPane;
+
 public class RepositorioJaExisteException extends Exception{
 	/**
 	 * 
@@ -8,5 +10,6 @@ public class RepositorioJaExisteException extends Exception{
 
 	public RepositorioJaExisteException() {
 		super("Repositório já existe!!");
+		JOptionPane.showMessageDialog(null, "Repositório já existe!!");
 	}
 }

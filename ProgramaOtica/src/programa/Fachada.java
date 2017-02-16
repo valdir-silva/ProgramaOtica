@@ -4,6 +4,7 @@ import base.Cliente;
 
 
 import base.Funcionario;
+import base.ItemVenda;
 import base.Produto;
 import base.Venda;
 import exceptions.IdNaoExisteException;
@@ -14,12 +15,15 @@ import exceptions.SemPosicaoParaInserirException;
 import exceptions.TamanhoException;
 import interfaces.IRepositorioCliente;
 import interfaces.IRepositorioFuncionario;
+import interfaces.IRepositorioItemVenda;
 import interfaces.IRepositorioProduto;
 import interfaces.IRepositorioVenda;
 import repositorios.RepositorioClienteArray;
 import repositorios.RepositorioClienteBanco;
 import repositorios.RepositorioFuncionarioArray;
 import repositorios.RepositorioFuncionarioBanco;
+import repositorios.RepositorioItemVendaArray;
+import repositorios.RepositorioItemVendaBanco;
 import repositorios.RepositorioProdutoArray;
 import repositorios.RepositorioProdutoBanco;
 import repositorios.RepositorioVendaArray;
@@ -31,6 +35,7 @@ public class Fachada {
 	private ControleFuncionarios funcionarios;
 	private ControleProdutos produtos;
 	private ControleVendas vendas;
+	private ControleItensVenda itensVenda;
 
 	private Fachada (String server, String user, String key) {
 		RepositorioClienteBanco instanceCliente = RepositorioClienteBanco.getInstance(server, user, key);
@@ -48,6 +53,10 @@ public class Fachada {
 		RepositorioVendaBanco instanceVenda = RepositorioVendaBanco.getInstance(server, user, key);
 		IRepositorioVenda repositorioVenda = instanceVenda;
 		vendas = new ControleVendas (repositorioVenda);
+		
+		RepositorioItemVendaBanco instanceItemVenda = RepositorioItemVendaBanco.getInstance(server, user, key);
+		IRepositorioItemVenda repositorioItemVenda = instanceItemVenda;
+		itensVenda = new ControleItensVenda(repositorioItemVenda);
 		
 	}
 	
@@ -153,6 +162,29 @@ public class Fachada {
 	
 	public RepositorioVendaArray todasVendas() throws TamanhoException {
 		return this.vendas.todasVendas();
+		}
+	
+	//////////////////
+	////Item Venda////
+	//////////////////
+	
+	public void inserir (ItemVenda produto) throws SemPosicaoParaInserirException, RepositorioException, NullPointerException, TamanhoException, QuantidadeProdutoInvalidaException {
+		this.itensVenda.inserir(produto);
 	}
 	
+	public void atualizar (ItemVenda produto) throws NullPointerException, RepositorioException, TamanhoException {
+		this.itensVenda.atualizar(produto);
+	}
+	
+	public ItemVenda procurarItemVenda (int id) throws NullPointerException, RepositorioException, TamanhoException, IdNaoExisteException {
+		return this.itensVenda.procurarItemVenda(id);
+	}
+	
+	public void removerItemVenda (int id) throws RepositorioException {
+	this.itensVenda.removerItemVenda(id);
+	}
+	
+	public RepositorioItemVendaArray todosItensVenda() throws TamanhoException {
+	return this.itensVenda.todosItensVenda();
+	}
 }

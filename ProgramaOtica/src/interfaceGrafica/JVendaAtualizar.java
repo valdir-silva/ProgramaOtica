@@ -22,12 +22,13 @@ public class JVendaAtualizar extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private static JVendaAtualizar instance;
-	private JTextField textFieldIdCliente;
-	private JTextField textFieldIdProduto;
-	private JTextField txtId;
 	//declaração de objetos aqui para ser possível usar nos dois métodos (carregar e atualizar)
 	Venda venda = new Venda();
 	Fachada fachada;
+	private JTextField txtId;
+	private JTextField textFieldIdCliente;
+	private JTextField textFieldData;
+	private JTextField textFieldTotal;
 	
 	public static JVendaAtualizar getInstance(String server, String user, String key) {
 		if (instance == null) {
@@ -54,38 +55,17 @@ public class JVendaAtualizar extends JPanel {
 		lblAtualizar.setBounds(334, 0, 61, 14);
 		panelVendaAtualizar.add(lblAtualizar);
 		
-		JLabel lblIdCliente = new JLabel("Id Cliente");
-		lblIdCliente.setBounds(11, 64, 70, 14);
-		panelVendaAtualizar.add(lblIdCliente);
-		
-		textFieldIdCliente = new JTextField();
-		textFieldIdCliente.setBounds(91, 64, 148, 20);
-		panelVendaAtualizar.add(textFieldIdCliente);
-		textFieldIdCliente.setColumns(10);
-		
-		JLabel lblIdProduto = new JLabel("Id Produto");
-		lblIdProduto.setBounds(10, 103, 71, 14);
-		panelVendaAtualizar.add(lblIdProduto);
-		
-		textFieldIdProduto = new JTextField();
-		textFieldIdProduto.setBounds(91, 103, 148, 20);
-		panelVendaAtualizar.add(textFieldIdProduto);
-		textFieldIdProduto.setColumns(10);
-		
 		
 		JButton btnAtualizarVenda = new JButton("Atualizar Venda");
 		btnAtualizarVenda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				/*(teste) estou testando sem a instance pq aparentemente é redundante
-				Cliente cliente = new Cliente();
-				Endereco endereco = new Endereco();
-				Fachada instance = Fachada.getInstance(server, user, key);
-				Fachada fachada = instance;
-				*/
 				fachada = Fachada.getInstance(server, user, key);
 				try {
-					venda.setCliente(Integer.parseInt(textFieldIdCliente.getText()));
-					venda.setProduto(Integer.parseInt(textFieldIdProduto.getText()));
+					venda.setIdCliente(Integer.parseInt(textFieldIdCliente.getText()));
+					venda.setTotal(Integer.parseInt(textFieldTotal.getText()));
+					venda.setData(textFieldData.getText());
+					
+					//implementar Itens Venda
 					fachada.atualizar(venda);
 				} catch (TamanhoException | RepositorioException e) {
 					e.printStackTrace();
@@ -95,34 +75,60 @@ public class JVendaAtualizar extends JPanel {
 		btnAtualizarVenda.setBounds(355, 257, 131, 23);
 		panelVendaAtualizar.add(btnAtualizarVenda);
 		
-		JLabel lblId = new JLabel("id:");
-		lblId.setBounds(10, 29, 26, 14);
-		panelVendaAtualizar.add(lblId);
-		
-		txtId = new JTextField();
-		txtId.setBounds(46, 26, 86, 20);
-		panelVendaAtualizar.add(txtId);
-		txtId.setColumns(10);
-		
 		JButton btnCarregar = new JButton("carregar");
 		btnCarregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int id = 0;
-				id = Integer.parseInt(txtId.getText());
+				int id = Integer.parseInt(txtId.getText());
 				fachada = Fachada.getInstance(server, user, key);
 				try {
 					venda = fachada.procurarVenda(id);
+					textFieldIdCliente.setText(Integer.toString(venda.getIdCliente()));
+					textFieldData.setText(venda.getData());
+					textFieldTotal.setText(Float.toString(venda.getTotal()));
 				} catch (NullPointerException | RepositorioException | TamanhoException | IdNaoExisteException e) {
 
 					e.printStackTrace();
 				}
-				//busca no banco e preenche todos os campos
-				textFieldIdCliente.setText(Integer.toString(venda.getCliente()));
-				textFieldIdProduto.setText(Integer.toString(venda.getProduto()));
 			}
 		});
 		btnCarregar.setBounds(139, 25, 89, 23);
 		panelVendaAtualizar.add(btnCarregar);
+		
+		JLabel lblId = new JLabel("id:");
+		lblId.setBounds(10, 28, 26, 14);
+		panelVendaAtualizar.add(lblId);
+		
+		txtId = new JTextField();
+		txtId.setColumns(10);
+		txtId.setBounds(46, 25, 86, 20);
+		panelVendaAtualizar.add(txtId);
+		
+		JLabel lblIdCliente = new JLabel("Id Cliente");
+		lblIdCliente.setBounds(11, 63, 70, 14);
+		panelVendaAtualizar.add(lblIdCliente);
+		
+		textFieldIdCliente = new JTextField();
+		textFieldIdCliente.setColumns(10);
+		textFieldIdCliente.setBounds(120, 63, 100, 20);
+		panelVendaAtualizar.add(textFieldIdCliente);
+		
+		JLabel lblData = new JLabel("Data da venda");
+		lblData.setBounds(10, 94, 86, 14);
+		panelVendaAtualizar.add(lblData);
+		
+		textFieldData = new JTextField();
+		textFieldData.setColumns(10);
+		textFieldData.setBounds(119, 94, 86, 20);
+		panelVendaAtualizar.add(textFieldData);
+		
+		textFieldTotal = new JTextField();
+		textFieldTotal.setColumns(10);
+		textFieldTotal.setBounds(120, 243, 86, 20);
+		panelVendaAtualizar.add(textFieldTotal);
+		
+		JLabel lblTotal = new JLabel("Total comprado");
+		lblTotal.setBounds(11, 246, 86, 14);
+		panelVendaAtualizar.add(lblTotal);
 
 		
 	}

@@ -22,11 +22,13 @@ public class JVendaProcurar extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private static JVendaProcurar instance;
 	private JTextField textFieldIdCliente;
-	private JTextField textFieldIdProduto;
+	private JTextField textFieldNomeCliente;
 	private JTextField txtId;
 	//declaração de objetos aqui para ser possível usar nos dois métodos (carregar e atualizar)
 	Venda venda = new Venda();
 	Fachada fachada;
+	private JTextField textFieldTotal;
+	private JTextField textFieldData;
 	
 	public static JVendaProcurar getInstance(String server, String user, String key) {
 		if (instance == null) {
@@ -58,18 +60,18 @@ public class JVendaProcurar extends JPanel {
 		panelVendaProcurar.add(lblIdCliente);
 		
 		textFieldIdCliente = new JTextField();
-		textFieldIdCliente.setBounds(91, 64, 148, 20);
+		textFieldIdCliente.setBounds(120, 64, 100, 20);
 		panelVendaProcurar.add(textFieldIdCliente);
 		textFieldIdCliente.setColumns(10);
 		
-		JLabel lblIdProduto = new JLabel("Id Produto");
-		lblIdProduto.setBounds(10, 103, 71, 14);
-		panelVendaProcurar.add(lblIdProduto);
+		JLabel lblNomeCliente = new JLabel("Nome do cliente");
+		lblNomeCliente.setBounds(10, 103, 100, 14);
+		panelVendaProcurar.add(lblNomeCliente);
 		
-		textFieldIdProduto = new JTextField();
-		textFieldIdProduto.setBounds(91, 103, 148, 20);
-		panelVendaProcurar.add(textFieldIdProduto);
-		textFieldIdProduto.setColumns(10);
+		textFieldNomeCliente = new JTextField();
+		textFieldNomeCliente.setBounds(120, 103, 100, 20);
+		panelVendaProcurar.add(textFieldNomeCliente);
+		textFieldNomeCliente.setColumns(10);
 		
 		JLabel lblId = new JLabel("id:");
 		lblId.setBounds(10, 29, 26, 14);
@@ -87,19 +89,37 @@ public class JVendaProcurar extends JPanel {
 				fachada = Fachada.getInstance(server, user, key);
 				try {
 					venda = fachada.procurarVenda(id);
+					textFieldIdCliente.setText(Integer.toString(venda.getIdCliente()));
+					textFieldNomeCliente.setText(fachada.procurarCliente(venda.getIdCliente()).getNome());
+					textFieldData.setText(venda.getData());
+					textFieldTotal.setText(Float.toString(venda.getTotal()));
 				} catch (NullPointerException | RepositorioException | TamanhoException | IdNaoExisteException e) {
 
 					e.printStackTrace();
-				}
-				//busca no banco e preenche todos os campos
-				textFieldIdCliente.setText(Integer.toString(venda.getCliente()));
-				textFieldIdProduto.setText(Integer.toString(venda.getProduto()));
+				}				
 			}
 		});
 		btnProcurar.setBounds(139, 25, 89, 23);
 		panelVendaProcurar.add(btnProcurar);
+		
+		JLabel lblTotal = new JLabel("Total comprado");
+		lblTotal.setBounds(11, 247, 86, 14);
+		panelVendaProcurar.add(lblTotal);
+		
+		textFieldTotal = new JTextField();
+		textFieldTotal.setBounds(120, 244, 86, 20);
+		panelVendaProcurar.add(textFieldTotal);
+		textFieldTotal.setColumns(10);
+		
+		JLabel lblData = new JLabel("Data da venda");
+		lblData.setBounds(11, 139, 86, 14);
+		panelVendaProcurar.add(lblData);
+		
+		textFieldData = new JTextField();
+		textFieldData.setBounds(120, 139, 86, 20);
+		panelVendaProcurar.add(textFieldData);
+		textFieldData.setColumns(10);
 
 		
 	}
-
 }

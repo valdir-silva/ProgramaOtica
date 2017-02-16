@@ -3,13 +3,13 @@ package programa;
 import java.awt.HeadlessException;
 
 
+
 import javax.swing.JOptionPane;
-
-
 
 import base.Cliente;
 import base.Endereco;
 import base.Funcionario;
+import base.ItemVenda;
 import base.Produto;
 import base.Venda;
 import exceptions.IdNaoExisteException;
@@ -20,6 +20,7 @@ import exceptions.SemPosicaoParaInserirException;
 import exceptions.TamanhoException;
 import repositorios.RepositorioClienteArray;
 import repositorios.RepositorioFuncionarioArray;
+import repositorios.RepositorioItemVendaArray;
 import repositorios.RepositorioProdutoArray;
 import repositorios.RepositorioVendaArray;
 
@@ -358,18 +359,38 @@ public class ProgramaOtica {
 							break;
 					}
 					break;
-					
-				case 4://Venda
-					int opcaoVenda = Integer.parseInt(JOptionPane.showInputDialog("    VENDA\n 1. Inserir\n 2. Atualizar\n 3. Remover\n 4. Procurar\n 5. Todos\n 0. Voltar Menu"));
+					/////////
+					//Venda//
+					/////////
+				case 4:
+					int opcaoVenda = Integer.parseInt(JOptionPane.showInputDialog("    VENDA\n 1. Inserir\n 2. Atualizar\n 3. Remover\n 4. Procurar\n 5. Todos\n 6. Itens da venda 0. Voltar Menu"));
 					switch(opcaoVenda){
 					case 0://voltar menu
 						break;
 					case 1://inserir
 							try {
+								int op = 1;
+								int i = 0;
 								Venda tempV1 = new Venda();
+								ItemVenda tempIV = new ItemVenda();
+								ItemVenda[] tempIV1 = new ItemVenda[10];
 								
-								tempV1.setCliente(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do cliente?")));
-								tempV1.setProduto(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do produto?")));
+								tempV1.setIdCliente(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do cliente?")));
+								//implementar automaticamente
+								tempV1.setTotal(Float.parseFloat(JOptionPane.showInputDialog("Qual o total da venda?")));
+								tempV1.setData(JOptionPane.showInputDialog("Qual a data da venda?"));
+								while(op == 1) {
+									//implementar a inserção do id_venda
+									tempIV.setIdProduto(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do produto a comprar?")));
+									tempIV.setQuantidade(Integer.parseInt(JOptionPane.showInputDialog("Quantos desse produto você deseja comprar?")));
+									fachada.inserir(tempIV);
+									
+									tempIV1[i] = tempIV;
+									i++;
+									op = Integer.parseInt(JOptionPane.showInputDialog("Deseja comprar outro produto?  1. Sim\t 0. Não"));
+								}
+								tempV1.setVendas(tempIV1);
+								
 								fachada.inserir(tempV1);
 							} catch (SemPosicaoParaInserirException e) {
 								e.printStackTrace();
@@ -385,18 +406,37 @@ public class ProgramaOtica {
 							}
 							break;
 						case 2://atualizar
-							Venda tempV2 = new Venda();
 							try {
-							//procura o cliente / produto e manda para o temV2
+								Venda tempV2 = new Venda();
+								ItemVenda tempIV = new ItemVenda();
+								ItemVenda[] tempIV2 = fachada.procurarVenda(tempV2.getId()).getVendas();
+								
+								//procura o cliente / produto e manda para o temV2
 								tempV2.setId(Integer.parseInt(JOptionPane.showInputDialog("Qual o id da venda?")));
+								
 								if (fachada.procurarVenda(tempV2.getId()) != null) {
-									tempV2.setCliente(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do cliente?")));
-									tempV2.setProduto(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do produto?")));
+									tempV2.setIdCliente(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do cliente?")));
+									//implementar automaticamente
+									tempV2.setTotal(Float.parseFloat(JOptionPane.showInputDialog("Qual o total da venda?")));
+									tempV2.setData(JOptionPane.showInputDialog("Qual a data da venda?"));
+									
+									//pega todos os itens da venda
+									int i = 0;
+									while(fachada.procurarItemVenda(tempIV2[i].getId()) != null) {
+										tempIV.setIdVenda(tempV2.getId());
+										tempIV.setIdProduto(Integer.parseInt(JOptionPane.showInputDialog("Qual o id do novo produto comprado?")));
+										tempIV.setQuantidade(Integer.parseInt(JOptionPane.showInputDialog("Quantos desse produto você deseja comprar?")));
+										fachada.inserir(tempIV);
+										
+										tempIV2[i] = tempIV;
+										i++;
+									}
+									tempV2.setVendas(tempIV2);
+									
 									fachada.atualizar(tempV2);
-								}else {
-									NullPointerException e = new NullPointerException();
-									throw e;
-								}
+								}else 
+									throw new IdNaoExisteException();
+								
 							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
@@ -408,6 +448,8 @@ public class ProgramaOtica {
 							} catch (HeadlessException e) {
 								e.printStackTrace();
 							} catch (IdNaoExisteException e) {
+								e.printStackTrace();
+							} catch (QuantidadeProdutoInvalidaException e) {
 								e.printStackTrace();
 							}
 							break;
@@ -426,15 +468,13 @@ public class ProgramaOtica {
 							try {
 								tempV4 = fachada.procurarVenda(buscaV);
 								Cliente cliente = new Cliente();
-								Produto produto = new Produto();
-								//procura seus respectivos objetos, pelo seu id
-								cliente = fachada.procurarCliente(tempV4.getCliente());
-								produto = fachada.procurarProduto(tempV4.getProduto());
+								//procura cliente pelo seu id
+								cliente = fachada.procurarCliente(tempV4.getIdCliente());
+								
 								
 								JOptionPane.showMessageDialog(null,"id da venda: " + tempV4.getId() + "\nnome Cliente: " 
-								+ cliente.getNome() + "\nId Cliente:"+ cliente.getId() 
-								+ "\nnome produto: " + produto.getNome() + "\nId Produto:" + produto.getId() 
-								+ "\nnome Venda" + tempV4.getNome());
+								+ cliente.getNome() + "\nId Cliente:"+ cliente.getId() + "\nData da venda: " + tempV4.getData() 
+								+ "\nQuantidade de produtos comprados:" + tempV4.getVendas().length);
 							} catch (NullPointerException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(null, e);
@@ -454,8 +494,32 @@ public class ProgramaOtica {
 								try {
 									
 									JOptionPane.showMessageDialog(null, "id da venda: " + tempV5[i][0] +"\nId Cliente: " 
-									+ tempV5[i][1] + "\n Id produto: " + tempV5[i][2] );
+									+ tempV5[i][1]  + "\nTotal da venda: " + tempV5[i][2] + "\n Data da venda: " 
+									+ tempV5[i][3] );
 									i++;
+								}
+								catch (NullPointerException e){
+									e.printStackTrace();
+									JOptionPane.showMessageDialog(null, e);
+								}
+							}
+							break;
+							//////////////
+							//Item Venda//
+							//////////////
+						case 6:
+							int j = 0;
+							RepositorioItemVendaArray itensVenda = new RepositorioItemVendaArray();
+							String[][] tempIV6;
+							itensVenda = fachada.todosItensVenda();
+							tempIV6 = itensVenda.todosItensVenda();
+							
+							while(tempIV6[j][2] != null) {
+								try {
+									
+									JOptionPane.showMessageDialog(null, "id do Item venda: " + tempIV6[j][0] +"\nId Venda: " 
+									+ tempIV6[j][1] + "\n Id produto: " + tempIV6[j][2] + "\nQuantidade comprada" + tempIV6[j][3]);
+									j++;
 								}
 								catch (NullPointerException e){
 									e.printStackTrace();

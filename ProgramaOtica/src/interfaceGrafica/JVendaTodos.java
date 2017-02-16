@@ -41,7 +41,7 @@ public class JVendaTodos extends JPanel {
 		///////////
 		//Tabela///
 		///////////
-		String [] colunas = {"id", "Id cliente", "Id produto"};
+		String [] colunas = {"id", "Id cliente", "Id produto", "Quantidade"};
 		String [][] dados = null;
 				
 		RepositorioVendaArray vendas = new RepositorioVendaArray();

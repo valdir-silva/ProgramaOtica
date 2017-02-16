@@ -1,6 +1,6 @@
 package exceptions;
 
-
+import javax.swing.JOptionPane;
 
 /**
  * @author scbs
@@ -19,6 +19,7 @@ public class TransactionException extends Exception {
 
 	public TransactionException(String msg) {
 		super(msg);
+		JOptionPane.showMessageDialog(null, msg);
 	}
 
 
