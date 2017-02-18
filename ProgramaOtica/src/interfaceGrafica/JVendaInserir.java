@@ -9,12 +9,17 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
+import base.ItemVenda;
+import base.Produto;
 import base.Venda;
+import exceptions.IdNaoExisteException;
 import exceptions.QuantidadeProdutoInvalidaException;
 import exceptions.RepositorioException;
 import exceptions.SemPosicaoParaInserirException;
 import exceptions.TamanhoException;
 import programa.Fachada;
+import java.awt.Color;
+import java.awt.Font;
 
 public class JVendaInserir extends JPanel {
 
@@ -23,12 +28,13 @@ public class JVendaInserir extends JPanel {
 	//declaração de objetos aqui para ser possível usar nos dois métodos (carregar e atualizar)
 	Venda venda = new Venda();
 	Fachada fachada;
-	private JTextField txtId;
 	private JTextField textFieldIdCliente;
 	private JTextField textFieldData;
-	private JTextField textFieldTotal;
 	private JTextField textFieldIdProduto;
 	private JTextField textFieldQuantidade;
+	private ItemVenda[] vendas = new ItemVenda[10];
+	private int i = 0;
+	
 	
 	public static JVendaInserir getInstance(String server, String user, String key) {
 		if (instance == null) {
@@ -41,6 +47,7 @@ public class JVendaInserir extends JPanel {
 	}
 
 	private JVendaInserir(String server, String user, String key) {
+		
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -55,6 +62,11 @@ public class JVendaInserir extends JPanel {
 		lblInserir.setBounds(334, 0, 61, 14);
 		panelVendaInserir.add(lblInserir);
 		
+		JLabel labelTotal = new JLabel("0");
+		labelTotal.setFont(new Font("Raavi", Font.BOLD, 11));
+		labelTotal.setForeground(Color.BLACK);
+		labelTotal.setBounds(120, 234, 46, 14);
+		panelVendaInserir.add(labelTotal);
 		
 		JButton btnRealizarVenda = new JButton("Realizar Venda");
 		btnRealizarVenda.addActionListener(new ActionListener() {
@@ -62,8 +74,10 @@ public class JVendaInserir extends JPanel {
 				fachada = Fachada.getInstance(server, user, key);
 				try {
 					venda.setIdCliente(Integer.parseInt(textFieldIdCliente.getText()));
-					venda.setTotal(Float.parseFloat(textFieldTotal.getText()));
+					venda.setTotal(Float.parseFloat(labelTotal.getText()));
 					venda.setData(textFieldData.getText());
+					
+					venda.setVendas(vendas);
 					
 					fachada.inserir(venda);
 				} catch (TamanhoException | RepositorioException | NullPointerException | SemPosicaoParaInserirException | QuantidadeProdutoInvalidaException e) {
@@ -71,17 +85,8 @@ public class JVendaInserir extends JPanel {
 				}
 			}
 		});
-		btnRealizarVenda.setBounds(369, 273, 131, 23);
+		btnRealizarVenda.setBounds(358, 273, 142, 23);
 		panelVendaInserir.add(btnRealizarVenda);
-		
-		JLabel lblId = new JLabel("id:");
-		lblId.setBounds(10, 14, 26, 14);
-		panelVendaInserir.add(lblId);
-		
-		txtId = new JTextField();
-		txtId.setColumns(10);
-		txtId.setBounds(46, 11, 86, 20);
-		panelVendaInserir.add(txtId);
 		
 		JLabel lblIdCliente = new JLabel("Id Cliente");
 		lblIdCliente.setBounds(11, 49, 70, 14);
@@ -101,13 +106,8 @@ public class JVendaInserir extends JPanel {
 		textFieldData.setBounds(119, 80, 86, 20);
 		panelVendaInserir.add(textFieldData);
 		
-		textFieldTotal = new JTextField();
-		textFieldTotal.setColumns(10);
-		textFieldTotal.setBounds(120, 229, 86, 20);
-		panelVendaInserir.add(textFieldTotal);
-		
 		JLabel lblTotal = new JLabel("Total comprado");
-		lblTotal.setBounds(11, 232, 86, 14);
+		lblTotal.setBounds(11, 232, 99, 14);
 		panelVendaInserir.add(lblTotal);
 		
 		JLabel lblIdProduto = new JLabel("Id do Produto");
@@ -126,17 +126,43 @@ public class JVendaInserir extends JPanel {
 		textFieldQuantidade = new JTextField();
 		textFieldQuantidade.setBounds(422, 123, 86, 20);
 		panelVendaInserir.add(textFieldQuantidade);
-		textFieldQuantidade.setColumns(10);
+		textFieldQuantidade.setColumns(10);		
 		
 		JButton btnAdicionar = new JButton("Adicionar ao Carrinho");
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				float total = 0;
+				fachada = Fachada.getInstance(server, user, key);
+				ItemVenda item = new ItemVenda();
+				item.setIdProduto(Integer.parseInt(textFieldIdProduto.getText()));
+				item.setQuantidade(Integer.parseInt(textFieldQuantidade.getText()));
+				item.setIdVenda(0);
+				
+				total = Float.parseFloat(labelTotal.getText());
+				Produto produto = new Produto();
+				try {
+					produto = fachada.procurarProduto(item.getIdProduto());
+				
+					if(produto != null) {//se produto existir
+						total += item.getQuantidade() * produto.getValorVenda();//calcula o total
+					
+						labelTotal.setText(Float.toString(total));//coloca o valor total no text field
+						fachada.inserir(item);
+						//tenho que pegar o id de item venda, antes de enviar para venda
+						vendas[i++] = item;
+					}
+				} catch (NullPointerException | SemPosicaoParaInserirException | RepositorioException | TamanhoException
+						| QuantidadeProdutoInvalidaException | IdNaoExisteException e) {
+					e.printStackTrace();
+				}
 				
 				
 			}
 		});
-		btnAdicionar.setBounds(355, 164, 151, 23);
+		btnAdicionar.setBounds(334, 164, 172, 23);
 		panelVendaInserir.add(btnAdicionar);
+		
+
 		
 	}
 }

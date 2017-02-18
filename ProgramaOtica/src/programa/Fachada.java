@@ -181,10 +181,14 @@ public class Fachada {
 	}
 	
 	public void removerItemVenda (int id) throws RepositorioException {
-	this.itensVenda.removerItemVenda(id);
+		this.itensVenda.removerItemVenda(id);
 	}
 	
 	public RepositorioItemVendaArray todosItensVenda() throws TamanhoException {
-	return this.itensVenda.todosItensVenda();
+		return this.itensVenda.todosItensVenda();
+	}
+	
+	public void InserirIdVenda(int itemVenda, int idVenda) {
+		this.itensVenda.InserirIdVenda(itemVenda, idVenda);
 	}
 }

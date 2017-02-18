@@ -59,7 +59,7 @@ public class RepositorioItemVendaBanco implements IRepositorioItemVenda {
 				statement.executeUpdate("INSERT INTO item_venda (id_venda, id_produto, quantidade)"
 						+ "VALUES ('" + venda.getIdVenda() + "', '" 
 						+ venda.getIdProduto() + "', '" + venda.getQuantidade() +"')");						
-				JOptionPane.showMessageDialog(null, "Item Venda inserido com sucesso");		
+				JOptionPane.showMessageDialog(null, "Item Venda inserido com sucesso");
 			}else
 				throw new IdNaoExisteException();
 
@@ -234,5 +234,15 @@ public class RepositorioItemVendaBanco implements IRepositorioItemVenda {
 		return vendas;			
 	}
 
+	public void InserirIdVenda(int itemVenda, int idVenda) {	
+		try {
+			Statement statement = (Statement) pm.getCommunicationChannel();
+			statement.executeUpdate("UPDATE item_venda SET id_venda ='" + idVenda + "' WHERE id = '" + itemVenda + "'");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (PersistenceMechanismException e) {
+			e.printStackTrace();
+		}
+	}
 	
 }

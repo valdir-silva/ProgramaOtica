@@ -37,4 +37,9 @@ public class ControleItensVenda implements IRepositorioItemVenda {
 		return this.vendas.todosItensVenda();
 	}
 
+	@Override
+	public void InserirIdVenda(int itemVenda, int idVenda) {
+		this.vendas.InserirIdVenda(itemVenda, idVenda);
+	}
+
 }

@@ -41,7 +41,7 @@ public class JVendaTodos extends JPanel {
 		///////////
 		//Tabela///
 		///////////
-		String [] colunas = {"id", "Id cliente", "Id produto", "Quantidade"};
+		String [] colunas = {"id", "Id cliente", "total", "Data"};
 		String [][] dados = null;
 				
 		RepositorioVendaArray vendas = new RepositorioVendaArray();
@@ -66,6 +66,8 @@ public class JVendaTodos extends JPanel {
 		tabbedPane.addTab("Remover", JVendaRemover.getInstance(server, user, key));
 		
 		tabbedPane.addTab("Procurar", JVendaProcurar.getInstance(server, user, key));
+		
+		tabbedPane.addTab("Carrinho", JVendaItensTodos.getInstance(server, user, key));
 	}
 
 }

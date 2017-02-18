@@ -52,24 +52,25 @@ public class RepositorioVendaBanco implements IRepositorioVenda {
 	public void inserir (Venda venda) throws RepositorioException, NullPointerException, TamanhoException, QuantidadeProdutoInvalidaException {
 		//Statement é usado para utilizar os comandos sql no java.
 		Fachada fachada = Fachada.getInstance(server, user, key);
-		ItemVenda IVenda = new ItemVenda();
 		int i = 0;
 		try {
 			if (fachada.procurarCliente(venda.getIdCliente()) != null) {//se o cliente existir
 				//para buscar os itens da venda terá que
 				//ir em repositorio Item venda bannco
-				while(venda.getVendas()[i] != null) {
-					IVenda = venda.getVendas()[i];
-					fachada.inserir(IVenda);
-					i++;
-				}
 				Statement statement = (Statement) pm.getCommunicationChannel();
 				statement.executeUpdate("INSERT INTO venda (id_cliente, total, data)"
 						+ "VALUES ('" + venda.getIdCliente() + "', '" 
-						+ venda.getTotal() + "', '" + venda.getData() +"')");						
-				JOptionPane.showMessageDialog(null, "Venda inserida com sucesso");
+						+ venda.getTotal() + "', '" + venda.getData() +"')");
 				
+				ItemVenda[] itensVenda = venda.getVendas();
+				System.out.println("id itens " + itensVenda[i].getId());
+				while(itensVenda[i] != null) {//inserir o id_venda dos itens venda
+					fachada.InserirIdVenda(itensVenda[i].getId(), venda.getId());
+					i++;
+				}
 						
+				
+				JOptionPane.showMessageDialog(null, "Venda inserida com sucesso");
 			}else throw new NullPointerException();
 
 		} catch(PersistenceMechanismException e){
@@ -79,8 +80,6 @@ public class RepositorioVendaBanco implements IRepositorioVenda {
 		} catch (TamanhoException e) {
 			e.printStackTrace();
 		} catch (IdNaoExisteException e) {
-			e.printStackTrace();
-		} catch (SemPosicaoParaInserirException e) {
 			e.printStackTrace();
 		} finally {
 		    try {
