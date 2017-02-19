@@ -2,6 +2,7 @@ package interfaceGrafica;
 
 import java.awt.event.ActionEvent;
 
+
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
@@ -11,6 +12,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import base.Cliente;
+import exceptions.CampoVazioException;
 import exceptions.IdNaoExisteException;
 import exceptions.RepositorioException;
 import exceptions.TamanhoException;
@@ -139,34 +141,42 @@ public class JClienteProcurar extends JPanel {
 		txtId.setBounds(46, 26, 86, 20);
 		panelClienteProcurar.add(txtId);
 		txtId.setColumns(10);
-		txtId.setText("Procurar ID");
 				
 				JButton btnProcurarCliente = new JButton("Procurar Cliente");
 				btnProcurarCliente.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						int id=0;
-						id = Integer.parseInt(txtId.getText());
-						
-						fachada = Fachada.getInstance(server, user, key);
-						try {
-							cliente = fachada.procurarCliente(id);
-						} catch (NullPointerException | RepositorioException | TamanhoException | IdNaoExisteException e) {
-							e.printStackTrace();
+						if(txtId.getText() != null) {
+							int id=0;
+							id = Integer.parseInt(txtId.getText());
+							
+							fachada = Fachada.getInstance(server, user, key);
+							try {
+								cliente = fachada.procurarCliente(id);
+							} catch (NullPointerException | RepositorioException | TamanhoException | IdNaoExisteException e) {
+								e.printStackTrace();
+							}
+							//busca no banco e preenche todos os campos
+							textFieldNome.setText(cliente.getNome());
+							textFieldNascimento.setText(cliente.getNascimento());
+							textFieldCpf.setText(cliente.getCpf());
+							textFieldTelefone.setText(cliente.getTelefone());
+							textFieldCep.setText(cliente.getEndereco().getCep());
+							textFieldEstado.setText(cliente.getEndereco().getEstado());
+							textFieldCidade.setText(cliente.getEndereco().getCidade());
+							textFieldRua.setText(cliente.getEndereco().getRua());
+						} else {
+							try {
+								throw new CampoVazioException();
+							} catch (CampoVazioException e) {
+								e.printStackTrace();
+							}
 						}
-						//busca no banco e preenche todos os campos
-						textFieldNome.setText(cliente.getNome());
-						textFieldNascimento.setText(cliente.getNascimento());
-						textFieldCpf.setText(cliente.getCpf());
-						textFieldTelefone.setText(cliente.getTelefone());
-						textFieldCep.setText(cliente.getEndereco().getCep());
-						textFieldEstado.setText(cliente.getEndereco().getEstado());
-						textFieldCidade.setText(cliente.getEndereco().getCidade());
-						textFieldRua.setText(cliente.getEndereco().getRua());
 					}
 				});
 				btnProcurarCliente.setBounds(355, 257, 131, 23);
 				panelClienteProcurar.add(btnProcurarCliente);		
+				
+				
 		
 	}
-
 }

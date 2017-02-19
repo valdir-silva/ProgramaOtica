@@ -11,6 +11,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import base.Funcionario;
+import exceptions.CampoVazioException;
 import exceptions.RepositorioException;
 import exceptions.RepositorioJaExisteException;
 import exceptions.SemPosicaoParaInserirException;
@@ -84,11 +85,16 @@ public class JFuncionarioInserir extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				fachada = Fachada.getInstance(server, user, key);
 				try {
-					funcionario.setNome(textFieldNome.getText());
-					funcionario.setCpf(textFieldCpf.getText());
-					funcionario.setTelefone(textFieldTelefone.getText());
-					fachada.inserir(funcionario);
-				} catch (TamanhoException | SemPosicaoParaInserirException | RepositorioException | RepositorioJaExisteException e) {
+					if(textFieldNome.getText() != null && textFieldCpf.getText() != null && textFieldTelefone.getText() != null) {
+						funcionario.setNome(textFieldNome.getText());
+						funcionario.setCpf(textFieldCpf.getText());
+						funcionario.setTelefone(textFieldTelefone.getText());
+						fachada.inserir(funcionario);
+					}
+					else {
+						throw new  CampoVazioException();
+					}
+				} catch (TamanhoException | SemPosicaoParaInserirException | RepositorioException | RepositorioJaExisteException | CampoVazioException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

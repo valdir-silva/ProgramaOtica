@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 
 import base.Cliente;
 import base.Endereco;
+import exceptions.CampoVazioException;
 import exceptions.IdNaoExisteException;
 import exceptions.RepositorioException;
 import exceptions.TamanhoException;
@@ -170,24 +171,32 @@ public class JClienteAtualizar extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				int id=0;
 				id = Integer.parseInt(txtId.getText());
-				
-				fachada = Fachada.getInstance(server, user, key);
-				try {
-					cliente = fachada.procurarCliente(id);
-				} catch (NullPointerException | RepositorioException | TamanhoException e) {
-					e.printStackTrace();
-				} catch (IdNaoExisteException e) {
-					e.printStackTrace();
+				if(txtId.getText() != null) {
+					fachada = Fachada.getInstance(server, user, key);
+					try {
+						cliente = fachada.procurarCliente(id);
+					} catch (NullPointerException | RepositorioException | TamanhoException e) {
+						e.printStackTrace();
+					} catch (IdNaoExisteException e) {
+						e.printStackTrace();
+					}
+					//busca no banco e preenche todos os campos
+					textFieldNome.setText(cliente.getNome());
+					textFieldNascimento.setText(cliente.getNascimento());
+					textFieldCpf.setText(cliente.getCpf());
+					textFieldTelefone.setText(cliente.getTelefone());
+					textFieldCep.setText(cliente.getEndereco().getCep());
+					textFieldEstado.setText(cliente.getEndereco().getEstado());
+					textFieldCidade.setText(cliente.getEndereco().getCidade());
+					textFieldRua.setText(cliente.getEndereco().getRua());
+				} else {
+					try {
+						throw new CampoVazioException();
+					} catch (CampoVazioException e) {
+						
+						e.printStackTrace();
+					}
 				}
-				//busca no banco e preenche todos os campos
-				textFieldNome.setText(cliente.getNome());
-				textFieldNascimento.setText(cliente.getNascimento());
-				textFieldCpf.setText(cliente.getCpf());
-				textFieldTelefone.setText(cliente.getTelefone());
-				textFieldCep.setText(cliente.getEndereco().getCep());
-				textFieldEstado.setText(cliente.getEndereco().getEstado());
-				textFieldCidade.setText(cliente.getEndereco().getCidade());
-				textFieldRua.setText(cliente.getEndereco().getRua());
 			}
 		});
 		btnCarregar.setBounds(139, 25, 89, 23);

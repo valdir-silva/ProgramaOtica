@@ -11,6 +11,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import base.Funcionario;
+import exceptions.CampoVazioException;
 import exceptions.IdNaoExisteException;
 import exceptions.RepositorioException;
 import exceptions.TamanhoException;
@@ -94,18 +95,25 @@ public class JFuncionarioProcurar extends JPanel {
 		JButton btnCarregar = new JButton("Procurar Funcionario");
 		btnCarregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int id = Integer.parseInt(txtId.getText());
-				
-				fachada = Fachada.getInstance(server, user, key);
 				try {
-					funcionario = fachada.procurarFuncionario(id);
-				} catch (NullPointerException | RepositorioException | TamanhoException | IdNaoExisteException e) {
+					if(txtId.getText() != null) {
+						int id = Integer.parseInt(txtId.getText());
+						
+						fachada = Fachada.getInstance(server, user, key);
+						
+							funcionario = fachada.procurarFuncionario(id);
+						//busca no banco e preenche todos os campos
+						textFieldNome.setText(funcionario.getNome());
+						textFieldCpf.setText(funcionario.getCpf());
+						textFieldTelefone.setText(funcionario.getTelefone());
+					}else {
+						throw new CampoVazioException();
+					}
+				}
+				catch (NullPointerException | RepositorioException | TamanhoException | IdNaoExisteException | CampoVazioException e) {
 					e.printStackTrace();
 				}
-				//busca no banco e preenche todos os campos
-				textFieldNome.setText(funcionario.getNome());
-				textFieldCpf.setText(funcionario.getCpf());
-				textFieldTelefone.setText(funcionario.getTelefone());
+					
 			}
 		});
 		btnCarregar.setBounds(139, 25, 89, 23);

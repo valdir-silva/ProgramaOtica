@@ -11,6 +11,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import base.Produto;
+import exceptions.CampoVazioException;
 import exceptions.RepositorioException;
 import exceptions.RepositorioJaExisteException;
 import exceptions.SemPosicaoParaInserirException;
@@ -107,13 +108,18 @@ public class JProdutoInserir extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				fachada = Fachada.getInstance(server, user, key);
 				try {
-					produto.setNome(textFieldNome.getText());
-					produto.setMarca(textFieldMarca.getText());
-					produto.setValorCompra(Float.parseFloat(textFieldValorCompra.getText()));
-					produto.setValorVenda(Float.parseFloat(textFieldValorVenda.getText()));
-					produto.setQuantidade(Integer.parseInt(textFieldQuantidade.getText()));
-					fachada.inserir(produto);
-				} catch (SemPosicaoParaInserirException | RepositorioJaExisteException | TamanhoException | RepositorioException e) {
+					if(textFieldNome.getText() != null && textFieldMarca.getText() != null && textFieldValorCompra.getText() != null &&
+							textFieldValorVenda.getText() != null && textFieldQuantidade.getText() != null) {
+						produto.setNome(textFieldNome.getText());
+						produto.setMarca(textFieldMarca.getText());
+						produto.setValorCompra(Float.parseFloat(textFieldValorCompra.getText()));
+						produto.setValorVenda(Float.parseFloat(textFieldValorVenda.getText()));
+						produto.setQuantidade(Integer.parseInt(textFieldQuantidade.getText()));
+						fachada.inserir(produto);
+					}else {
+						throw new CampoVazioException();
+					}
+				} catch (SemPosicaoParaInserirException | RepositorioJaExisteException | TamanhoException | RepositorioException | CampoVazioException e) {
 					e.printStackTrace();
 				}
 			}

@@ -50,15 +50,16 @@ public class RepositorioItemVendaBanco implements IRepositorioItemVenda {
 		return instance;
 	}
 	
-	public void inserir (ItemVenda venda) throws RepositorioException, NullPointerException, TamanhoException, QuantidadeProdutoInvalidaException {
+	public void inserir (ItemVenda itemVenda) throws RepositorioException, NullPointerException, TamanhoException, QuantidadeProdutoInvalidaException {
 		//Statement é usado para utilizar os comandos sql no java.
 		Fachada fachada = Fachada.getInstance(server, user, key);
 		try {
-			if(produtoExiste(fachada, venda)){
+			itemVenda.setId(gerarId());
+			if(produtoExiste(fachada, itemVenda)){
 				Statement statement = (Statement) pm.getCommunicationChannel();
-				statement.executeUpdate("INSERT INTO item_venda (id_venda, id_produto, quantidade)"
-						+ "VALUES ('" + venda.getIdVenda() + "', '" 
-						+ venda.getIdProduto() + "', '" + venda.getQuantidade() +"')");						
+				statement.executeUpdate("INSERT INTO item_venda (id, id_venda, id_produto, quantidade)"
+						+ "VALUES ('" + itemVenda.getId() + "', '" +itemVenda.getIdVenda() + "', '" 
+						+ itemVenda.getIdProduto() + "', '" + itemVenda.getQuantidade() +"')");						
 				JOptionPane.showMessageDialog(null, "Item Venda inserido com sucesso");
 			}else
 				throw new IdNaoExisteException();
@@ -93,7 +94,7 @@ public class RepositorioItemVendaBanco implements IRepositorioItemVenda {
 			if(quantidade < 0){
 				throw new QuantidadeEstoqueMenorException();
 			}
-			produto.setQuantidade(quantidade);//
+			produto.setQuantidade(quantidade);
 			
 			fachada.atualizar(produto);
 			return true;
@@ -185,7 +186,7 @@ public class RepositorioItemVendaBanco implements IRepositorioItemVenda {
 			if(venda != null)
 				return venda;
 			else //se a venda nao existir 
-				throw new IdNaoExisteException();
+				return null;
 
 		} catch (PersistenceMechanismException e) {
 			throw new RepositorioException(e);
@@ -201,14 +202,14 @@ public class RepositorioItemVendaBanco implements IRepositorioItemVenda {
 		
 	}
 	
-	public RepositorioItemVendaArray todosItensVenda() throws TamanhoException {
+	public RepositorioItemVendaArray todosItensVenda(int idVenda) throws TamanhoException {
 		
 		RepositorioItemVendaArray vendas = new RepositorioItemVendaArray();
 		try {
 			Statement statement;
 			ResultSet resultset;
 			statement = (Statement) pm.getCommunicationChannel();
-			resultset = statement.executeQuery("SELECT * FROM item_venda ");
+			resultset = statement.executeQuery("SELECT * FROM item_venda WHERE id_venda = '" + idVenda + "'");
 			
 			while (resultset.next()){
 				ItemVenda venda = new ItemVenda();
@@ -234,6 +235,15 @@ public class RepositorioItemVendaBanco implements IRepositorioItemVenda {
 		return vendas;			
 	}
 
+	public int gerarId() throws TamanhoException, RepositorioException, IdNaoExisteException {
+		int id = 1;
+		
+		while(procurarItemVenda(id) != null) {//pega o ultimo id disponível
+			id++;
+		}
+		return id;
+	}
+	
 	public void InserirIdVenda(int itemVenda, int idVenda) {	
 		try {
 			Statement statement = (Statement) pm.getCommunicationChannel();

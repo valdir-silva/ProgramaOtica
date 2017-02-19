@@ -23,7 +23,7 @@ public class Cliente extends Identificacao{
 	}
 	
 	public void setNascimento (String nascimento) throws TamanhoException {
-		if (nascimento.length() < 11) {
+		if (nascimento.length() <= 10 && nascimento.length() >= 8) {
 			this.nascimento = nascimento;
 		} else {
 			TamanhoException e = new TamanhoException();

@@ -49,7 +49,7 @@ public class RepositorioVendaBanco implements IRepositorioVenda {
 		return instance;
 	}
 	
-	public void inserir (Venda venda) throws RepositorioException, NullPointerException, TamanhoException, QuantidadeProdutoInvalidaException {
+	public void inserir (Venda venda) throws RepositorioException, NullPointerException, TamanhoException, QuantidadeProdutoInvalidaException, SemPosicaoParaInserirException {
 		//Statement é usado para utilizar os comandos sql no java.
 		Fachada fachada = Fachada.getInstance(server, user, key);
 		int i = 0;
@@ -57,14 +57,15 @@ public class RepositorioVendaBanco implements IRepositorioVenda {
 			if (fachada.procurarCliente(venda.getIdCliente()) != null) {//se o cliente existir
 				//para buscar os itens da venda terá que
 				//ir em repositorio Item venda bannco
+				venda.setId(gerarId());
 				Statement statement = (Statement) pm.getCommunicationChannel();
-				statement.executeUpdate("INSERT INTO venda (id_cliente, total, data)"
-						+ "VALUES ('" + venda.getIdCliente() + "', '" 
+				statement.executeUpdate("INSERT INTO venda (id, id_cliente, total, data)"
+						+ "VALUES ('" + venda.getId() + "', '" + venda.getIdCliente() + "', '" 
 						+ venda.getTotal() + "', '" + venda.getData() +"')");
 				
 				ItemVenda[] itensVenda = venda.getVendas();
-				System.out.println("id itens " + itensVenda[i].getId());
 				while(itensVenda[i] != null) {//inserir o id_venda dos itens venda
+					fachada.inserir(itensVenda[i]);
 					fachada.InserirIdVenda(itensVenda[i].getId(), venda.getId());
 					i++;
 				}
@@ -93,7 +94,17 @@ public class RepositorioVendaBanco implements IRepositorioVenda {
 	public void removerVenda (int id) throws RepositorioException {
 		try {
 			if(procurarVenda(id) != null) {
+				Fachada fachada = Fachada.getInstance(server, user, key);
+				RepositorioItemVendaArray vendas = new RepositorioItemVendaArray();
+				String [][] dados = null;
 				
+				vendas = fachada.todosItensVenda(id);
+				dados = vendas.todosItensVenda();
+				
+				for(int i = 0; i < dados.length; i++) {
+					if(dados[i][0] != null)
+						fachada.removerItemVenda(Integer.parseInt(dados[i][0]));
+				}
 				Statement statement = (Statement) pm.getCommunicationChannel();
 				statement.executeUpdate("DELETE from venda WHERE id = '" + id + "'");
 				
@@ -182,8 +193,7 @@ public class RepositorioVendaBanco implements IRepositorioVenda {
 			
 			if(venda != null)
 				return venda;
-			else //se a venda nao existir 
-				throw new IdNaoExisteException();
+			return null;
 
 		} catch (PersistenceMechanismException e) {
 			throw new RepositorioException(e);
@@ -229,7 +239,16 @@ public class RepositorioVendaBanco implements IRepositorioVenda {
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return vendas;			
+		return vendas;
+	}
+	
+	public int gerarId() throws TamanhoException, RepositorioException, IdNaoExisteException {
+		int id = 1;
+		
+		while(procurarVenda(id) != null) {//pega o ultimo id disponível
+			id++;
+		}
+		return id;
 	}
 	
 }

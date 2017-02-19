@@ -7,7 +7,7 @@ import exceptions.TamanhoException;
 
 public class RepositorioItemVendaArray {
 	private ItemVenda[] venda;
-	private int indice;
+	private int indice = 0;
 	
 	public RepositorioItemVendaArray () {
 		this.venda = new ItemVenda[100];

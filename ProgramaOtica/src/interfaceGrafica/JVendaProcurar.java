@@ -11,6 +11,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import base.Venda;
+import exceptions.CampoVazioException;
 import exceptions.IdNaoExisteException;
 import exceptions.RepositorioException;
 import exceptions.TamanhoException;
@@ -85,15 +86,20 @@ public class JVendaProcurar extends JPanel {
 		JButton btnProcurar = new JButton("Procurar");
 		btnProcurar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int id = Integer.parseInt(txtId.getText());
-				fachada = Fachada.getInstance(server, user, key);
 				try {
-					venda = fachada.procurarVenda(id);
-					textFieldIdCliente.setText(Integer.toString(venda.getIdCliente()));
-					textFieldNomeCliente.setText(fachada.procurarCliente(venda.getIdCliente()).getNome());
-					textFieldData.setText(venda.getData());
-					textFieldTotal.setText(Float.toString(venda.getTotal()));
-				} catch (NullPointerException | RepositorioException | TamanhoException | IdNaoExisteException e) {
+					if(txtId.getText() != null) {
+						int id = Integer.parseInt(txtId.getText());
+						fachada = Fachada.getInstance(server, user, key);
+						
+						venda = fachada.procurarVenda(id);
+						textFieldIdCliente.setText(Integer.toString(venda.getIdCliente()));
+						textFieldNomeCliente.setText(fachada.procurarCliente(venda.getIdCliente()).getNome());
+						textFieldData.setText(venda.getData());
+						textFieldTotal.setText(Float.toString(venda.getTotal()));
+					}else {
+						throw new CampoVazioException();
+					}
+				} catch (NullPointerException | RepositorioException | TamanhoException | IdNaoExisteException | CampoVazioException e) {
 
 					e.printStackTrace();
 				}				

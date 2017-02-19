@@ -26,12 +26,12 @@ import repositorios.RepositorioVendaArray;
 
 public class ProgramaOtica {
 	public static void main(String[] args) throws TamanhoException, NullPointerException, SemPosicaoParaInserirException, RepositorioException {
-		//jdbc:mysql://localhost:3306/programa
-		//root
-		//""
-		String server = "jdbc:mysql://whiteofdark.com:3306/whiteofd_programa";
-		String user = "whiteofd_ark";
-		String key = "1!2@3#";
+		String server = "jdbc:mysql://localhost:3306/programa";
+		String user = "root";
+		String key = "";
+//		String server = "jdbc:mysql://whiteofdark.com:3306/whiteofd_programa";
+//		String user = "whiteofd_ark";
+//		String key = "1!2@3#";
 		
 		boolean run = true;//start false to use the loggin
 		Fachada fachada = Fachada.getInstance(server, user, key);
@@ -363,7 +363,7 @@ public class ProgramaOtica {
 					//Venda//
 					/////////
 				case 4:
-					int opcaoVenda = Integer.parseInt(JOptionPane.showInputDialog("    VENDA\n 1. Inserir\n 2. Atualizar\n 3. Remover\n 4. Procurar\n 5. Todos\n 6. Itens da venda 0. Voltar Menu"));
+					int opcaoVenda = Integer.parseInt(JOptionPane.showInputDialog("    VENDA\n 1. Inserir\n 2. Atualizar\n 3. Remover\n 4. Procurar\n 5. Todos\n 6. Itens da venda\n 0. Voltar Menu"));
 					switch(opcaoVenda){
 					case 0://voltar menu
 						break;
@@ -508,12 +508,12 @@ public class ProgramaOtica {
 							//Item Venda//
 							//////////////
 						case 6:
-							int j = 0;
+							int j = 0, idVenda;
+							idVenda = Integer.parseInt(JOptionPane.showInputDialog("Digite o id da venda!"));
 							RepositorioItemVendaArray itensVenda = new RepositorioItemVendaArray();
 							String[][] tempIV6;
-							itensVenda = fachada.todosItensVenda();
+							itensVenda = fachada.todosItensVenda(idVenda);
 							tempIV6 = itensVenda.todosItensVenda();
-							
 							while(tempIV6[j][2] != null) {
 								try {
 									

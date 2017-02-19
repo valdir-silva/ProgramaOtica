@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import base.ItemVenda;
 import base.Produto;
 import base.Venda;
+import exceptions.CampoVazioException;
 import exceptions.IdNaoExisteException;
 import exceptions.QuantidadeProdutoInvalidaException;
 import exceptions.RepositorioException;
@@ -73,14 +74,18 @@ public class JVendaInserir extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				fachada = Fachada.getInstance(server, user, key);
 				try {
-					venda.setIdCliente(Integer.parseInt(textFieldIdCliente.getText()));
-					venda.setTotal(Float.parseFloat(labelTotal.getText()));
-					venda.setData(textFieldData.getText());
-					
-					venda.setVendas(vendas);
-					
-					fachada.inserir(venda);
-				} catch (TamanhoException | RepositorioException | NullPointerException | SemPosicaoParaInserirException | QuantidadeProdutoInvalidaException e) {
+					if(textFieldIdCliente.getText() != null && textFieldData.getText() != null) {
+							venda.setIdCliente(Integer.parseInt(textFieldIdCliente.getText()));
+							venda.setTotal(Float.parseFloat(labelTotal.getText()));
+							venda.setData(textFieldData.getText());
+							
+							venda.setVendas(vendas);
+							
+							fachada.inserir(venda);
+					}else {
+						throw new CampoVazioException();
+					}
+				} catch (TamanhoException | RepositorioException | NullPointerException | SemPosicaoParaInserirException | QuantidadeProdutoInvalidaException | CampoVazioException e) {
 					e.printStackTrace();
 				}
 			}
@@ -134,9 +139,9 @@ public class JVendaInserir extends JPanel {
 				float total = 0;
 				fachada = Fachada.getInstance(server, user, key);
 				ItemVenda item = new ItemVenda();
+				
 				item.setIdProduto(Integer.parseInt(textFieldIdProduto.getText()));
 				item.setQuantidade(Integer.parseInt(textFieldQuantidade.getText()));
-				item.setIdVenda(0);
 				
 				total = Float.parseFloat(labelTotal.getText());
 				Produto produto = new Produto();
@@ -144,23 +149,27 @@ public class JVendaInserir extends JPanel {
 					produto = fachada.procurarProduto(item.getIdProduto());
 				
 					if(produto != null) {//se produto existir
-						total += item.getQuantidade() * produto.getValorVenda();//calcula o total
-					
-						labelTotal.setText(Float.toString(total));//coloca o valor total no text field
-						fachada.inserir(item);
-						//tenho que pegar o id de item venda, antes de enviar para venda
-						vendas[i++] = item;
+						//se nao existir itens suficientes no estoque
+						if((produto.getQuantidade() - item.getQuantidade()) > 0 ) {
+							total += item.getQuantidade() * produto.getValorVenda();//calcula o total
+							
+							labelTotal.setText(Float.toString(total));//coloca o valor total no text field
+							
+							//tenho que pegar o id de item venda, antes de enviar para venda
+							vendas[i++] = item;
+						}
 					}
-				} catch (NullPointerException | SemPosicaoParaInserirException | RepositorioException | TamanhoException
-						| QuantidadeProdutoInvalidaException | IdNaoExisteException e) {
+				} catch (NullPointerException | RepositorioException | TamanhoException
+					 | IdNaoExisteException e) {
 					e.printStackTrace();
 				}
-				
 				
 			}
 		});
 		btnAdicionar.setBounds(334, 164, 172, 23);
 		panelVendaInserir.add(btnAdicionar);
+		
+		
 		
 
 		

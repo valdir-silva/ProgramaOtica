@@ -33,8 +33,8 @@ public class ControleItensVenda implements IRepositorioItemVenda {
 		return this.vendas.procurarItemVenda(id);
 	}
 	
-	public RepositorioItemVendaArray todosItensVenda () throws TamanhoException {
-		return this.vendas.todosItensVenda();
+	public RepositorioItemVendaArray todosItensVenda (int idVenda) throws TamanhoException {
+		return this.vendas.todosItensVenda(idVenda);
 	}
 
 	@Override

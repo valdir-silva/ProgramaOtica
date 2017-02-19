@@ -14,6 +14,6 @@ public interface IRepositorioItemVenda {
 	public void removerItemVenda (int id) throws RepositorioException;
 	public void atualizar (ItemVenda venda) throws NullPointerException, RepositorioException, TamanhoException;
 	public ItemVenda procurarItemVenda (int id) throws NullPointerException, RepositorioException, TamanhoException, IdNaoExisteException;
-	public RepositorioItemVendaArray todosItensVenda () throws TamanhoException;
+	public RepositorioItemVendaArray todosItensVenda (int idVenda) throws TamanhoException;
 	public void InserirIdVenda(int itemVenda, int idVenda);
 }

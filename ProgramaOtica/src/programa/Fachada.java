@@ -184,8 +184,8 @@ public class Fachada {
 		this.itensVenda.removerItemVenda(id);
 	}
 	
-	public RepositorioItemVendaArray todosItensVenda() throws TamanhoException {
-		return this.itensVenda.todosItensVenda();
+	public RepositorioItemVendaArray todosItensVenda(int idVenda) throws TamanhoException {
+		return this.itensVenda.todosItensVenda(idVenda);
 	}
 	
 	public void InserirIdVenda(int itemVenda, int idVenda) {

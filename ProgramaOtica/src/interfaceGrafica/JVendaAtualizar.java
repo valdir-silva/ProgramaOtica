@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import base.ItemVenda;
 import base.Produto;
 import base.Venda;
+import exceptions.CampoVazioException;
 import exceptions.IdNaoExisteException;
 import exceptions.QuantidadeProdutoInvalidaException;
 import exceptions.RepositorioException;
@@ -88,16 +89,21 @@ public class JVendaAtualizar extends JPanel {
 		JButton btnCarregar = new JButton("carregar");
 		btnCarregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int id = Integer.parseInt(txtId.getText());
-				fachada = Fachada.getInstance(server, user, key);
 				try {
-					venda = fachada.procurarVenda(id);
-					textFieldIdCliente.setText(Integer.toString(venda.getIdCliente()));
-					textFieldData.setText(venda.getData());
-					labelTotal.setText(Float.toString(venda.getTotal()));
-					
-					vendas = venda.getVendas();
-				} catch (NullPointerException | RepositorioException | TamanhoException | IdNaoExisteException e) {
+					if(txtId.getText() != null) {
+						int id = Integer.parseInt(txtId.getText());
+						fachada = Fachada.getInstance(server, user, key);
+						
+							venda = fachada.procurarVenda(id);
+							textFieldIdCliente.setText(Integer.toString(venda.getIdCliente()));
+							textFieldData.setText(venda.getData());
+							labelTotal.setText(Float.toString(venda.getTotal()));
+							
+							vendas = venda.getVendas();
+					}else {
+						throw new CampoVazioException();
+					}
+				} catch (NullPointerException | RepositorioException | TamanhoException | IdNaoExisteException | CampoVazioException e) {
 
 					e.printStackTrace();
 				}

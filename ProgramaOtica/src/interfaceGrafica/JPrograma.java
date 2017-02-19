@@ -1,5 +1,6 @@
 package interfaceGrafica;
 
+import java.awt.Canvas;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -51,6 +52,10 @@ public class JPrograma extends JFrame {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 0, 704, 490);
 		contentPane.add(tabbedPane);
+		
+		Canvas canvas = new Canvas();
+		canvas.setBounds(179, 242, 100, 100);
+		contentPane.add(canvas);
 		
 		JPanel panelInicio = new JPanel();
 		tabbedPane.addTab("Inicio", null, panelInicio, null);

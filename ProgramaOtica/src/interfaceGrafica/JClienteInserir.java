@@ -8,6 +8,7 @@ import javax.swing.JTextField;
 
 import base.Cliente;
 import base.Endereco;
+import exceptions.CampoVazioException;
 import exceptions.RepositorioException;
 import exceptions.RepositorioJaExisteException;
 import exceptions.SemPosicaoParaInserirException;
@@ -139,17 +140,24 @@ public class JClienteInserir extends JPanel {
 				
 				fachada = Fachada.getInstance(server, user, key);
 				try {
-					cliente.setNome(textFieldNome.getText());
-					cliente.setNascimento(textFieldNascimento.getText());
-					cliente.setCpf(textFieldCpf.getText());
-					cliente.setTelefone(textFieldTelefone.getText());
-					endereco.setCep(textFieldCep.getText());
-					endereco.setEstado(textFieldEstado.getText());
-					endereco.setCidade(textFieldCidade.getText());
-					endereco.setRua(textFieldRua.getText());
-					cliente.setEndereco(endereco);
-					fachada.inserir(cliente);
-				} catch (TamanhoException | SemPosicaoParaInserirException | RepositorioException | RepositorioJaExisteException e) {
+					if(textFieldNome.getText() != null && textFieldNascimento.getText() != null && textFieldCpf.getText() != null &&
+							textFieldTelefone.getText() != null && textFieldCep.getText() != null && textFieldEstado.getText() != null &&
+							textFieldCidade.getText() != null && textFieldRua.getText() != null) {
+							
+						cliente.setNome(textFieldNome.getText());
+						cliente.setNascimento(textFieldNascimento.getText());
+						cliente.setCpf(textFieldCpf.getText());
+						cliente.setTelefone(textFieldTelefone.getText());
+						endereco.setCep(textFieldCep.getText());
+						endereco.setEstado(textFieldEstado.getText());
+						endereco.setCidade(textFieldCidade.getText());
+						endereco.setRua(textFieldRua.getText());
+						cliente.setEndereco(endereco);
+						fachada.inserir(cliente);
+					} else {
+						throw new CampoVazioException();
+					}
+				} catch (TamanhoException | SemPosicaoParaInserirException | RepositorioException | RepositorioJaExisteException | CampoVazioException e) {
 					e.printStackTrace();
 				}
 			}

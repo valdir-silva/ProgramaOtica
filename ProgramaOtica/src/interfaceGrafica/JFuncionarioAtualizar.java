@@ -12,6 +12,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import base.Funcionario;
+import exceptions.CampoVazioException;
 import exceptions.IdNaoExisteException;
 import exceptions.RepositorioException;
 import exceptions.TamanhoException;
@@ -120,21 +121,30 @@ public class JFuncionarioAtualizar extends JPanel {
 		JButton btnCarregar = new JButton("carregar");
 		btnCarregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String idS;
-				int id = 0;
-				idS = txtId.getText();
-				id = Integer.parseInt(idS);
-				fachada = Fachada.getInstance(server, user, key);
-				try {
-					funcionario = fachada.procurarFuncionario(id);
-				} catch (NullPointerException | RepositorioException | TamanhoException | IdNaoExisteException e) {
-
-					e.printStackTrace();
+				if(txtId.getText() != null) {
+					String idS;
+					int id = 0;
+					idS = txtId.getText();
+					id = Integer.parseInt(idS);
+					fachada = Fachada.getInstance(server, user, key);
+					try {
+						funcionario = fachada.procurarFuncionario(id);
+					} catch (NullPointerException | RepositorioException | TamanhoException | IdNaoExisteException e) {
+	
+						e.printStackTrace();
+					}
+					//busca no banco e preenche todos os campos
+					textFieldNome.setText(funcionario.getNome());
+					textFieldCpf.setText(funcionario.getCpf());
+					textFieldTelefone.setText(funcionario.getTelefone());
+				}else {
+					try {
+						throw new CampoVazioException();
+					} catch (CampoVazioException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
-				//busca no banco e preenche todos os campos
-				textFieldNome.setText(funcionario.getNome());
-				textFieldCpf.setText(funcionario.getCpf());
-				textFieldTelefone.setText(funcionario.getTelefone());
 			}
 		});
 		btnCarregar.setBounds(139, 25, 89, 23);

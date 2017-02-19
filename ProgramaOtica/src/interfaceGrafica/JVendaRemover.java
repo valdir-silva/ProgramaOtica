@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
+import exceptions.CampoVazioException;
 import exceptions.RepositorioException;
 import programa.Fachada;
 
@@ -74,14 +75,19 @@ public class JVendaRemover extends JPanel {
 		JButton btnRemover = new JButton("remover");
 		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int id=0;
-				
-				id = Integer.parseInt(textFieldId.getText());
 				try {
-					Fachada fachada = Fachada.getInstance(server, user, key);
-				
-					fachada.removerVenda(id);
-				} catch (RepositorioException e) {
+					if(textFieldId.getText() != null) {
+						int id=0;
+						
+						id = Integer.parseInt(textFieldId.getText());
+						
+						Fachada fachada = Fachada.getInstance(server, user, key);
+					
+						fachada.removerVenda(id);
+					}else {
+						throw new CampoVazioException();
+					}
+				} catch (RepositorioException | CampoVazioException e) {
 					e.printStackTrace();
 				}
 			}

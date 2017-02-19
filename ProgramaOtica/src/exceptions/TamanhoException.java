@@ -9,8 +9,8 @@ public class TamanhoException extends Exception{
 	 * nome < 50
 	 * cpf = 11
 	 * telefone <= 12
-	 * cep <= 10
-	 * nascimento < 11
+	 * cep <= 10 >= 8
+	 * nascimento <= 10 >= 8
 	 * 
 	 * Produto:
 	 * 

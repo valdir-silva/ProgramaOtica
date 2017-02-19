@@ -7,6 +7,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+
+import exceptions.CampoVazioException;
 import exceptions.RepositorioException;
 import programa.Fachada;
 
@@ -78,15 +80,23 @@ public class JClienteRemover extends JPanel {
 		JButton btnRemover = new JButton("remover");
 		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int id=0;
-				
-				id = Integer.parseInt(textFieldId.getText());
-				try {
-					Fachada fachada = Fachada.getInstance(server, user, key);
-				
-					fachada.removerCliente(id);
-				} catch (RepositorioException e) {
-					e.printStackTrace();
+				if(textFieldId.getText() != null) {
+					int id=0;
+					
+					id = Integer.parseInt(textFieldId.getText());
+					try {
+						Fachada fachada = Fachada.getInstance(server, user, key);
+					
+						fachada.removerCliente(id);
+					} catch (RepositorioException e) {
+						e.printStackTrace();
+					}
+				} else {
+					try {
+						throw new CampoVazioException();
+					} catch (CampoVazioException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		});
