@@ -80,7 +80,7 @@ public class RepositorioItemVendaBanco implements IRepositorioItemVenda {
 			} catch (PersistenceMechanismException ex) {
 				throw new RepositorioException(ex);
 			}
-		}		
+		}
 	}
 	
 	//tambem testa se existe produto suficiente em estoque
@@ -91,7 +91,7 @@ public class RepositorioItemVendaBanco implements IRepositorioItemVenda {
 			
 			quantidade = produto.getQuantidade();//pega quantos produtos tinha
 			quantidade -= venda.getQuantidade();//reduz a quantidade que foi comprada
-			if(quantidade < 0){
+			if(quantidade < 0) {
 				throw new QuantidadeEstoqueMenorException();
 			}
 			produto.setQuantidade(quantidade);
@@ -128,17 +128,17 @@ public class RepositorioItemVendaBanco implements IRepositorioItemVenda {
 		}
 	}
 	
-	public void atualizar (ItemVenda venda) throws RepositorioException, TamanhoException {
+	public void atualizar (ItemVenda itemVenda) throws RepositorioException, TamanhoException {
 		try {
 			//recebo uma venda e passo apenas o id do cliente e do produto, para o banco
 			Fachada fachada = Fachada.getInstance(server,user,key);
 			//se venda, cliente e produto existirem, atualize
-			if (procurarItemVenda(venda.getId()) != null) {
-				if(produtoExiste(fachada, venda)) {
+			if (procurarItemVenda(itemVenda.getId()) != null) {
+				if(produtoExiste(fachada, itemVenda)) {
 					Statement statement = (Statement) pm.getCommunicationChannel();
-					statement.executeUpdate("UPDATE item_venda SET id_venda ='" + venda.getIdVenda() 
-						+ "', id_produto ='" + venda.getIdProduto() + "', quantidade ='" + venda.getQuantidade()
-						+ "' WHERE id = '" + venda.getId() + "'");
+					statement.executeUpdate("UPDATE item_venda SET id_venda ='" + itemVenda.getIdVenda() 
+						+ "', id_produto ='" + itemVenda.getIdProduto() + "', quantidade ='" + itemVenda.getQuantidade()
+						+ "' WHERE id = '" + itemVenda.getId() + "'");
 					
 					JOptionPane.showMessageDialog(null, "Item Venda atualizada com sucesso");
 				} else //se produto não existir
