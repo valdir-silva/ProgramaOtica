@@ -17,6 +17,7 @@ import base.Produto;
 import base.Venda;
 import exceptions.CampoVazioException;
 import exceptions.IdNaoExisteException;
+import exceptions.QuantidadeEstoqueMenorException;
 import exceptions.QuantidadeProdutoInvalidaException;
 import exceptions.RepositorioException;
 import exceptions.SemPosicaoParaInserirException;
@@ -175,15 +176,19 @@ public class JVendaAtualizar extends JPanel {
 				Produto produto = new Produto();
 				try {
 					produto = fachada.procurarProduto(item.getIdProduto());
-				
-					total += item.getQuantidade() * produto.getValorVenda();//calcula o total
+					if((produto.getQuantidade() - item.getQuantidade()) > 0 ) {
 					
-					labelTotal.setText(Float.toString(total));//coloca o valor total no text field
-					vendas[i++] = item;
-					
-					fachada.inserir(item);
+						total += item.getQuantidade() * produto.getValorVenda();//calcula o total
+						
+						labelTotal.setText(Float.toString(total));//coloca o valor total no text field
+						vendas[i++] = item;
+						
+						fachada.inserir(item);//insere o produto que foi comprado
+					}else
+						throw new QuantidadeEstoqueMenorException();
+						
 				} catch (NullPointerException | SemPosicaoParaInserirException | RepositorioException | TamanhoException
-						| QuantidadeProdutoInvalidaException | IdNaoExisteException e1) {
+						| QuantidadeProdutoInvalidaException | IdNaoExisteException | QuantidadeEstoqueMenorException e1) {
 					e1.printStackTrace();
 				}
 				

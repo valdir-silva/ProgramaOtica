@@ -14,6 +14,7 @@ import base.Produto;
 import base.Venda;
 import exceptions.CampoVazioException;
 import exceptions.IdNaoExisteException;
+import exceptions.QuantidadeEstoqueMenorException;
 import exceptions.QuantidadeProdutoInvalidaException;
 import exceptions.RepositorioException;
 import exceptions.SemPosicaoParaInserirException;
@@ -157,10 +158,11 @@ public class JVendaInserir extends JPanel {
 							
 							//tenho que pegar o id de item venda, antes de enviar para venda
 							vendas[i++] = item;
-						}
+						}else
+							throw new QuantidadeEstoqueMenorException();
 					}
 				} catch (NullPointerException | RepositorioException | TamanhoException
-					 | IdNaoExisteException e) {
+					 | IdNaoExisteException | QuantidadeEstoqueMenorException e) {
 					e.printStackTrace();
 				}
 				
